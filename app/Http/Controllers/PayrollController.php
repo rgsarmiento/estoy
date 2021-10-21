@@ -41,12 +41,10 @@ class PayrollController extends Controller
             $payrolls = Payroll::with('worker')->where('status', 'ACTIVO')->paginate(20);
         } else {
             $payrolls = Payroll::with('worker')->where('status', 'ACTIVO')->where('company_id', $company_id)->paginate(20);
-            
         }
 
         $periodo_nomina = Period::where('year', date('Y'))->where('month', '>=', date('m')-1)->take(2)->get();
-        
-        
+                
         return view('payrolls.index', compact('payrolls', 'periodo_nomina'));
     }
 
