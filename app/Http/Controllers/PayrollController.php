@@ -48,6 +48,7 @@ class PayrollController extends Controller
         return view('payrolls.index', compact('payrolls', 'periodo_nomina'));
     }
 
+    
     /**
      * Show the form for creating a new resource.
      *
