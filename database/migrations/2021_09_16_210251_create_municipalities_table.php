@@ -15,7 +15,6 @@ class CreateMunicipalitiesTable extends Migration
     {
         Schema::create('municipalities', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('department_id');
             $table->foreignId('department_id')->constrained('departments');
             $table->string('name');
             $table->char('code');
