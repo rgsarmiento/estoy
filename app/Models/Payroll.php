@@ -17,7 +17,7 @@ class Payroll extends Model
         'deductions',
         'deductions_total',
         'payroll_total',
-        'status'
+        'payroll_status'
     ];
 
     public function company()

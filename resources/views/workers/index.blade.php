@@ -47,7 +47,7 @@
                             <table class="table table-bordered table-striped mt-2">
                                 <thead style="background-color: #6777ef;">
                                     <th style="display: none;">Id</th>
-                                    <th style="color: #fff;">NDI</th>
+                                    <th style="color: #fff;">Documento</th>
                                     <th style="color: #fff;">Nombre</th>
                                     <th style="color: #fff;">E-mail</th>
                                     <th style="color: #fff;">Estado</th>
@@ -71,25 +71,42 @@
                                                 @endif
                                             </td>
                                             <td class="text-right">
-                                                @can('workers.eliminar')
-                                                    {!! Form::open(['method' => 'DELETE', 'route' => ['workers.destroy', $row], 'style' => 'display:inline', 'class' => 'form-delete']) !!}
-                                                    {!! Form::button('<i class="fas fa-trash-alt"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-icon icon-left']) !!}
-                                                    {!! Form::close() !!}
-                                                @endcan
-                                                @can('workers.editar')
-                                                    <a class="btn btn-warning btn-icon icon-left"
-                                                        href="{{ route('workers.edit', $row->id) }}"><i
-                                                            class="fas fa-edit"></i></a>
 
-                                                    {!! Form::open(['method' => 'PUT', 'route' => ['workers.change_status', $row], 'style' => 'display:inline']) !!}
+                                                <div class="btn-group dropleft" style="float:right;width:50px;">
+                                                    <button class="btn btn-sm btn-primary dropdown-toggle waves-light"
+                                                        type="button" id="dropdown3" data-toggle="dropdown"
+                                                        aria-haspopup="true" aria-expanded="false"><i
+                                                            class="fas fa-th-large"></i></button>
+                                                    <div class="dropdown-menu dropleft">
 
-                                                    @if ($row->status == 'ACTIVO')
-                                                        {!! Form::button('<i class="fas fa-ban"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-icon icon-left']) !!}
-                                                    @else
-                                                        {!! Form::button('<i class="fas fa-check-circle"></i>', ['type' => 'submit', 'class' => 'btn btn-success btn-icon icon-left']) !!}
-                                                    @endif
-                                                    {!! Form::close() !!}
-                                                @endcan
+                                                        @can('workers.eliminar')
+                                                            {!! Form::open(['method' => 'DELETE', 'route' => ['workers.destroy', $row], 'style' => 'display:inline', 'class' => 'form-delete']) !!}
+                                                            {!! Form::button('<i class="fas fa-trash-alt"></i> Eliminar', ['type' => 'submit', 'class' => 'dropdown-item btn-link me-2']) !!}
+                                                            {!! Form::close() !!}
+                                                        @endcan
+                                       
+                                                        @can('workers.editar')
+                                                                <a class="dropdown-item has-icon" href="{{ route('workers.edit', $row->id) }}"><i
+                                                                    class="far fa-edit"></i> Modificar</a>
+                                                    
+                                                                {!! Form::open(['method' => 'PUT', 'route' => ['workers.change_status', $row], 'style' => 'display:inline']) !!}
+            
+                                                                @if ($row->status == 'ACTIVO')
+                                                                    {!! Form::button('<i class="fas fa-ban" style="color:#FF267B;"></i> Inactivar', ['type' => 'submit', 'class' => 'dropdown-item btn-link me-2']) !!}
+                                                                @else
+                                                                    {!! Form::button('<i class="fas fa-check-circle" style="color:#47c363;"></i> Activar', ['type' => 'submit', 'class' => 'dropdown-item btn-link me-2']) !!}
+                                                                @endif
+                                                                {!! Form::close() !!}
+                                                            @endcan
+
+                                                    </div>
+                                                    <!-- end of dropdown menu -->
+                                                </div>
+
+
+
+
+                                               
                                             </td>
 
                                         </tr>
@@ -133,10 +150,10 @@
 
 
     @if (Session::has('change_status'))
-    <script>
-        Swal.fire("Actualizado!", "{{ session()->get('change_status') }}", "success");
-    </script>
-@endif
+        <script>
+            Swal.fire("Actualizado!", "{{ session()->get('change_status') }}", "success");
+        </script>
+    @endif
 
     <script>
         $('.form-delete').submit(function(e) {

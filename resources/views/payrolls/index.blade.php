@@ -22,7 +22,7 @@
                     <h5>Periodo de Nomina</h5>
                 </div>
                 <div class="card-block">
-                    
+
                     <div class="row">
                         <div class="col-sm-12 col-xl-6 m-b-30">
                             <div class="form-group">
@@ -44,7 +44,7 @@
                             </div>
                         </div>
                     </div>
-                   
+
                 </div>
             </div>
         </div>
@@ -68,54 +68,74 @@
                                         <th class="text-right" style="color: #fff;">Acciones</th>
                                     </thead>
                                     <tbody>
-                                        @foreach ($payrolls as $row)                                        
-                                        <tr>
-                                            <td colspan="2">{{ $row->worker->payroll_type_document_identification->name }} : {{ $row->worker->identification_number }}<br>
-                                                <i class="fas fa-user-clock" style="font-size:16px;color:#6777ef;"> </i><a href="{{ route('workers.show', $row->worker) }}">
-                                                    {{ $row->worker->first_name . ' ' . $row->worker->surname }}</a> </td>
-                                        <td colspan="3"><i class="fas fa-cloud-sun" style="font-size:16px;color:#F8C471;"> Días trabajados:</i> {{ $row->worked_days}}</td>
-                                    <td>{!! Form::open(['method' => 'PUT', 'route' => ['workers.change_status', $row], 'style' => 'display:inline']) !!}
+                                        @foreach ($payrolls as $row)
+                                            @if ($row->payroll_status == 0)
+                                                <tr style="background-color: #FFE9E3;">
+                                                @else
+                                                <tr>
+                                            @endif
 
-                                        @if ($row->status == 0)
-                                            {!! Form::button('<i class="fas fa-ban"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-icon icon-left']) !!}
-                                        @else
-                                            {!! Form::button('<i class="fas fa-check-circle"></i>', ['type' => 'submit', 'class' => 'btn btn-success btn-icon icon-left']) !!}
-                                        @endif
-                                        {!! Form::close() !!}</td>            
-                                    </tr>
+                                            <td colspan="2">
+                                                {{ $row->worker->payroll_type_document_identification->name }} :
+                                                {{ $row->worker->identification_number }}<br>
+                                                <i class="fas fa-user-clock" style="font-size:16px;color:#6777ef;">
+                                                </i><a href="{{ route('workers.show', $row->worker) }}">
+                                                    {{ $row->worker->first_name . ' ' . $row->worker->surname }}</a>
+                                            </td>
+                                            <td colspan="3"><i class="fas fa-cloud-sun"
+                                                    style="font-size:16px;color:#F8C471;"> Días trabajados:</i>
+                                                {{ $row->worked_days }}</td>
+                                            <td>
+                                                {!! Form::open(['method' => 'PUT', 'route' => ['payrolls.change_status', $row], 'style' => 'display:inline']) !!}
+
+                                                @if ($row->payroll_status == 0)
+                                                    {{ Form::button('Inactivo', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm']) }}
+                                                @else
+                                                    {{ Form::button('Activo', ['type' => 'submit', 'class' => 'btn btn-success btn-sm']) }}
+                                                @endif
+                                                {!! Form::close() !!}
+                                            </td>
+                                            </tr>
                                             <tr>
                                                 <td style="display: none;">{{ $row->id }}</td>
-                                               
+
                                                 <td>
                                                     @foreach (json_decode($row->accrued, true) as $value)
                                                         {!! $value['name'] . ':<br><strong> +' . number_format($value['value'], 2) . '</strong>' !!} <br>
                                                     @endforeach
                                                 </td>
-                                                <td style="white-space:nowrap;"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i> $
+                                                <td style="white-space:nowrap;"><i class="fa fa-sort-up"
+                                                        style="font-size:18px;color:#00D0C4;"></i> $
                                                     {{ number_format($row->accrued_total, 2) }}</td>
                                                 <td>
                                                     @foreach (json_decode($row->deductions, true) as $value)
                                                         {!! $value['name'] . ':<strong> -' . number_format($value['value'], 2) . '</strong>' !!} <br>
                                                     @endforeach
                                                 </td>
-                                                <td style="white-space:nowrap;"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i> $
+                                                <td style="white-space:nowrap;"><i class="fa fa-sort-down"
+                                                        style="font-size:18px;color:#FF267B;"></i> $
                                                     {{ number_format($row->deductions_total, 2) }}</td>
-                                                <td style="white-space:nowrap;"><i class="fa fa-equals" style="font-size:15px;color:#00D0C4;"></i> $
+                                                <td style="white-space:nowrap;"><i class="fa fa-equals"
+                                                        style="font-size:15px;color:#00D0C4;"></i> $
                                                     {{ number_format($row->payroll_total, 2) }}</td>
 
-                                                    <td>
-                                                        <div class="btn-group dropleft" style="float:right;width:50px;">
-                                                            <button class="btn btn-sm btn-primary dropdown-toggle waves-light" type="button"
-                                                                id="dropdown3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i
-                                                                    class="fas fa-th-large"></i></button>
-                                                            <div class="dropdown-menu dropleft">
-                                                                <a class="dropdown-item has-icon" href="{{ route('payrolls.send_apidian_payroll', $row) }}"><i class="far fa-share-square"></i> Enviar DIAN</a>
-                                                                <a class="dropdown-item has-icon" href="#"><i class="far fa-edit"></i> Modificar</a>
-                                                               
-                                                            </div>
-                                                            <!-- end of dropdown menu -->
+                                                <td>
+                                                    <div class="btn-group dropleft" style="float:right;width:50px;">
+                                                        <button class="btn btn-sm btn-primary dropdown-toggle waves-light"
+                                                            type="button" id="dropdown3" data-toggle="dropdown"
+                                                            aria-haspopup="true" aria-expanded="false"><i
+                                                                class="fas fa-th-large"></i></button>
+                                                        <div class="dropdown-menu dropleft">
+                                                            <a class="dropdown-item has-icon"
+                                                                href="{{ route('payrolls.send_apidian_payroll', $row) }}"><i
+                                                                    class="far fa-share-square"></i> Enviar DIAN</a>
+                                                            <a class="dropdown-item has-icon" href="#"><i
+                                                                    class="far fa-edit"></i> Modificar</a>
+
                                                         </div>
-                                                    </td>
+                                                        <!-- end of dropdown menu -->
+                                                    </div>
+                                                </td>
 
                                             </tr>
                                         @endforeach

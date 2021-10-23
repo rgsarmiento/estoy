@@ -23,7 +23,7 @@ class PayrollController extends Controller
     {
         $user = auth()->user();
         $role_user = auth()->user()->roles->first()->id;
-        $company_id = 1;
+        $company_id=1;
 
         if ($role_user <> 1) {
             $user_id = $user->id;
@@ -38,10 +38,17 @@ class PayrollController extends Controller
         }
 
         if ($company_id == 0) {
-            $payrolls = Payroll::with('worker')->where('status', 'ACTIVO')->paginate(20);
+            $payrolls = Payroll::whereHas('worker', function ($query) {
+                return $query->where('status', 'ACTIVO');
+            })->paginate(20);
         } else {
-            $payrolls = Payroll::with('worker')->where('status', 'ACTIVO')->where('company_id', $company_id)->paginate(20);
+           
+            $payrolls = Payroll::whereHas('worker', function ($query) {
+                return $query->where('status', 'ACTIVO');
+            })->where('company_id', $company_id)->paginate(20);
+        
         }
+       
 
         $periodo_nomina = Period::where('year', date('Y'))->where('month', '>=', date('m')-1)->take(2)->get();
                 
@@ -211,6 +218,19 @@ class PayrollController extends Controller
         
            
         return json_encode($objeto_nomina);
+    }
+
+
+    public function change_status(Payroll $payroll)
+    {        
+        if ($payroll->payroll_status == 1) {
+            $payroll->update(['payroll_status' => 0]);
+            return redirect()->back();
+        } else {
+            $payroll->update(['payroll_status' => 1]);
+            return redirect()->back();
+            //return redirect()->route('workers.index');
+        }
     }
 
 }

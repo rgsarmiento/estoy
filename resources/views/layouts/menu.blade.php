@@ -26,6 +26,9 @@
         <li class="side-menus {{ Request::is('workers') ? 'active' : '' }}">
             <a class="nav-link" href="/workers"><i class="fas fa-user-clock"></i><span>Empleados</span></a>
         </li>
+        <li class="side-menus {{ Request::is('payrolls') ? 'active' : '' }}">
+            <a class="nav-link" href="/payrolls"><i class="fas fa-receipt"></i><span>Comprobante</span></a>
+        </li>
     </ul>
 </li>
 

@@ -23,7 +23,7 @@ class CreatePayrollsTable extends Migration
             $table->json('deductions');
             $table->decimal('deductions_total',10,2);
             $table->decimal('payroll_total',10,2);
-            $table->boolean('status')->default(true);
+            $table->boolean('payroll_status')->default(true);
             $table->timestamps();
         });
     }

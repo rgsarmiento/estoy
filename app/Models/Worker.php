@@ -95,5 +95,6 @@ class Worker extends Model
             return $this->belongsTo(Payment_method::class);
         }
 
+        
        
 }
