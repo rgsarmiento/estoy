@@ -81,6 +81,8 @@ class CompanyController extends Controller
 
            $this->send_apidian_resolution($data['api_token'], $configuraciones);
            
+           $this->send_apidian_environment($data, $configuraciones);
+           
             $resolution = new Resolution();
             $resolution->company_id = $company->id;
             $resolution->type_document_id = 9;
@@ -230,6 +232,20 @@ class CompanyController extends Controller
                             
         return $response;
 
+    }
+
+    protected function send_apidian_environment($data, $configuraciones)
+    {       
+        $objeto = new stdClass();
+        $objeto->type_environment_id = $data['type_environment_id'];
+        $objeto->payroll_type_environment_id = $data['type_environment_id'];
+               
+        $response = Http::accept('application/json')
+                            ->withToken($data['api_token'])
+                            ->put($configuraciones->url_server_api.'config/environment',
+                            json_decode(json_encode($objeto), true));
+                            
+        return $response;
     }
 
     
