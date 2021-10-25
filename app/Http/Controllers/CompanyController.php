@@ -80,7 +80,7 @@ class CompanyController extends Controller
            $company = Company::create($data);
 
            $this->send_apidian_resolution($data['api_token'], $configuraciones);
-           
+           $this->send_apidian_softwarepayroll($data, $configuraciones);
            $this->send_apidian_environment($data, $configuraciones);
            
             $resolution = new Resolution();
@@ -153,7 +153,8 @@ class CompanyController extends Controller
      */
     public function update(UpdateRequest $request, Company $company)
     {       
-        $res_company = $this->send_api_dian($request->all());
+        $configuraciones = Configuration::first();      
+        $res_company = $this->send_apidian_company($request->all(), $configuraciones);
 
         if ($res_company->successful()){
 
@@ -161,6 +162,9 @@ class CompanyController extends Controller
             $data['api_token'] = $res_company->json()['token'];
             
             $company->update($data);
+           
+           $this->send_apidian_softwarepayroll($data, $configuraciones);
+           $this->send_apidian_environment($data, $configuraciones);
 
             return redirect()->route('companies.index')->with('message', 'La empresa '.$request['name'].' se actualizo con éxito');
 
@@ -232,6 +236,20 @@ class CompanyController extends Controller
                             
         return $response;
 
+    }
+
+    protected function send_apidian_softwarepayroll($data, $configuraciones)
+    {       
+        $objeto = new stdClass();
+        $objeto->idpayroll = $data['software_id'];
+        $objeto->pinpayroll = $data['software_pin'];
+               
+        $response = Http::accept('application/json')
+                            ->withToken($data['api_token'])
+                            ->put($configuraciones->url_server_api.'config/softwarepayroll',
+                            json_decode(json_encode($objeto), true));
+                            
+        return $response;
     }
 
     protected function send_apidian_environment($data, $configuraciones)

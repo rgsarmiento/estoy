@@ -135,6 +135,27 @@
                     <div class="row">
                         <div class="col-sm-12 col-xl-6 m-b-30">
                             <div class="form-group">
+                                {!! Html::decode(Form::label('software_id', 'Software Id<span class="text-danger">(*)</span>')) !!}
+                                {!! Form::text('software_id', null, ['class' => 'form-control']) !!}
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('software_id') }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-xl-4 m-b-30">
+                            <div class="form-group">
+                                {!! Html::decode(Form::label('software_pin', 'Software Pin<span class="text-danger">(*)</span>')) !!}
+                                {!! Form::number('software_pin', null, ['class' => 'form-control']) !!}
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('software_pin') }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12 col-xl-6 m-b-30">
+                            <div class="form-group">
                                 {!! Html::decode(Form::label('type_environment_id', 'Entorno<span class="text-danger">(*)</span>')) !!}
                                 {!! Form::select('type_environment_id', ['1' => '1 Produccion', '2' => '2 Pruebas'], null, ['class' => 'form-control', 'id' => 'select_type_organization_id', 'placeholder' => '-- Seleccionar --']) !!}
                                 <div class="invalid-feedback">

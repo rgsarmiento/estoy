@@ -36,8 +36,14 @@ class UpdateRequest extends FormRequest
             'type_organization_id' => 'required|integer|exists:type_organizations,id',
             'type_regime_id' => 'required|integer|exists:type_regimes,id',
             'type_liability_id' => 'required|integer|exists:type_liabilities,id',
-
-            
+            'software_id' => 'required|min:25|max:50',
+            'software_pin' => 'required|min:5|max:5',
+            'software_id.required' => 'El Software Id es requerido.',
+            'software_pin.required' => 'El Software Pin es requerido.',
+            'software_id.min' => 'Minimo 25 caracteres en el Software Id.',
+            'software_id.max' => 'Maximo 50 caracteres en el Software Id.',
+            'software_pin.min' => 'Minimo 5 caracteres en el Software Pin.',
+            'software_pin.max' => 'Maximo 5 caracteres en el Software Pin.',           
                 
         ];
     }
