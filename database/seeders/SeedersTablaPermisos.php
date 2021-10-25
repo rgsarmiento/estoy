@@ -18,15 +18,15 @@ class SeedersTablaPermisos extends Seeder
     {
         $permisos = [
             //tabla roles
-            'roles.index',
-            'roles.crear',
-            'roles.editar',
-            'roles.eliminar',
-            //tabla workers
-            'workers.index',
-            'workers.crear',
-            'workers.editar',
-            'workers.eliminar',
+            // 'roles.index',
+            // 'roles.crear',
+            // 'roles.editar',
+            // 'roles.eliminar',
+            // //tabla workers
+            // 'workers.index',
+            // 'workers.crear',
+            // 'workers.editar',
+            // 'workers.eliminar',
             //tabla companies
             'companies.index',
             'companies.crear',
