@@ -36,7 +36,12 @@ class SeedersTablaPermisos extends Seeder
             'company_has_users.index',
             'company_has_users.crear',
             'company_has_users.editar',
-            'company_has_users.eliminar'
+            'company_has_users.eliminar',
+            //usuarios
+            'usuarios.index',
+            'usuarios.crear',
+            'usuarios.editar',
+            'usuarios.eliminar'
 
 
         ];

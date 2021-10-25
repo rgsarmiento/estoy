@@ -25,7 +25,7 @@
                                         class="fas fa-plus"></i> Nuevo Empleado</a>
                             @endcan
 
-                            <div class="btn-group dropleft" style="float:right;width:50px;">
+                            {{--  <div class="btn-group dropleft" style="float:right;width:50px;">
                                 <button class="btn btn-sm btn-primary dropdown-toggle waves-light" type="button"
                                     id="dropdown3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i
                                         class="fas fa-bars"></i></button>
@@ -42,7 +42,7 @@
                                             class="icofont icofont-close m-r-10"></i>Remove</a>
                                 </div>
                                 <!-- end of dropdown menu -->
-                            </div>
+                            </div>  --}}
 
                             <table class="table table-bordered table-striped mt-2">
                                 <thead style="background-color: #6777ef;">

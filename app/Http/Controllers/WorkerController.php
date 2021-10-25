@@ -157,14 +157,12 @@ class WorkerController extends Controller
         //Worker::create($request->all());
         $worker = Worker::create($data);
 
-        
+        //crear nomina base
         $configuraciones = Configuration::first();
         $payroll = new Payroll;
 
         $payroll->company_id = $company_id;
         $payroll->worker_id = $worker->id;
-
-        
 
         //Devengados
         $accrued = array();
@@ -177,7 +175,8 @@ class WorkerController extends Controller
 
         $accrued_total = $worker->salary;
 
-        if ($worker->integral_salarary == 0 || $worker->salary < $configuraciones->minimum_salary * 2){
+        //if ($worker->integral_salarary == 0 || $worker->salary < $configuraciones->minimum_salary * 2){
+        if ($worker->transportation_allowance == 1 ){
             $accrued[] = array(
                 'type' => 'subsidio_transporte',
                 'name' => 'Subsidio Transporte',
@@ -305,6 +304,60 @@ class WorkerController extends Controller
 
         $worker->update($data);
 
+         //crear nomina base
+         $configuraciones = Configuration::first();
+         $payroll = Payroll::where('worker_id', $worker->id)->first();
+                 
+         //Devengados
+         $accrued = array();
+ 
+         $accrued[] = array(
+             'type' => 'salario',
+             'name' => 'Salario',
+             'value' => $worker->salary
+         );
+ 
+         $accrued_total = $worker->salary;
+ 
+         //if ($worker->integral_salarary == 0 || $worker->salary < $configuraciones->minimum_salary * 2){
+         if ($worker->transportation_allowance == 1 ){
+             $accrued[] = array(
+                 'type' => 'subsidio_transporte',
+                 'name' => 'Subsidio Transporte',
+                 'value' => $configuraciones->transport_allowance
+             );
+             $accrued_total += $configuraciones->transport_allowance;
+         }
+        
+         $payroll->accrued = json_encode($accrued);
+         $payroll->accrued_total = $accrued_total;
+ 
+          //Deducciones   
+          $deductions = array();
+          $deductions[] = array(
+              'type' => 'eps',
+              'id' => $worker->type_salud_law_deduction->id,
+              'name' => $worker->type_salud_law_deduction->name . ' % ' . $worker->type_salud_law_deduction->percentage,
+              'value' => $worker->salary * $worker->type_salud_law_deduction->percentage / 100
+          );
+  
+          $deductions_total = $worker->salary * $worker->type_salud_law_deduction->percentage / 100;
+ 
+          $deductions[] = array(
+              'type' => 'pension',
+              'id' => $worker->type_pension_law_deduction->id,
+              'name' => $worker->type_pension_law_deduction->name . ' % ' . $worker->type_pension_law_deduction->percentage,
+              'value' => $worker->salary * $worker->type_pension_law_deduction->percentage / 100
+          );
+          
+          $deductions_total += $worker->salary * $worker->type_pension_law_deduction->percentage / 100;
+ 
+         $payroll->deductions = json_encode($deductions);
+         $payroll->deductions_total = $deductions_total;
+         $payroll->payroll_total = $accrued_total - $deductions_total;
+ 
+         $payroll->update();
+        
         return redirect()->route('workers.index')->with('message', 'El empleado' . ' ' . $data['first_name'] . ' ' . $data['surname'] . ' ' . 'se actualizado con éxito');
     }
 
