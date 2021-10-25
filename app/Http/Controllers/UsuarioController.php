@@ -111,7 +111,7 @@ class UsuarioController extends Controller
 
         $input = $request->all();
         if (!empty($input['password'])){
-            $input['password'] = Hash::make($input['passsword']);
+            $input['password'] = Hash::make($input['password']);
         }else{
             $input = Arr::except($input, array('password'));
         }

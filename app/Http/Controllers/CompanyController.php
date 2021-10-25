@@ -80,6 +80,7 @@ class CompanyController extends Controller
            $company = Company::create($data);
 
            $this->send_apidian_resolution($data['api_token'], $configuraciones);
+           $this->send_apidian_software($data, $configuraciones);
            $this->send_apidian_softwarepayroll($data, $configuraciones);
            $this->send_apidian_environment($data, $configuraciones);
            
@@ -236,6 +237,20 @@ class CompanyController extends Controller
                             
         return $response;
 
+    }
+
+    protected function send_apidian_software($data, $configuraciones)
+    {       
+        $objeto = new stdClass();
+        $objeto->id = $data['software_id'];
+        $objeto->pin = $data['software_pin'];
+               
+        $response = Http::accept('application/json')
+                            ->withToken($data['api_token'])
+                            ->put($configuraciones->url_server_api.'config/software',
+                            json_decode(json_encode($objeto), true));
+                            
+        return $response;
     }
 
     protected function send_apidian_softwarepayroll($data, $configuraciones)
