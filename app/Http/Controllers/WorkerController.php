@@ -80,13 +80,15 @@ class WorkerController extends Controller
             ->orderBy('name', 'asc');
 
         $tipo_contrato = Type_contract::all();
-        $tipo_empleado = Type_worker::orderBy('name', 'asc')->get();
-        $sub_tipo_empleado = Sub_type_worker::orderBy('name', 'asc')->get();
+        $tipo_empleado = Type_worker::orderBy('code', 'asc')->get();
+        $sub_tipo_empleado = Sub_type_worker::orderBy('code', 'asc')->get();
         $periodo_nomina = Payroll_period::all();
-        $eps_deduccion = Type_salud_law_deduction::all();
-        $pension_deduccion = Type_pension_law_deduction::all();
+        $eps_deduccion = Type_salud_law_deduction::select('id', DB::raw('CONCAT(name, " - (% Aplicado ", percentage, ")") AS name'))->get();
+        $pension_deduccion = Type_pension_law_deduction::select('id', DB::raw('CONCAT(name, " - (% Aplicado ", percentage, ")") AS name'))->get();
 
         $metodo_pago = Payment_method::orderBy('name', 'asc')->get();
+
+        $configuraciones = Configuration::first();
 
         return view('workers.crear', compact(
             'tipo_documento',
@@ -97,7 +99,8 @@ class WorkerController extends Controller
             'eps_deduccion',
             'pension_deduccion',
             'metodo_pago',
-            'municipios'
+            'municipios',
+            'configuraciones'
         ));
     }
 
@@ -246,13 +249,15 @@ class WorkerController extends Controller
             ->orderBy('name', 'asc');
 
         $tipo_contrato = Type_contract::all();
-        $tipo_empleado = Type_worker::orderBy('name', 'asc')->get();
-        $sub_tipo_empleado = Sub_type_worker::orderBy('name', 'asc')->get();
+        $tipo_empleado = Type_worker::orderBy('code', 'asc')->get();
+        $sub_tipo_empleado = Sub_type_worker::orderBy('code', 'asc')->get();
         $periodo_nomina = Payroll_period::all();
         $eps_deduccion = Type_salud_law_deduction::all();
         $pension_deduccion = Type_pension_law_deduction::all();
 
         $metodo_pago = Payment_method::orderBy('name', 'asc')->get();
+
+        $configuraciones = Configuration::first();
 
         return view('workers.editar', compact(
             'worker',
@@ -264,7 +269,8 @@ class WorkerController extends Controller
             'eps_deduccion',
             'pension_deduccion',
             'metodo_pago',
-            'municipios'
+            'municipios',
+            'configuraciones'
         ));
     }
 

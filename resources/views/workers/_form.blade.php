@@ -234,7 +234,9 @@
                         <div class="col-sm-12 col-xl-3 m-b-30">
                             <div class="form-group">
                                 {!! Html::decode(Form::label('salary', 'Salario<span class="text-danger">(*)</span>')) !!}
-                                {!! Form::number('salary', null, ['class' => 'form-control']) !!}
+                                <i style="font-size:16px;color:#0084d0;" class="fas fa-info-circle" data-toggle="tooltip" title="Salario Mensual - Mes (SMMLV) {{number_format($configuraciones->minimum_salary, 2)}}"></i>
+                                {!! Form::number('salary', null, ['class' => 'form-control']) !!} 
+
                                 <div class="invalid-feedback">
                                     {{ $errors->first('salary') }}
                                 </div>

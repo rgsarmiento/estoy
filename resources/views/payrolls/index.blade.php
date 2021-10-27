@@ -37,7 +37,7 @@
                         <div class="col-sm-12 col-xl-3 m-b-30">
                             <div class="form-group">
                                 {!! Html::decode(Form::label('payment_date', 'Fecha de Pago<span class="text-danger">(*)</span>')) !!}
-                                {!! Form::date('payment_date', null, ['class' => 'form-control']) !!}
+                                {!! Form::date('payment_date', null, ['class' => 'form-control', 'id' => 'payment_date']) !!}
                                 <div class="invalid-feedback">
                                     {{ $errors->first('payment_date') }}
                                 </div>
@@ -126,9 +126,15 @@
                                                             aria-haspopup="true" aria-expanded="false"><i
                                                                 class="fas fa-th-large"></i></button>
                                                         <div class="dropdown-menu dropleft">
-                                                            <a class="dropdown-item has-icon"
-                                                                href="{{ route('payrolls.send_apidian_payroll', $row) }}"><i
-                                                                    class="far fa-share-square"></i> Enviar DIAN</a>
+
+                                                            {!! Form::open(['method' => 'GET', 'route' => ['payrolls.send_payroll', $row], 'style' => 'display:inline']) !!}
+                                                           
+                                                            {!! Form::hidden('periodo_ni', null, ['id' => 'periodo_ni']) !!}
+                                                            {!! Form::hidden('fecha_pago_ni', null, ['id' => 'fecha_pago_ni']) !!}
+                                                            {!! Form::button('<i class="far fa-share-square"></i> Enviar DIAN', ['type' => 'submit', 'class' => 'dropdown-item btn-link me-2']) !!}
+
+                                                            {!! Form::close() !!}
+
                                                             <a class="dropdown-item has-icon" href="#"><i
                                                                     class="far fa-edit"></i> Modificar</a>
 
@@ -204,5 +210,21 @@
             });
         });
     </script>
+    <script>
+        $(document).ready(function() {
+            document.getElementById("periodo_ni").value = document.getElementById("select_payroll_period_id").value
+            $('#select_payroll_period_id').change(function() {
+                var periodo
+                periodo = $(this).val()
+                document.getElementById("periodo_ni").value = periodo                
+            });
 
+            document.getElementById("fecha_pago_ni").value = document.getElementById("payment_date").value
+            $('#payment_date').change(function() {
+                var fecha
+                fecha = $(this).val()
+                document.getElementById("fecha_pago_ni").value = fecha
+            });
+        });
+    </script>
 @endsection

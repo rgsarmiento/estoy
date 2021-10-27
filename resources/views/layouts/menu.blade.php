@@ -30,10 +30,10 @@
     <a href="#" class="nav-link has-dropdown"><i class="fas fa-address-book"></i><span>Nomina</span></a>
     <ul class="dropdown-menu">
         <li class="side-menus {{ Request::is('workers') ? 'active' : '' }}">
-            <a class="nav-link" href="/workers"><i class="fas fa-user-clock"></i><span>Empleados</span></a>
+            <a class="nav-link beep beep-sidebar" href="/workers"><i class="fa fa-user-clock"></i>Empleados</a>
         </li>
         <li class="side-menus {{ Request::is('payrolls') ? 'active' : '' }}">
-            <a class="nav-link" href="/payrolls"><i class="fas fa-receipt"></i><span>Comprobante</span></a>
+            <a class="nav-link beep beep-sidebar" href="/payrolls"><i class="fa fa-receipt"></i>Comprobante</a>
         </li>
     </ul>
 </li>

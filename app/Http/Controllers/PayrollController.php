@@ -2,13 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Company;
 use App\Models\Company_has_user;
+use App\Models\Configuration;
 use App\Models\Payroll;
 use App\Models\Payroll_period;
 use App\Models\Period;
+use App\Models\Resolution;
 use App\Models\Worker;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 use phpDocumentor\Reflection\Types\Boolean;
 use stdClass;
 
@@ -23,7 +28,7 @@ class PayrollController extends Controller
     {
         $user = auth()->user();
         $role_user = auth()->user()->roles->first()->id;
-        $company_id=1;
+        $company_id=0;
 
         if ($role_user <> 1) {
             $user_id = $user->id;
@@ -36,7 +41,7 @@ class PayrollController extends Controller
                 $company_id = $company_has_user->company_id;
             }
         }
-
+        //dd($company_id);
         if ($company_id == 0) {
             $payrolls = Payroll::whereHas('worker', function ($query) {
                 return $query->where('status', 'ACTIVO');
@@ -48,8 +53,7 @@ class PayrollController extends Controller
             })->where('company_id', $company_id)->paginate(20);
         
         }
-       
-
+              
         $periodo_nomina = Period::where('year', date('Y'))->where('month', '>=', date('m')-1)->take(2)->get();
                 
         return view('payrolls.index', compact('payrolls', 'periodo_nomina'));
@@ -123,11 +127,15 @@ class PayrollController extends Controller
     }
 
 
-    public function send_apidian_payroll(Payroll $payroll)
+    public function send_payroll(Payroll $payroll, Request $request)
     {
+        $periodo_id = $request->periodo_ni;
+        $fecha_pago = $request->fecha_pago_ni;
 
-
-        //return $payroll->worker->admision_date;
+        $periodo = Period::find($periodo_id);
+        $company = Company::find($payroll->company_id);
+        $configuraciones = Configuration::first();
+        $resolution = Resolution::where('company_id', $payroll->company_id)->first();
         
         $objeto_nomina = new stdClass();
         $objeto_nomina->type_document_id= 9;//nomina individual
@@ -136,8 +144,8 @@ class PayrollController extends Controller
         $objeto_nomina->establishment_phone= $payroll->company->phone;
         $objeto_nomina->establishment_municipality= $payroll->company->municipality_id;
         $objeto_nomina->establishment_email= $payroll->company->email;
-        $objeto_nomina->head_note= "PRUEBA TEXTO CABEZA";
-        $objeto_nomina->foot_note= "PRUEBA TEXTO PIE";
+        //$objeto_nomina->head_note= "PRUEBA TEXTO CABEZA";
+        //$objeto_nomina->foot_note= "PRUEBA TEXTO PIE";
 
         $objeto_nomina->novelty = array('novelty' => false,
                                         'uuidnov' => "");
@@ -145,19 +153,19 @@ class PayrollController extends Controller
         //e debe indicar la Fecha de Ingreso del trabajador a la empresa, en formato AAAA‐MM‐DD
         $objeto_nomina->period = array('admision_date' => $payroll->worker->admision_date,
         //Se debe indicar la Fecha de Inicio del Periodo de liquidación del documento, en formato AAAA‐MM‐D
-                                       'settlement_start_date' => "2021-07-01", 
+                                       'settlement_start_date' => $periodo->date_from, 
         //Se debe indicar la Fecha de Fin del Periodo de liquidación del documento, en formato AAAA‐MM‐DD
-                                       'settlement_end_date' => "2021-07-15",
+                                       'settlement_end_date' => $periodo->date_to,
         //Cantidad de Tiempo que lleva laborando el Trabajador en la empresa
-                                       'worked_time' => "30.00",
-        //echa de emisión: Fecha de emisión del documento
-                                       'issue_date' => "2021-07-28",);
+                                       'worked_time' => strval(Carbon::parse($payroll->worker->admision_date)->diffInDays($periodo->date_to)),
+        //fecha de emisión: Fecha de emisión del documento
+                                       'issue_date' => Carbon::now()->format('Y-m-d'),);
 
         $objeto_nomina->worker_code = strval($payroll->worker->identification_number);
-        $objeto_nomina->prefix = "NE";
-        $objeto_nomina->consecutive = 1;
+        $objeto_nomina->prefix = $resolution->prefix;
+        $objeto_nomina->consecutive = $resolution->nex;
         $objeto_nomina->payroll_period_id= 4;
-        $objeto_nomina->notes = "NOMINA ELECTRONICA";
+        $objeto_nomina->notes = "NOMINA ELECTRONICA ".$periodo->description;
 
         $objeto_nomina->worker = array('type_worker_id' => $payroll->worker->type_worker_id,
                                        'sub_type_worker_id' => $payroll->worker->sub_type_worker_id,
@@ -178,8 +186,9 @@ class PayrollController extends Controller
                                         'account_type' => $payroll->worker->account_type,
                                         'account_number' => $payroll->worker->account_number);
         
-        $objeto_nomina->payment_dates = array(array('payment_date' => "2021-03-10"));
+        $objeto_nomina->payment_dates = array(array('payment_date' => $fecha_pago));
                
+        $subsidio_transporte = null;
         foreach (json_decode($payroll->accrued, true) as $value){
 
             switch ($value['type']) {
@@ -191,10 +200,16 @@ class PayrollController extends Controller
                     break;
             }            
         }
-        $objeto_nomina->accrued = array('worked_days' => $payroll->worked_days,
-                                        'salary' => $salario,
-                                        'transportation_allowance' => $subsidio_transporte,
-                                        'accrued_total' => $payroll->accrued_total);
+
+        $accrued = array('worked_days' => $payroll->worked_days,
+                            'salary' => $salario);
+
+        if($subsidio_transporte)
+            $accrued['transportation_allowance'] = $subsidio_transporte;
+
+        $accrued["accrued_total"] = $payroll->accrued_total;
+
+        $objeto_nomina->accrued = $accrued;
                     
         foreach (json_decode($payroll->deductions, true) as $value){
             switch ($value['type']) {
@@ -216,9 +231,46 @@ class PayrollController extends Controller
                                             'pension_deduction' =>  $deduction_pension,
                                             'deductions_total' => $payroll->deductions_total);
         
-           
-        return json_encode($objeto_nomina);
+         
+       
+        $this->save_file("app/public/json/".$payroll->company->id, $objeto_nomina, "Env-".$payroll->worker->identification_number."-".$resolution->prefix."-".$resolution->nex.".json");
+        
+        //55ed1dc8-1806-4325-9083-8bbb789f4454     
+                 
+        $response =  $this->send_apidian_payroll($company, $configuraciones, $objeto_nomina);
+       
+        $this->save_file("app/public/json/".$payroll->company->id, json_decode($response), "Rpta-".$payroll->worker->identification_number."-".$resolution->prefix."-".$resolution->nex.".json");
+        
+        if ($response->successful()){
+
+            $resolution->increment('nex');
+
+        }
+        
+        return json_decode($response);
     }
+    
+    protected function send_apidian_payroll($company, $configuraciones, $objeto_nomina){
+        $response = Http::accept('application/json')
+                            ->withToken($company->api_token)
+                            ->post($configuraciones->url_server_api.'payroll',
+                            json_decode(json_encode($objeto_nomina), true));
+        return $response;           
+
+    }
+
+
+
+    protected function save_file($guardaren, $data, $file_name){
+
+        if (!is_dir(storage_path($guardaren)))
+            mkdir(storage_path($guardaren));
+
+        $file = fopen(storage_path($guardaren."/".$file_name), "w");
+        fwrite($file, json_encode($data));
+        fclose($file);
+    }
+    
 
 
     public function change_status(Payroll $payroll)
