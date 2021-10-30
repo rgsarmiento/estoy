@@ -65,7 +65,7 @@
                 var nodo = document.getElementById("select_tipo_deduccion").value;
                 var tipo = $('#select_tipo_deduccion option:selected').html();
 
-                if (validar_campos(nodo) = false) {
+                if (validar_campos(nodo) == false) {
                     return false
                 }
 
@@ -145,7 +145,7 @@
             switch (nodo) {
                 case 'other_deductions':
                     var val_deduction = Number(document.getElementById("val_deduction").value);
-                    if (val_deduction >0) {
+                    if (val_deduction <= 0) {
                         return false
                     }
                     break;

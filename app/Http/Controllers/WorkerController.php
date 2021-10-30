@@ -58,9 +58,9 @@ class WorkerController extends Controller
         }
 
         if ($company_id == 1) {
-            $workers = Worker::paginate(5);
+            $workers = Worker::paginate(10);
         } else {
-            $workers = Worker::where('company_id', $company_id)->paginate(5);
+            $workers = Worker::where('company_id', $company_id)->paginate(10);
         }
 
 
