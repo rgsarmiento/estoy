@@ -79,20 +79,29 @@ class CompanyController extends Controller
             
            $company = Company::create($data);
 
-           $this->send_apidian_resolution($data['api_token'], $configuraciones);
+           $this->send_apidian_resolution($data['api_token'], $configuraciones, 'NI', 9);
+           $this->send_apidian_resolution($data['api_token'], $configuraciones, 'NA', 10);
            $this->send_apidian_software($data, $configuraciones);
            $this->send_apidian_softwarepayroll($data, $configuraciones);
            $this->send_apidian_environment($data, $configuraciones);
            
-            $resolution = new Resolution();
-            $resolution->company_id = $company->id;
-            $resolution->type_document_id = 9;
-            $resolution->from = 1;
-            $resolution->to = 99999999;
-            $resolution->prefix = 'NI';
-            $resolution->nex = 1;
-            
+           $resolution = new Resolution();
+           $resolution->company_id = $company->id;
+           $resolution->type_document_id = 9;
+           $resolution->from = 1;
+           $resolution->to = 99999999;
+           $resolution->prefix = 'NI';
+           $resolution->nex = 1;            
            $resolution->save();
+
+           $resolutionNA= new Resolution();
+           $resolutionNA->company_id = $company->id;
+           $resolutionNA->type_document_id = 10;
+           $resolutionNA->from = 1;
+           $resolutionNA->to = 99999999;
+           $resolutionNA->prefix = 'NA';
+           $resolutionNA->nex = 1;            
+           $resolutionNA->save();
            
             return redirect()->route('companies.index')->with('message', 'La empresa '.$request['name'].' se creo con éxito');
 
@@ -222,13 +231,13 @@ class CompanyController extends Controller
 
     }
 
-    protected function send_apidian_resolution($token, $configuraciones)
+    protected function send_apidian_resolution($token, $configuraciones, $prefix, $type_document_id)
     {       
         $objeto = new stdClass();
-        $objeto->type_document_id = 9;
+        $objeto->type_document_id = $type_document_id;
         $objeto->from = 1;
         $objeto->to = 99999999;
-        $objeto->prefix = 'NI';
+        $objeto->prefix = $prefix;
         
         $response = Http::accept('application/json')
                             ->withToken($token)

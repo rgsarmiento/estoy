@@ -16,6 +16,7 @@ class Payroll extends Model
         'accrued_total',
         'deductions',
         'deductions_total',
+        'notes',
         'payroll_total',
         'payroll_status'
     ];

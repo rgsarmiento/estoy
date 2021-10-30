@@ -82,10 +82,11 @@
                                                 </i><a href="{{ route('workers.show', $row->worker) }}">
                                                     {{ $row->worker->first_name . ' ' . $row->worker->surname }}</a>
                                             </td>
-                                            <td colspan="3"><i class="fas fa-cloud-sun"
+                                            
+                                            <td colspan="4"><i class="fas fa-cloud-sun"
                                                     style="font-size:16px;color:#F8C471;"> Días trabajados:</i>
                                                 {{ $row->worked_days }}</td>
-                                            <td>
+                                            {{-- <td>
                                                 {!! Form::open(['method' => 'PUT', 'route' => ['payrolls.change_status', $row], 'style' => 'display:inline']) !!}
 
                                                 @if ($row->payroll_status == 0)
@@ -94,23 +95,55 @@
                                                     {{ Form::button('Activo', ['type' => 'submit', 'class' => 'btn btn-success btn-sm']) }}
                                                 @endif
                                                 {!! Form::close() !!}
-                                            </td>
+                                            </td> --}}
                                             </tr>
                                             <tr>
                                                 <td style="display: none;">{{ $row->id }}</td>
 
                                                 <td>
-                                                    @foreach (json_decode($row->accrued, true) as $value)
-                                                        {!! $value['name'] . ':<br><strong> +' . number_format($value['value'], 2) . '</strong>' !!} <br>
-                                                    @endforeach
+
+                                                    @php
+                                                    $devengados_json = json_decode($row->accrued, true);
+
+                                                    $salary = $devengados_json['devengados']['salary'];
+                                                    $transportation_allowance = $devengados_json['devengados']['transportation_allowance'];
+                                                    
+                                                    @endphp
+
+                                                    {!! $salary['name'] . ':<br><strong> +' . number_format($salary['value'], 2) . '</strong>' !!} <hr style="margin-top:0rem;margin-bottom:0rem;border-top:1px solid rgb(103 119 239)">
+                                                    {!! $transportation_allowance['name'] . ':<br><strong> +' . number_format($transportation_allowance['value'], 2) . '</strong>' !!} 
+                                                    
                                                 </td>
                                                 <td style="white-space:nowrap;"><i class="fa fa-sort-up"
                                                         style="font-size:18px;color:#00D0C4;"></i> $
                                                     {{ number_format($row->accrued_total, 2) }}</td>
                                                 <td>
-                                                    @foreach (json_decode($row->deductions, true) as $value)
-                                                        {!! $value['name'] . ':<strong> -' . number_format($value['value'], 2) . '</strong>' !!} <br>
-                                                    @endforeach
+
+                                                    @php
+                                                    $deducciones_json = json_decode($row->deductions, true);
+
+                                                    $eps_type_law_deduction = $deducciones_json['deducciones']['eps_type_law_deduction'];
+                                                    $pension_type_law_deductions = $deducciones_json['deducciones']['pension_type_law_deductions'];
+                                                    $other_deductions = $deducciones_json['deducciones']['other_deductions'];
+                                                    
+                                                    @endphp
+                                                    
+                                                    {!! $eps_type_law_deduction['name'] . ':<strong> -' . number_format($eps_type_law_deduction['value'], 2) . '</strong>' !!} <hr style="margin-top:0rem;margin-bottom:0rem;border-top:1px solid rgb(103 119 239)">
+                                                    {!! $pension_type_law_deductions['name'] . ':<strong> -' . number_format($pension_type_law_deductions['value'], 2) . '</strong>' !!} 
+                                                   
+                                                    @if (count($other_deductions))
+                                                    <hr style="margin-top:0rem;margin-bottom:0rem;border-top:1px solid rgb(103 119 239)">
+                                                    @endif
+
+                                                    @foreach ($other_deductions as $value)
+                                                        {!! $value['name'] . ':<br><strong> +' . number_format($value['value'], 2) . '</strong>' !!} <br>
+                                                    @endforeach 
+
+                                                    @if (count($other_deductions))
+                                                    <hr style="margin-top:0rem;margin-bottom:0rem;border-top:1px solid rgb(103 119 239)">
+                                                    @endif
+                                                    
+
                                                 </td>
                                                 <td style="white-space:nowrap;"><i class="fa fa-sort-down"
                                                         style="font-size:18px;color:#FF267B;"></i> $
@@ -128,14 +161,15 @@
                                                         <div class="dropdown-menu dropleft">
 
                                                             {!! Form::open(['method' => 'GET', 'route' => ['payrolls.send_payroll', $row], 'style' => 'display:inline']) !!}
-                                                           
+
                                                             {!! Form::hidden('periodo_ni', null, ['id' => 'periodo_ni']) !!}
                                                             {!! Form::hidden('fecha_pago_ni', null, ['id' => 'fecha_pago_ni']) !!}
                                                             {!! Form::button('<i class="far fa-share-square"></i> Enviar DIAN', ['type' => 'submit', 'class' => 'dropdown-item btn-link me-2']) !!}
 
                                                             {!! Form::close() !!}
 
-                                                            <a class="dropdown-item has-icon" href="#"><i
+                                                            <a class="dropdown-item has-icon"
+                                                                href="{{ route('payrolls.edit', $row->id) }}"><i
                                                                     class="far fa-edit"></i> Modificar</a>
 
                                                         </div>
@@ -147,10 +181,11 @@
                                         @endforeach
                                     </tbody>
                                 </table>
+                                <div class="pagination justify-content-end">
+                                    {!! $payrolls->links() !!}
+                                </div>
                             </div>
-                            <div class="pagination justify-content-end">
-
-                            </div>
+                           
 
                         </div>
                     </div>
@@ -216,7 +251,7 @@
             $('#select_payroll_period_id').change(function() {
                 var periodo
                 periodo = $(this).val()
-                document.getElementById("periodo_ni").value = periodo                
+                document.getElementById("periodo_ni").value = periodo
             });
 
             document.getElementById("fecha_pago_ni").value = document.getElementById("payment_date").value

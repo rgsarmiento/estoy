@@ -22,6 +22,7 @@ use App\Models\Worker;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use stdClass;
 
 class WorkerController extends Controller
 {
@@ -168,53 +169,106 @@ class WorkerController extends Controller
         $payroll->worker_id = $worker->id;
 
         //Devengados
-        $accrued = array();
-
-        $accrued[] = array(
-            'type' => 'salario',
+        $accrued = new stdClass();
+        $salary_ = array(
             'name' => 'Salario',
-            'value' => $worker->salary
+            'value' => ($worker->salary * 1)
         );
-
+        
         $accrued_total = $worker->salary;
 
         //if ($worker->integral_salarary == 0 || $worker->salary < $configuraciones->minimum_salary * 2){
-        if ($worker->transportation_allowance == 1 ){
-            $accrued[] = array(
-                'type' => 'subsidio_transporte',
+        if ($worker->transportation_allowance == 1) {
+            $transportation_allowance = array(
                 'name' => 'Subsidio Transporte',
-                'value' => $configuraciones->transport_allowance
+                'value' => ($configuraciones->transport_allowance * 1)
             );
             $accrued_total += $configuraciones->transport_allowance;
+        }else{
+            $transportation_allowance = new StdClass();
         }
-       
+
+        $accrued->devengados = array(
+            'salary' => $salary_,
+            'transportation_allowance' => $transportation_allowance,
+            'HEDs' => array(),
+            'HENs' => array(),
+            'HRNs' => array(),
+            'HEDDFs' => array(),
+            'HRDDFs' => array(),
+            'HENDFs' => array(),
+            'HRNDFs' => array(),
+            'common_vacation' => array(),
+            'paid_vacation' => array(),
+            'service_bonus' => array(),
+            'severance' => array(),
+            'work_disabilities' => array(),
+            'maternity_leave' => array(),
+            'paid_leave' => array(),
+            'non_paid_leave' => array(),
+            'bonuses' => array(),
+            'aid' => array(),
+            'legal_strike' => array(),
+            'other_concepts' => array(),
+            'compensations' => array(),
+            'epctv_bonuses' => array(),
+            'commissions' => array(),
+            'third_party_payments' => array(),
+            'advances' => array(),
+            'endowment' => new StdClass(),
+            'sustenance_support' => new StdClass(),
+            'telecommuting' => new StdClass(),
+            'withdrawal_bonus' => new StdClass(),
+            'compensation' => new StdClass(),
+        );
+
         $payroll->accrued = json_encode($accrued);
         $payroll->accrued_total = $accrued_total;
 
-         //Deducciones   
-         $deductions = array();
-         $deductions[] = array(
-             'type' => 'eps',
-             'id' => $worker->type_salud_law_deduction->id,
-             'name' => $worker->type_salud_law_deduction->name . ' % ' . $worker->type_salud_law_deduction->percentage,
-             'value' => $worker->salary * $worker->type_salud_law_deduction->percentage / 100
-         );
- 
-         $deductions_total = $worker->salary * $worker->type_salud_law_deduction->percentage / 100;
+        //Deducciones   
+        $deductions = new stdClass();
+        $eps_type_law_deduction_ = array(
+            'id' => $worker->type_salud_law_deduction->id,
+            'name' => $worker->type_salud_law_deduction->name . ' % ' . $worker->type_salud_law_deduction->percentage,
+            'value' => $worker->salary * $worker->type_salud_law_deduction->percentage / 100
+        );
 
-         $deductions[] = array(
-             'type' => 'pension',
-             'id' => $worker->type_pension_law_deduction->id,
-             'name' => $worker->type_pension_law_deduction->name . ' % ' . $worker->type_pension_law_deduction->percentage,
-             'value' => $worker->salary * $worker->type_pension_law_deduction->percentage / 100
-         );
-         
-         $deductions_total += $worker->salary * $worker->type_pension_law_deduction->percentage / 100;
+
+        $pension_type_law_deduction_ = array(
+            'id' => $worker->type_pension_law_deduction->id,
+            'name' => $worker->type_pension_law_deduction->name . ' % ' . $worker->type_pension_law_deduction->percentage,
+            'value' => $worker->salary * $worker->type_pension_law_deduction->percentage / 100
+        );
+
+
+        $deductions->deducciones = array(
+            'eps_type_law_deduction' => $eps_type_law_deduction_,
+            'pension_type_law_deductions' => $pension_type_law_deduction_,
+            'other_deductions' => array(),
+            'labor_union' => array(),
+            'sanctions' => array(),
+            'orders' => array(),
+            'third_party_payments' => array(),
+            'advances' => array(),
+            'voluntary_pension' => new StdClass(),
+            'withholding_at_source' => new StdClass(),
+            'afc' => new StdClass(),
+            'cooperative' => new StdClass(),
+            'tax_liens' => new StdClass(),
+            'supplementary_plan' => new StdClass(),
+            'education' => new StdClass(),
+            'refund' => new StdClass(),
+            'debt' => new StdClass()
+        );
+
+        $deductions_total = $worker->salary * $worker->type_salud_law_deduction->percentage / 100;
+        $deductions_total += $worker->salary * $worker->type_pension_law_deduction->percentage / 100;
 
         $payroll->deductions = json_encode($deductions);
         $payroll->deductions_total = $deductions_total;
         $payroll->payroll_total = $accrued_total - $deductions_total;
-
+        $payroll->notes = 'NOMINA ELECTRONICA';
+        
         $payroll->save();
 
         return redirect()->route('workers.index')->with('message', 'El empleado ' . $data['first_name'] . ' ' . $data['surname'] . ' se creo con éxito');;
@@ -310,60 +364,113 @@ class WorkerController extends Controller
 
         $worker->update($data);
 
-         //crear nomina base
-         $configuraciones = Configuration::first();
-         $payroll = Payroll::where('worker_id', $worker->id)->first();
-                 
-         //Devengados
-         $accrued = array();
- 
-         $accrued[] = array(
-             'type' => 'salario',
-             'name' => 'Salario',
-             'value' => $worker->salary
-         );
- 
-         $accrued_total = $worker->salary;
- 
-         //if ($worker->integral_salarary == 0 || $worker->salary < $configuraciones->minimum_salary * 2){
-         if ($worker->transportation_allowance == 1 ){
-             $accrued[] = array(
-                 'type' => 'subsidio_transporte',
-                 'name' => 'Subsidio Transporte',
-                 'value' => $configuraciones->transport_allowance
-             );
-             $accrued_total += $configuraciones->transport_allowance;
-         }
+        //crear nomina base
+        $configuraciones = Configuration::first();
+        $payroll = Payroll::where('worker_id', $worker->id)->first();
+
+        //Devengados
+        $accrued = new stdClass();
+        $salary_ = array(
+            'name' => 'Salario',
+            'value' => ($worker->salary * 1)
+        );
         
-         $payroll->accrued = json_encode($accrued);
-         $payroll->accrued_total = $accrued_total;
- 
-          //Deducciones   
-          $deductions = array();
-          $deductions[] = array(
-              'type' => 'eps',
-              'id' => $worker->type_salud_law_deduction->id,
-              'name' => $worker->type_salud_law_deduction->name . ' % ' . $worker->type_salud_law_deduction->percentage,
-              'value' => $worker->salary * $worker->type_salud_law_deduction->percentage / 100
-          );
-  
-          $deductions_total = $worker->salary * $worker->type_salud_law_deduction->percentage / 100;
- 
-          $deductions[] = array(
-              'type' => 'pension',
-              'id' => $worker->type_pension_law_deduction->id,
-              'name' => $worker->type_pension_law_deduction->name . ' % ' . $worker->type_pension_law_deduction->percentage,
-              'value' => $worker->salary * $worker->type_pension_law_deduction->percentage / 100
-          );
-          
-          $deductions_total += $worker->salary * $worker->type_pension_law_deduction->percentage / 100;
- 
-         $payroll->deductions = json_encode($deductions);
-         $payroll->deductions_total = $deductions_total;
-         $payroll->payroll_total = $accrued_total - $deductions_total;
- 
-         $payroll->update();
-        
+        $accrued_total = $worker->salary;
+
+        //if ($worker->integral_salarary == 0 || $worker->salary < $configuraciones->minimum_salary * 2){
+        if ($worker->transportation_allowance == 1) {
+            $transportation_allowance = array(
+                'name' => 'Subsidio Transporte',
+                'value' => ($configuraciones->transport_allowance * 1)
+            );
+            $accrued_total += $configuraciones->transport_allowance;
+        }else{
+            $transportation_allowance = new StdClass();
+        }
+
+        $accrued->devengados = array(
+            'salary' => $salary_,
+            'transportation_allowance' => $transportation_allowance,
+            'HEDs' => array(),
+            'HENs' => array(),
+            'HRNs' => array(),
+            'HEDDFs' => array(),
+            'HRDDFs' => array(),
+            'HENDFs' => array(),
+            'HRNDFs' => array(),
+            'common_vacation' => array(),
+            'paid_vacation' => array(),
+            'service_bonus' => array(),
+            'severance' => array(),
+            'work_disabilities' => array(),
+            'maternity_leave' => array(),
+            'paid_leave' => array(),
+            'non_paid_leave' => array(),
+            'bonuses' => array(),
+            'aid' => array(),
+            'legal_strike' => array(),
+            'other_concepts' => array(),
+            'compensations' => array(),
+            'epctv_bonuses' => array(),
+            'commissions' => array(),
+            'third_party_payments' => array(),
+            'advances' => array(),
+            'endowment' => new StdClass(),
+            'sustenance_support' => new StdClass(),
+            'telecommuting' => new StdClass(),
+            'withdrawal_bonus' => new StdClass(),
+            'compensation' => new StdClass(),
+        );
+
+        $payroll->accrued = json_encode($accrued);
+        $payroll->accrued_total = $accrued_total;
+
+        //Deducciones   
+        $deductions = new stdClass();
+        $eps_type_law_deduction_ = array(
+            'id' => $worker->type_salud_law_deduction->id,
+            'name' => $worker->type_salud_law_deduction->name . ' % ' . $worker->type_salud_law_deduction->percentage,
+            'value' => $worker->salary * $worker->type_salud_law_deduction->percentage / 100
+        );
+
+
+        $pension_type_law_deduction_ = array(
+            'id' => $worker->type_pension_law_deduction->id,
+            'name' => $worker->type_pension_law_deduction->name . ' % ' . $worker->type_pension_law_deduction->percentage,
+            'value' => $worker->salary * $worker->type_pension_law_deduction->percentage / 100
+        );
+
+
+        $deductions->deducciones = array(
+            'eps_type_law_deduction' => $eps_type_law_deduction_,
+            'pension_type_law_deductions' => $pension_type_law_deduction_,
+            'other_deductions' => array(),
+            'labor_union' => array(),
+            'sanctions' => array(),
+            'orders' => array(),
+            'third_party_payments' => array(),
+            'advances' => array(),
+            'voluntary_pension' => new StdClass(),
+            'withholding_at_source' => new StdClass(),
+            'afc' => new StdClass(),
+            'cooperative' => new StdClass(),
+            'tax_liens' => new StdClass(),
+            'supplementary_plan' => new StdClass(),
+            'education' => new StdClass(),
+            'refund' => new StdClass(),
+            'debt' => new StdClass()
+        );
+
+        $deductions_total = $worker->salary * $worker->type_salud_law_deduction->percentage / 100;
+        $deductions_total += $worker->salary * $worker->type_pension_law_deduction->percentage / 100;
+
+        $payroll->deductions = json_encode($deductions);
+        $payroll->deductions_total = $deductions_total;
+        $payroll->payroll_total = $accrued_total - $deductions_total;
+        $payroll->notes = 'NOMINA ELECTRONICA';
+
+        $payroll->update();
+
         return redirect()->route('workers.index')->with('message', 'El empleado' . ' ' . $data['first_name'] . ' ' . $data['surname'] . ' ' . 'se actualizado con éxito');
     }
 
