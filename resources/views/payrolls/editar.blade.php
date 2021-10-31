@@ -181,6 +181,7 @@
                     break;
                 case '':
             }
+            recalcular_total();
 
         }
 
