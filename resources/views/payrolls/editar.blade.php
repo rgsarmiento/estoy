@@ -213,15 +213,15 @@
             var salario1 = document.getElementById("salario1");
             salario1.parentNode.removeChild(salario1);
 
-            $("#tbl_accrued>tbody").append('<tr id="salario1"><td>Subsidio Transporte' +
+            $("#tbl_accrued>tbody").append('<tr id="salario1"><td>Salario' +
                 '</td><td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i> $' +
                 parseFloat((salario_diario * dias), 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
                     "$1,").toString() + '</td>' +
                 '<td><a href="" class="btn disabled btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a></td></tr>'
             );
 
-            if (tiene_aux_transporte_mensual = "SI") {
-                array = {
+            if (tiene_aux_transporte_mensual == "SI") {
+                var array = {
                     'value': (aux_transporte_diario * dias),
                     'name': "Subsidio Transporte"
                 };

@@ -57,7 +57,7 @@
                         <div class="card-body">
 
                             <div class="table-responsive">
-                                <table class="table table-bordered border-primary table-striped mt-2">
+                                <table class="table table-bordered table-hover border-primary table-striped mt-2">
                                     <thead style="background-color: #6777ef;">
                                         <th style="display: none;">Id</th>
                                         <th style="color: #fff;">Devengados</th>
@@ -111,8 +111,10 @@
                                                     @endphp
 
                                                     {!! $salary['name'] . ':<br><strong> +' . number_format($salary['value'], 2) . '</strong>' !!} <hr style="margin-top:0rem;margin-bottom:0rem;border-top:1px solid rgb(103 119 239)">
+                                                    @if (count($transportation_allowance))
                                                     {!! $transportation_allowance['name'] . ':<br><strong> +' . number_format($transportation_allowance['value'], 2) . '</strong>' !!} 
-                                                    
+                                                    @endif
+
                                                 </td>
                                                 <td style="white-space:nowrap;"><i class="fa fa-sort-up"
                                                         style="font-size:18px;color:#00D0C4;"></i> $
@@ -162,8 +164,8 @@
 
                                                             {!! Form::open(['method' => 'GET', 'route' => ['payrolls.send_payroll', $row], 'style' => 'display:inline']) !!}
 
-                                                            {!! Form::hidden('periodo_ni', null, ['id' => 'periodo_ni']) !!}
-                                                            {!! Form::hidden('fecha_pago_ni', null, ['id' => 'fecha_pago_ni']) !!}
+                                                            {!! Form::text('periodo_ni', null, ['id' => 'periodo_ni']) !!}
+                                                            {!! Form::text('fecha_pago_ni', null, ['id' => 'fecha_pago_ni']) !!}
                                                             {!! Form::button('<i class="far fa-share-square"></i> Enviar DIAN', ['type' => 'submit', 'class' => 'dropdown-item btn-link me-2']) !!}
 
                                                             {!! Form::close() !!}

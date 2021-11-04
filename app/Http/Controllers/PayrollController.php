@@ -6,6 +6,7 @@ use App\Http\Requests\payroll\UpdateRequest;
 use App\Models\Company;
 use App\Models\Company_has_user;
 use App\Models\Configuration;
+use App\Models\Document;
 use App\Models\Payroll;
 use App\Models\Payroll_period;
 use App\Models\Period;
@@ -16,6 +17,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
+
 use phpDocumentor\Reflection\Types\Boolean;
 use stdClass;
 
@@ -28,6 +30,16 @@ class PayrollController extends Controller
      */
     public function index()
     {
+        // $configuraciones = Configuration::first();
+        // $respuesta = $this->status_zip_apidian_payroll($configuraciones);
+
+        // if ($respuesta->successful()) {
+        //     $jsonRespuesta = json_decode($respuesta, true);
+        //     dd($jsonRespuesta['ResponseDian']['Envelope']['Body']);
+        // }
+
+
+        //pruebas arriba 
         $user = auth()->user();
         $role_user = auth()->user()->roles->first()->id;
         $company_id = 0;
@@ -55,7 +67,7 @@ class PayrollController extends Controller
             })->where('company_id', $company_id);
         }
 
-        $payrolls = $payrolls->paginate(10);
+        $payrolls = $payrolls->orderBy('updated_at', 'desc')->paginate(10);
 
         $periodo_nomina = Period::where('year', date('Y'))->where('month', '>=', date('m') - 1)->take(2)->get();
 
@@ -151,6 +163,7 @@ class PayrollController extends Controller
 
         $periodo = Period::find($periodo_id);
         $company = Company::find($payroll->company_id);
+
         $configuraciones = Configuration::first();
         $resolution = Resolution::where('company_id', $payroll->company_id)->first();
 
@@ -169,7 +182,7 @@ class PayrollController extends Controller
             'uuidnov' => ""
         );
 
-        $fechaHora = Carbon::now()->format('Y-m-d H:i:s');
+        $fechaHora = Carbon::now();
         //e debe indicar la Fecha de Ingreso del trabajador a la empresa, en formato AAAA‐MM‐DD
         $objeto_nomina->period = array(
             'admision_date' => $payroll->worker->admision_date,
@@ -180,9 +193,10 @@ class PayrollController extends Controller
             //Cantidad de Tiempo que lleva laborando el Trabajador en la empresa
             'worked_time' => strval(Carbon::parse($payroll->worker->admision_date)->diffInDays($periodo->date_to)),
             //fecha de emisión: Fecha de emisión del documento
-            'issue_date' => $fechaHora,
+            'issue_date' => $fechaHora->format('Y-m-d'),
         );
-        date("Y-m-d H:i:s");
+        //date("Y-m-d H:i:s");
+
         $objeto_nomina->worker_code = strval($payroll->worker->identification_number);
         $objeto_nomina->prefix = $resolution->prefix;
         $objeto_nomina->consecutive = $resolution->nex;
@@ -214,18 +228,13 @@ class PayrollController extends Controller
 
         $objeto_nomina->payment_dates = array(array('payment_date' => $fecha_pago));
 
-        $subsidio_transporte = null;
-        foreach (json_decode($payroll->accrued, true) as $value) {
 
-            switch ($value['type']) {
-                case 'salario':
-                    $salario = $value['value'];
-                    break;
-                case 'subsidio_transporte':
-                    $subsidio_transporte = $value['value'];
-                    break;
-            }
-        }
+        //Devengados
+
+        $devengados_json = json_decode($payroll->accrued, true);
+
+        $salario = $devengados_json['devengados']['salary']['value'];
+        $subsidio_transporte = $devengados_json['devengados']['transportation_allowance']['value'];
 
         $accrued = array(
             'worked_days' => $payroll->worked_days,
@@ -239,21 +248,20 @@ class PayrollController extends Controller
 
         $objeto_nomina->accrued = $accrued;
 
-        foreach (json_decode($payroll->deductions, true) as $value) {
-            switch ($value['type']) {
-                case 'eps':
-                    $deduction_eps_id = $value['id'];
-                    $deduction_eps = $value['value'];
-                    break;
-                case 'pension':
-                    $deduction_pension_id = $value['id'];
-                    $deduction_pension = $value['value'];
-                    break;
-            }
-        }
+        //Deducciones
+
+        $deducciones_json = json_decode($payroll->deductions, true);
+
+        $deduction_eps_id = $deducciones_json['deducciones']['eps_type_law_deduction']['id'];
+        $deduction_eps = $deducciones_json['deducciones']['eps_type_law_deduction']['value'];
+
+        $deduction_pension_id = $deducciones_json['deducciones']['pension_type_law_deductions']['id'];
+        $deduction_pension = $deducciones_json['deducciones']['pension_type_law_deductions']['value'];
+
+        $other_deductions = $deducciones_json['deducciones']['other_deductions'];
 
 
-        $objeto_nomina->deductions = array(
+        $deductions = array(
             'eps_type_law_deductions_id' => $deduction_eps_id,
             'eps_deduction' => $deduction_eps,
             'pension_type_law_deductions_id' => $deduction_pension_id,
@@ -261,26 +269,44 @@ class PayrollController extends Controller
             'deductions_total' => $payroll->deductions_total
         );
 
+        if (count($other_deductions) > 0) {
+            $deductions['other_deductions'] = array();
+            foreach ($other_deductions as $key) {
+                $other_deduction = array(
+                    'other_deduction' => $key['value']
+                );
+                array_push($deductions['other_deductions'], $other_deduction);
+            }
+        }
 
-
+        $objeto_nomina->deductions = $deductions;
+        
+       
         $this->save_file("app/public/json/" . $payroll->company->id, $objeto_nomina, "Env-" . $payroll->worker->identification_number . "-" . $resolution->prefix . "-" . $resolution->nex . ".json");
-
-        //55ed1dc8-1806-4325-9083-8bbb789f4454     
 
         $response =  $this->send_apidian_payroll($company, $configuraciones, $objeto_nomina);
 
         $this->save_file("app/public/json/" . $payroll->company->id, json_decode($response), "Rpta-" . $payroll->worker->identification_number . "-" . $resolution->prefix . "-" . $resolution->nex . ".json");
 
+
+
+
         if ($response->successful()) {
 
-            $resolution->increment('nex');
+            $isValid = ($response['ResponseDian']['Envelope']['Body']['SendNominaSyncResponse']['SendNominaSyncResult']['IsValid'] === 'true') ? true : false;
+            if ($isValid) {
+                $this->store_documents($payroll->id, $periodo_id, $objeto_nomina, $response, 1, $fechaHora);
+                $resolution->increment('nex');
+            }else{
+                $this->store_documents($payroll->id, $periodo_id, $objeto_nomina, $response, 0, $fechaHora);
+            }            
         }
 
         return json_decode($response);
     }
 
     protected function send_apidian_payroll($company, $configuraciones, $objeto_nomina)
-    {
+    {//55ed1dc8-1806-4325-9083-8bbb789f4454   
         $response = Http::accept('application/json')
             ->withToken($company->api_token)
             ->post(
@@ -315,5 +341,54 @@ class PayrollController extends Controller
             return redirect()->back();
             //return redirect()->route('workers.index');
         }
+    }
+
+
+    protected function status_zip_apidian_payroll($configuraciones)
+    {
+        $objeto = new stdClass();
+        $objeto->sendmail = false;
+        $objeto->sendmailtome = false;
+
+        $response = Http::accept('application/json')
+            ->withToken('b71b3d1994db7369d5bcfa51a76fb5065f0217b56c99da93264aab131cc504e1')
+            ->post(
+                $configuraciones->url_server_api . 'status/zip/7547a172-dae7-46fb-a612-8d320d9a2744',
+                json_decode(json_encode($objeto), true)
+            );
+        return $response;
+    }
+
+    protected function store_documents($payroll_id, $period_id, $objeto_nomina, $respuesta, $state_document_id, $fechaHora)
+    {
+
+        $payroll = Payroll::find($payroll_id);
+
+        $user = auth()->user();
+
+        $document = new Document();
+        $document->user_id = $user->id;
+        $document->company_id = $payroll->company_id;
+        $document->worker_id = $payroll->worker_id;
+        $document->worked_days = $payroll->worked_days;
+        $document->accrued = $payroll->accrued;
+        $document->accrued_total = $payroll->accrued_total;
+        $document->deductions = $payroll->deductions;
+        $document->deductions_total = $payroll->deductions_total;
+        $document->notes = $payroll->notes;
+        $document->payroll_total = $payroll->payroll_total;
+        $document->state_document_id = $state_document_id;
+        $document->type_document_id = 9;
+        $document->period_id = $period_id;
+        $document->date_issue = $fechaHora->format('Y-m-d H:i:s');
+        $document->prefix = $objeto_nomina->prefix;
+        $document->consecutive = $objeto_nomina->consecutive;
+        $document->payment_date = json_encode($objeto_nomina->payment_dates);
+        $document->xml = $respuesta['urlpayrollxml'];
+        $document->pdf = $respuesta['urlpayrollpdf'];
+        $document->cune = $respuesta['cune'];
+        $document->qrstr = $respuesta['QRStr'];
+
+        $document->save();
     }
 }

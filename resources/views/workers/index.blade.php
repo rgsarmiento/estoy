@@ -44,7 +44,7 @@
                                 <!-- end of dropdown menu -->
                             </div>  --}}
 
-                            <table class="table table-bordered table-striped mt-2">
+                            <table class="table table-bordered table-hover table-striped mt-2">
                                 <thead style="background-color: #6777ef;">
                                     <th style="display: none;">Id</th>
                                     <th style="color: #fff;">Documento</th>

@@ -28,8 +28,9 @@
                 </p>
                 <strong><i class="fas fa-street-view mr-1"></i> Nombre</strong>
                 <p class="text-muted">
-                    <a href="{{ route('workers.show', $payroll->worker) }}">{{ $payroll->worker->first_name . ' ' . $payroll->worker->surname }}</a>
-                    
+                    <a
+                        href="{{ route('workers.show', $payroll->worker) }}">{{ $payroll->worker->first_name . ' ' . $payroll->worker->surname }}</a>
+
                 </p>
                 <strong><i class="fas fa-map-marked-alt mr-1"></i> Direccion</strong>
                 <p class="text-muted">
@@ -87,10 +88,10 @@
                 <p class="text-muted">
                     @if ($payroll->worker->transportation_allowance == 1)
                         SI
-                        <input type="hidden" id="transportation_allowance" value="SI">I
+                        <input type="hidden" id="transportation_allowance" value="SI">
                     @else
                         NO
-                        <input type="hidden" id="transportation_allowance" value="NO">I
+                        <input type="hidden" id="transportation_allowance" value="NO">
                     @endif
                 </p>
                 <strong><i class="fas fa-wallet mr-1"></i> Metodo de Pago</strong>
@@ -140,7 +141,8 @@
 
                     <div class="profile-widget-item">
                         <div class="profile-widget-item-label"><i class="fas fa-dollar-sign mr-1"></i> Total Pago</div>
-                        <div id="payroll_total2" class="profile-widget-item-value">{{ number_format($payroll->payroll_total, 2) }}</div>
+                        <div id="payroll_total2" class="profile-widget-item-value">
+                            {{ number_format($payroll->payroll_total, 2) }}</div>
                     </div>
 
                 </div>
@@ -174,14 +176,15 @@
                                         class="fas fa-times"></i></a></td>
                         </tr>
 
-                        <tr id="aux_transporte1">
-                            <td>{!! $transportation_allowance['name'] !!}</td>
-                            <td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i>
-                                ${!! number_format($transportation_allowance['value'], 2) !!}</td>
-                            <td><a href="" class="btn disabled btn-icon btn-sm btn-danger"><i
-                                        class="fas fa-times"></i></a></td>
-                        </tr>
-
+                        @if (count($transportation_allowance))
+                            <tr id="aux_transporte1">
+                                <td>{!! $transportation_allowance['name'] !!}</td>
+                                <td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i>
+                                    ${!! number_format($transportation_allowance['value'], 2) !!}</td>
+                                <td><a href="" class="btn disabled btn-icon btn-sm btn-danger"><i
+                                            class="fas fa-times"></i></a></td>
+                            </tr>
+                        @endif
                     </tbody>
                     <tfoot style="background-color: #b5eee0;">
                         <tr align="center">
@@ -193,7 +196,7 @@
                 </table>
                 {!! Form::hidden('accrued', null, ['class' => 'form-control', 'id' => 'accrued']) !!}
                 {!! Form::hidden('accrued_total', null, ['class' => 'form-control', 'id' => 'accrued_total']) !!}
-                
+
                 <input type="hidden" id="transportation_allowance_value"
                     value={{ $configuraciones->transport_allowance }}>
 
@@ -292,7 +295,7 @@
                 {!! Form::hidden('deductions_total', null, ['class' => 'form-control', 'id' => 'deductions_total']) !!}
 
                 {!! Form::hidden('payroll_total', null, ['class' => 'form-control', 'id' => 'payroll_total']) !!}
-                
+
             </div>
         </div>
 
@@ -307,7 +310,7 @@
                     <div class="form-group col-12">
                         <label>Notas</label>
                         {!! Form::textarea('notes', null, ['class' => 'form-control summernote-simple', 'id' => 'notes']) !!}
-                        
+
                     </div>
                 </div>
 

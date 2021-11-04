@@ -5,41 +5,43 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Document_payroll extends Model
+class Document extends Model
 {
     use HasFactory;
     protected $fillable = [
         'company_id',
-        'worker_id',
         'user_id',
         'parent_id',
         'state_document_id',
         'type_document_id',
+        'period_id',
+        'date_issue',
         'prefix',
         'consecutive',
-        'xml',
-        'pdf',
-        'json_env',
-        'json_rpta',
-        'cune',
-        'date_issue',
-        'period_id',
+        'worker_id',
+        'payment_date',
         'worked_days',
         'accrued',
         'accrued_total',
         'deductions',
         'deductions_total',
-        'payroll_total'
+        'notes',
+        'payroll_total',
+        'cune',
+        'xml',
+        'pdf',
+        'zip',
+        'qrstr'        
     ];
 
     public function parent()
     {//el padre
-        return $this->belongsTo(Document_payroll::class);
+        return $this->belongsTo(Document::class);
     }
 
     public function document_payrolls()
     {//los hijos
-        return $this->hasMany(Document_payroll::class, 'parent_id');
+        return $this->hasMany(Document::class, 'parent_id');
     }
 
     public function company()
