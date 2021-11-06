@@ -157,7 +157,59 @@
                 <h4>DEVENGADOS</h4>
             </div>
             <div class="card-body">
-                <table id="tbl_accrued" class="table table-bordered table-hover border-primary table-striped mt-2">
+
+                <div class="form-group">
+                    {!! Html::decode(Form::label('tipo_devengado', 'Tipo Devengado')) !!}
+                    {!! Form::select('tipo_devengado', $type_accrueds->pluck('name', 'node'), null, ['class' => 'form-control', 'id' => 'select_tipo_devengado', 'placeholder' => '-- Seleccionar --']) !!}
+                </div>
+
+                <div class="row" id="div_rango_fecha_a">
+                    <div class="col-sm-12 col-xl-6 m-b-30">
+                        <div class="form-group">
+                            <label>Fecha Inicio</label>
+                            <input type="date" class="form-control" id="start_date_a">
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 col-xl-6 m-b-30">
+                        <div class="form-group">
+                            <label>Fecha Fin</label>
+                            <input type="date" class="form-control" id="end_date_a">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" id="div_quantity_a">
+                    <div class="col-md-4 col-12">
+                        <div class="form-group">
+                            <label>Cantidad de Dias</label>
+                            <input type="number" class="form-control" id="quantity_a">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" id="div_accrued_value">
+                    <div class="col-md-4 col-12">
+                        <div class="form-group">
+                            <label>Valor Pagado</label>
+                            <input type="number" class="form-control" id="val_accrued">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-12" id="div_add_accrueds">
+                    <button type="button" class="btn btn-info" id="add_accrued">Add. pago</button>
+                </div>
+
+                <br>
+                <div id="alert_accrued">
+                    <div class="col-md-12 col-12">
+                    </div>
+                </div>
+
+
+
+                <table id="tbl_accrueds" class="table table-bordered table-hover border-primary table-striped mt-2">
 
                     <tbody>
                         @php
@@ -165,6 +217,12 @@
                             
                             $salary = $devengados_json['devengados']['salary'];
                             $transportation_allowance = $devengados_json['devengados']['transportation_allowance'];
+                            
+                            $common_vacation = $devengados_json['devengados']['common_vacation'];
+                            $paid_vacation = $devengados_json['devengados']['paid_vacation'];
+                            $maternity_leave = $devengados_json['devengados']['maternity_leave'];
+                            $paid_leave = $devengados_json['devengados']['paid_leave'];
+                            $legal_strike = $devengados_json['devengados']['legal_strike'];
                             
                         @endphp
 
@@ -185,6 +243,59 @@
                                             class="fas fa-times"></i></a></td>
                             </tr>
                         @endif
+
+                        @foreach ($common_vacation as $value)
+                            <tr id="common_vacation-{!! $value['id'] !!}">
+                                <td>{!! $value['name'] !!} Fecha: ({!! $value['start_date'] !!} / {!! $value['end_date'] !!}) Dias: {!! $value['quantity'] !!}</td>
+                                <td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i>
+                                    ${!! number_format($value['payment'], 2) !!}</td>
+                                <td><a href="javascript:eliminar_accrued({!! $value['id'] !!},'common_vacation', {!! $value['payment'] !!})"
+                                        class="btn btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a></td>
+                            </tr>
+                        @endforeach
+
+                        @foreach ($paid_vacation as $value)
+                        <tr id="paid_vacation-{!! $value['id'] !!}">
+                            <td>{!! $value['name'] !!} Fecha: ({!! $value['start_date'] !!} / {!! $value['end_date'] !!}) Dias: {!! $value['quantity'] !!}</td>
+                            <td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i>
+                                ${!! number_format($value['payment'], 2) !!}</td>
+                            <td><a href="javascript:eliminar_accrued({!! $value['id'] !!},'paid_vacation', {!! $value['payment'] !!})"
+                                    class="btn btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a></td>
+                        </tr>
+                    @endforeach
+
+                    @foreach ($maternity_leave as $value)
+                        <tr id="maternity_leave-{!! $value['id'] !!}">
+                            <td>{!! $value['name'] !!} Fecha: ({!! $value['start_date'] !!} / {!! $value['end_date'] !!}) Dias: {!! $value['quantity'] !!}</td>
+                            <td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i>
+                                ${!! number_format($value['payment'], 2) !!}</td>
+                            <td><a href="javascript:eliminar_accrued({!! $value['id'] !!},'maternity_leave', {!! $value['payment'] !!})"
+                                    class="btn btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a></td>
+                        </tr>
+                    @endforeach
+
+                    @foreach ($paid_leave as $value)
+                        <tr id="paid_leave-{!! $value['id'] !!}">
+                            <td>{!! $value['name'] !!} Fecha: ({!! $value['start_date'] !!} / {!! $value['end_date'] !!}) Dias: {!! $value['quantity'] !!}</td>
+                            <td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i>
+                                ${!! number_format($value['payment'], 2) !!}</td>
+                            <td><a href="javascript:eliminar_accrued({!! $value['id'] !!},'paid_leave', {!! $value['payment'] !!})"
+                                    class="btn btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a></td>
+                        </tr>
+                    @endforeach
+
+                    @foreach ($legal_strike as $value)
+                        <tr id="legal_strike-{!! $value['id'] !!}">
+                            <td>{!! $value['name'] !!} Fecha: ({!! $value['start_date'] !!} / {!! $value['end_date'] !!}) Dias: {!! $value['quantity'] !!}</td>
+                            <td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i>
+                                ${!! number_format($value['payment'], 2) !!}</td>
+                            <td><a href="javascript:eliminar_accrued({!! $value['id'] !!},'legal_strike', {!! $value['payment'] !!})"
+                                    class="btn btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a></td>
+                        </tr>
+                    @endforeach
+
+
+
                     </tbody>
                     <tfoot style="background-color: #b5eee0;">
                         <tr align="center">
@@ -225,12 +336,14 @@
                             <label>Valor Deducción</label>
                             <input type="number" class="form-control" id="val_deduction">
                         </div>
-
-                    </div>
-                    <div class="col-md-6 col-12">
-                        <button type="button" class="btn btn-info" id="add_deductions">Add. Deduccion</button>
                     </div>
                 </div>
+
+                <div class="col-md-6 col-12" id="div_add_deductions">
+                    <button type="button" class="btn btn-info" id="add_deductions">Add. Deduccion</button>
+                </div>
+
+
                 <br>
                 <div id="alert_deductions">
                     <div class="col-md-12 col-12">
@@ -276,9 +389,7 @@
                                     ${!! number_format($value['value'], 2) !!}</td>
                                 <td><a href="javascript:eliminar_deduccion({!! $value['id'] !!}, 'other_deductions', {!! $value['value'] !!})"
                                         class="btn btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a></td>
-
                             </tr>
-
                         @endforeach
 
                     </tbody>

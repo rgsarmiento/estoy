@@ -82,7 +82,7 @@
                                                 </i><a href="{{ route('workers.show', $row->worker) }}">
                                                     {{ $row->worker->first_name . ' ' . $row->worker->surname }}</a>
                                             </td>
-                                            
+
                                             <td colspan="4"><i class="fas fa-cloud-sun"
                                                     style="font-size:16px;color:#F8C471;"> Días trabajados:</i>
                                                 {{ $row->worked_days }}</td>
@@ -103,17 +103,70 @@
                                                 <td>
 
                                                     @php
-                                                    $devengados_json = json_decode($row->accrued, true);
-
-                                                    $salary = $devengados_json['devengados']['salary'];
-                                                    $transportation_allowance = $devengados_json['devengados']['transportation_allowance'];
-                                                    
+                                                        $devengados_json = json_decode($row->accrued, true);
+                                                        
+                                                        $salary = $devengados_json['devengados']['salary'];
+                                                        $transportation_allowance = $devengados_json['devengados']['transportation_allowance'];
+                                                        
+                                                        $common_vacation = $devengados_json['devengados']['common_vacation'];
+                                                        $paid_vacation = $devengados_json['devengados']['paid_vacation'];
+                                                        $maternity_leave = $devengados_json['devengados']['maternity_leave'];
+                                                        $paid_leave = $devengados_json['devengados']['paid_leave'];
+                                                        $legal_strike = $devengados_json['devengados']['legal_strike'];
                                                     @endphp
 
-                                                    {!! $salary['name'] . ':<br><strong> +' . number_format($salary['value'], 2) . '</strong>' !!} <hr style="margin-top:0rem;margin-bottom:0rem;border-top:1px solid rgb(103 119 239)">
+                                                    {!! $salary['name'] . ':<br><strong> +' . number_format($salary['value'], 2) . '</strong>' !!}
+                                                    
                                                     @if (count($transportation_allowance))
-                                                    {!! $transportation_allowance['name'] . ':<br><strong> +' . number_format($transportation_allowance['value'], 2) . '</strong>' !!} 
+                                                    <hr
+                                                        style="margin-top:0rem;margin-bottom:0rem;border-top:1px solid rgb(103 119 239)">
+                                                        {!! $transportation_allowance['name'] . ':<br><strong> +' . number_format($transportation_allowance['value'], 2) . '</strong>' !!}
                                                     @endif
+
+                                                    @if (count($common_vacation))
+                                                        <hr
+                                                            style="margin-top:0rem;margin-bottom:0rem;border-top:1px solid rgb(103 119 239)">
+                                                    @endif
+                                                    @foreach ($common_vacation as $value)
+                                                        {!! $value['name'] . ':<br><strong> +' . number_format($value['payment'], 2) . '</strong>' !!} <br>
+                                                    @endforeach
+                                                   
+
+                                                    @if (count($paid_vacation))
+                                                        <hr
+                                                            style="margin-top:0rem;margin-bottom:0rem;border-top:1px solid rgb(103 119 239)">
+                                                    @endif
+                                                    @foreach ($paid_vacation as $value)
+                                                        {!! $value['name'] . ':<br><strong> +' . number_format($value['payment'], 2) . '</strong>' !!} <br>
+                                                    @endforeach
+
+
+                                                    @if (count($maternity_leave))
+                                                        <hr
+                                                            style="margin-top:0rem;margin-bottom:0rem;border-top:1px solid rgb(103 119 239)">
+                                                    @endif
+                                                    @foreach ($maternity_leave as $value)
+                                                        {!! $value['name'] . ':<br><strong> +' . number_format($value['payment'], 2) . '</strong>' !!} <br>
+                                                    @endforeach
+
+
+                                                    @if (count($paid_leave))
+                                                        <hr
+                                                            style="margin-top:0rem;margin-bottom:0rem;border-top:1px solid rgb(103 119 239)">
+                                                    @endif
+                                                    @foreach ($paid_leave as $value)
+                                                        {!! $value['name'] . ':<br><strong> +' . number_format($value['payment'], 2) . '</strong>' !!} <br>
+                                                    @endforeach
+
+
+                                                    @if (count($legal_strike))
+                                                        <hr
+                                                            style="margin-top:0rem;margin-bottom:0rem;border-top:1px solid rgb(103 119 239)">
+                                                    @endif
+                                                    @foreach ($legal_strike as $value)
+                                                        {!! $value['name'] . ':<br><strong> +' . number_format($value['payment'], 2) . '</strong>' !!} <br>
+                                                    @endforeach
+                                                   
 
                                                 </td>
                                                 <td style="white-space:nowrap;"><i class="fa fa-sort-up"
@@ -122,29 +175,33 @@
                                                 <td>
 
                                                     @php
-                                                    $deducciones_json = json_decode($row->deductions, true);
-
-                                                    $eps_type_law_deduction = $deducciones_json['deducciones']['eps_type_law_deduction'];
-                                                    $pension_type_law_deductions = $deducciones_json['deducciones']['pension_type_law_deductions'];
-                                                    $other_deductions = $deducciones_json['deducciones']['other_deductions'];
-                                                    
+                                                        $deducciones_json = json_decode($row->deductions, true);
+                                                        
+                                                        $eps_type_law_deduction = $deducciones_json['deducciones']['eps_type_law_deduction'];
+                                                        $pension_type_law_deductions = $deducciones_json['deducciones']['pension_type_law_deductions'];
+                                                        $other_deductions = $deducciones_json['deducciones']['other_deductions'];
+                                                        
                                                     @endphp
-                                                    
-                                                    {!! $eps_type_law_deduction['name'] . ':<strong> -' . number_format($eps_type_law_deduction['value'], 2) . '</strong>' !!} <hr style="margin-top:0rem;margin-bottom:0rem;border-top:1px solid rgb(103 119 239)">
-                                                    {!! $pension_type_law_deductions['name'] . ':<strong> -' . number_format($pension_type_law_deductions['value'], 2) . '</strong>' !!} 
-                                                   
+
+                                                    {!! $eps_type_law_deduction['name'] . ':<strong> -' . number_format($eps_type_law_deduction['value'], 2) . '</strong>' !!}
+                                                    <hr
+                                                        style="margin-top:0rem;margin-bottom:0rem;border-top:1px solid rgb(103 119 239)">
+                                                    {!! $pension_type_law_deductions['name'] . ':<strong> -' . number_format($pension_type_law_deductions['value'], 2) . '</strong>' !!}
+
                                                     @if (count($other_deductions))
-                                                    <hr style="margin-top:0rem;margin-bottom:0rem;border-top:1px solid rgb(103 119 239)">
+                                                        <hr
+                                                            style="margin-top:0rem;margin-bottom:0rem;border-top:1px solid rgb(103 119 239)">
                                                     @endif
 
                                                     @foreach ($other_deductions as $value)
                                                         {!! $value['name'] . ':<br><strong> +' . number_format($value['value'], 2) . '</strong>' !!} <br>
-                                                    @endforeach 
+                                                    @endforeach
 
                                                     @if (count($other_deductions))
-                                                    <hr style="margin-top:0rem;margin-bottom:0rem;border-top:1px solid rgb(103 119 239)">
+                                                        <hr
+                                                            style="margin-top:0rem;margin-bottom:0rem;border-top:1px solid rgb(103 119 239)">
                                                     @endif
-                                                    
+
 
                                                 </td>
                                                 <td style="white-space:nowrap;"><i class="fa fa-sort-down"
@@ -187,7 +244,7 @@
                                     {!! $payrolls->links() !!}
                                 </div>
                             </div>
-                           
+
 
                         </div>
                     </div>

@@ -220,6 +220,7 @@ class WorkerController extends Controller
             'telecommuting' => new StdClass(),
             'withdrawal_bonus' => new StdClass(),
             'compensation' => new StdClass(),
+            'refund' => new StdClass(),
         );
 
         $payroll->accrued = json_encode($accrued);

@@ -11,6 +11,7 @@ use App\Models\Payroll;
 use App\Models\Payroll_period;
 use App\Models\Period;
 use App\Models\Resolution;
+use App\Models\Type_accrued;
 use App\Models\Type_deduction;
 use App\Models\Worker;
 use Carbon\Carbon;
@@ -117,7 +118,8 @@ class PayrollController extends Controller
     {
         $configuraciones = Configuration::first();
         $type_deductions = Type_deduction::where('status_type_deduction', '1')->get();
-        return view('payrolls.editar', compact('payroll', 'type_deductions', 'configuraciones'));
+        $type_accrueds = Type_accrued::where('status_type_accrued', '1')->get();
+        return view('payrolls.editar', compact('payroll', 'type_deductions', 'type_accrueds', 'configuraciones'));
     }
 
     /**
