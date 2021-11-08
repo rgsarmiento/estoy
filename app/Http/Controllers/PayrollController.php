@@ -219,7 +219,7 @@ class PayrollController extends Controller
             'first_name' => $payroll->worker->first_name,
             'address' => $payroll->worker->address,
             'integral_salarary' => boolval($payroll->worker->integral_salarary),
-            'salary' => $payroll->worker->salary
+            'salary' => str_replace(',', '', number_format($payroll->worker->salary, 2))
         );
 
         $objeto_nomina->payment = array(
@@ -245,12 +245,12 @@ class PayrollController extends Controller
 
         $accrued = array(
             'worked_days' => $payroll->worked_days,
-            'salary' => $salario
+            'salary' => str_replace(',', '', number_format($salario, 2))
         );
 
         if (count($devengados_json['devengados']['transportation_allowance']) > 0) {
             $subsidio_transporte = $devengados_json['devengados']['transportation_allowance']['value'];
-            $accrued['transportation_allowance'] = $subsidio_transporte;
+            $accrued['transportation_allowance'] = str_replace(',', '', number_format($subsidio_transporte, 2));
         }
 
         if (count($common_vacation) > 0) {
@@ -260,7 +260,7 @@ class PayrollController extends Controller
                     'start_date' => $key['start_date'],
                     'end_date' => $key['end_date'],
                     'quantity' => $key['quantity'],
-                    'payment' => $key['payment']
+                    'payment' => str_replace(',', '', number_format($key['payment'], 2))
                 );
                 array_push($accrued['common_vacation'], $common_vacation);
             }
@@ -273,7 +273,7 @@ class PayrollController extends Controller
                     'start_date' => $key['start_date'],
                     'end_date' => $key['end_date'],
                     'quantity' => $key['quantity'],
-                    'payment' => $key['payment']
+                    'payment' => str_replace(',', '', number_format($key['payment'], 2))
                 );
                 array_push($accrued['paid_vacation'], $paid_vacation);
             }
@@ -286,7 +286,7 @@ class PayrollController extends Controller
                     'start_date' => $key['start_date'],
                     'end_date' => $key['end_date'],
                     'quantity' => $key['quantity'],
-                    'payment' => $key['payment']
+                    'payment' => str_replace(',', '', number_format($key['payment'], 2))
                 );
                 array_push($accrued['maternity_leave'], $maternity_leave);
             }
@@ -299,7 +299,7 @@ class PayrollController extends Controller
                     'start_date' => $key['start_date'],
                     'end_date' => $key['end_date'],
                     'quantity' => $key['quantity'],
-                    'payment' => $key['payment']
+                    'payment' => str_replace(',', '', number_format($key['payment'], 2))
                 );
                 array_push($accrued['paid_leave'], $paid_leave);
             }
@@ -312,7 +312,7 @@ class PayrollController extends Controller
                     'start_date' => $key['start_date'],
                     'end_date' => $key['end_date'],
                     'quantity' => $key['quantity'],
-                    'payment' => $key['payment']
+                    'payment' => str_replace(',', '', number_format($key['payment'], 2))
                 );
                 array_push($accrued['legal_strike'], $legal_strike);
             }
@@ -347,7 +347,7 @@ class PayrollController extends Controller
             $deductions['other_deductions'] = array();
             foreach ($other_deductions as $key) {
                 $other_deduction = array(
-                    'other_deduction' => $key['value']
+                    'other_deduction' => str_replace(',', '', number_format($key['value'], 2))
                 );
                 array_push($deductions['other_deductions'], $other_deduction);
             }
