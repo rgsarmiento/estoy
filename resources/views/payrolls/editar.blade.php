@@ -769,6 +769,13 @@
                 );
             }
 
+
+            var json_other_deductions = deductions.deducciones.other_deductions
+            var total_other_deductions = json_other_deductions.reduce((sum, value) => (typeof value.value == "number" ?
+                sum + value.value : sum), 0);
+            total_deducido += (total_other_deductions)
+
+
             document.getElementById("deductions_total").value = total_deducido;
             document.getElementById("deductions").value = JSON.stringify(deductions);
 
