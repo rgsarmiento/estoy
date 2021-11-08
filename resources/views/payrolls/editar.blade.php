@@ -55,6 +55,7 @@
                 switch (nodo) {
                     case 'other_deductions':
                         document.getElementById("div_deduction_value").style.display = "block";
+                        document.getElementById("div_add_deductions").style.display = "block";
                         break;
                     case '':
                 }
@@ -741,7 +742,8 @@
 
                 total_deducido = val_eps;
 
-                $("#tbl_deductions>tbody").append('<tr id="eps1"><td>' + deductions.deducciones.eps_type_law_deduction.name +
+                $("#tbl_deductions>tbody").append('<tr id="eps1"><td>' + deductions.deducciones.eps_type_law_deduction
+                    .name +
                     '</td><td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i> $' +
                     parseFloat(val_eps, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
                         "$1,").toString() + '</td>' +
@@ -761,7 +763,8 @@
 
                 total_deducido += val_pension;
 
-                $("#tbl_deductions>tbody").append('<tr id="pension1"><td>' + deductions.deducciones.pension_type_law_deductions.name +
+                $("#tbl_deductions>tbody").append('<tr id="pension1"><td>' + deductions.deducciones
+                    .pension_type_law_deductions.name +
                     '</td><td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i> $' +
                     parseFloat(val_eps, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
                         "$1,").toString() + '</td>' +

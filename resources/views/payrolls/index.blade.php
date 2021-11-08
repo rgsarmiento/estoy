@@ -239,8 +239,8 @@
 
                                                             {!! Form::open(['method' => 'GET', 'route' => ['payrolls.send_payroll', $row], 'style' => 'display:inline', 'class' => 'shotDina', 'id' => $row->id]) !!}
 
-                                                            {!! Form::text('periodo_ni', null, ['id' => 'periodo_ni']) !!}
-                                                            {!! Form::text('fecha_pago_ni', null, ['id' => 'fecha_pago_ni']) !!}
+                                                            {!! Form::hidden('periodo_ni', null, ['id' => 'periodo_ni']) !!}
+                                                            {!! Form::hidden('fecha_pago_ni', null, ['id' => 'fecha_pago_ni']) !!}
                                                             {!! Form::button('<i class="far fa-share-square"></i> Enviar DIAN', ['type' => 'submit', 'class' => 'dropdown-item btn-link me-2', 'data-id' => $row->id]) !!}
 
                                                             {!! Form::close() !!}

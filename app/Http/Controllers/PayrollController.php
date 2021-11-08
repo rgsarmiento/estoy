@@ -160,7 +160,7 @@ class PayrollController extends Controller
 
 
     public function send_payroll(Payroll $payroll, SendRequest $request)
-    {        
+    {
         $periodo_id = $request->periodo_ni;
         $fecha_pago = $request->fecha_pago_ni;
 
@@ -204,7 +204,7 @@ class PayrollController extends Controller
         $objeto_nomina->prefix = $resolution->prefix;
         $objeto_nomina->consecutive = $resolution->nex;
         $objeto_nomina->payroll_period_id = 4;
-        $objeto_nomina->notes = "NOMINA ELECTRONICA " . $periodo->description;
+        $objeto_nomina->notes = $payroll->notes;
 
         $objeto_nomina->worker = array(
             'type_worker_id' => $payroll->worker->type_worker_id,
@@ -237,18 +237,89 @@ class PayrollController extends Controller
         $devengados_json = json_decode($payroll->accrued, true);
 
         $salario = $devengados_json['devengados']['salary']['value'];
-       
+        $common_vacation = $devengados_json['devengados']['common_vacation'];
+        $paid_vacation = $devengados_json['devengados']['paid_vacation'];
+        $maternity_leave = $devengados_json['devengados']['maternity_leave'];
+        $paid_leave = $devengados_json['devengados']['paid_leave'];
+        $legal_strike = $devengados_json['devengados']['legal_strike'];
+
         $accrued = array(
             'worked_days' => $payroll->worked_days,
             'salary' => $salario
         );
 
-        
-        if (count($devengados_json['devengados']['transportation_allowance']) > 0){
+        if (count($devengados_json['devengados']['transportation_allowance']) > 0) {
             $subsidio_transporte = $devengados_json['devengados']['transportation_allowance']['value'];
             $accrued['transportation_allowance'] = $subsidio_transporte;
         }
-        
+
+        if (count($common_vacation) > 0) {
+            $accrued['common_vacation'] = array();
+            foreach ($common_vacation as $key) {
+                $common_vacation = array(
+                    'start_date' => $key['start_date'],
+                    'end_date' => $key['end_date'],
+                    'quantity' => $key['quantity'],
+                    'payment' => $key['payment']
+                );
+                array_push($accrued['common_vacation'], $common_vacation);
+            }
+        }
+
+        if (count($paid_vacation) > 0) {
+            $accrued['paid_vacation'] = array();
+            foreach ($paid_vacation as $key) {
+                $paid_vacation = array(
+                    'start_date' => $key['start_date'],
+                    'end_date' => $key['end_date'],
+                    'quantity' => $key['quantity'],
+                    'payment' => $key['payment']
+                );
+                array_push($accrued['paid_vacation'], $paid_vacation);
+            }
+        }
+
+        if (count($maternity_leave) > 0) {
+            $accrued['maternity_leave'] = array();
+            foreach ($maternity_leave as $key) {
+                $maternity_leave = array(
+                    'start_date' => $key['start_date'],
+                    'end_date' => $key['end_date'],
+                    'quantity' => $key['quantity'],
+                    'payment' => $key['payment']
+                );
+                array_push($accrued['maternity_leave'], $maternity_leave);
+            }
+        }
+
+        if (count($paid_leave) > 0) {
+            $accrued['paid_leave'] = array();
+            foreach ($paid_leave as $key) {
+                $paid_leave = array(
+                    'start_date' => $key['start_date'],
+                    'end_date' => $key['end_date'],
+                    'quantity' => $key['quantity'],
+                    'payment' => $key['payment']
+                );
+                array_push($accrued['paid_leave'], $paid_leave);
+            }
+        }
+
+        if (count($legal_strike) > 0) {
+            $accrued['legal_strike'] = array();
+            foreach ($legal_strike as $key) {
+                $legal_strike = array(
+                    'start_date' => $key['start_date'],
+                    'end_date' => $key['end_date'],
+                    'quantity' => $key['quantity'],
+                    'payment' => $key['payment']
+                );
+                array_push($accrued['legal_strike'], $legal_strike);
+            }
+        }
+
+
+
         $accrued["accrued_total"] = $payroll->accrued_total;
 
         $objeto_nomina->accrued = $accrued;
@@ -259,13 +330,10 @@ class PayrollController extends Controller
 
         $deduction_eps_id = $deducciones_json['deducciones']['eps_type_law_deduction']['id'];
         $deduction_eps = $deducciones_json['deducciones']['eps_type_law_deduction']['value'];
-
         $deduction_pension_id = $deducciones_json['deducciones']['pension_type_law_deductions']['id'];
         $deduction_pension = $deducciones_json['deducciones']['pension_type_law_deductions']['value'];
 
         $other_deductions = $deducciones_json['deducciones']['other_deductions'];
-
-        
 
         $deductions = array(
             'eps_type_law_deductions_id' => $deduction_eps_id,
@@ -286,12 +354,10 @@ class PayrollController extends Controller
         }
 
         $objeto_nomina->deductions = $deductions;
-        
-       
+
+
         $this->save_file("app/public/json/" . $payroll->company->id, $objeto_nomina, "Env-" . $payroll->worker->identification_number . "-" . $resolution->prefix . "-" . $resolution->nex . ".json");
-
         $response =  $this->send_apidian_payroll($company, $configuraciones, $objeto_nomina);
-
         $this->save_file("app/public/json/" . $payroll->company->id, json_decode($response), "Rpta-" . $payroll->worker->identification_number . "-" . $resolution->prefix . "-" . $resolution->nex . ".json");
 
 
@@ -303,16 +369,16 @@ class PayrollController extends Controller
             if ($isValid) {
                 $this->store_documents($payroll->id, $periodo_id, $objeto_nomina, $response, 1, $fechaHora);
                 $resolution->increment('nex');
-            }else{
+            } else {
                 $this->store_documents($payroll->id, $periodo_id, $objeto_nomina, $response, 0, $fechaHora);
-            }            
+            }
         }
 
         return json_decode($response);
     }
 
     protected function send_apidian_payroll($company, $configuraciones, $objeto_nomina)
-    {//55ed1dc8-1806-4325-9083-8bbb789f4454   
+    { //55ed1dc8-1806-4325-9083-8bbb789f4454   
 
         $response = Http::accept('application/json')
             ->withToken($company->api_token)
