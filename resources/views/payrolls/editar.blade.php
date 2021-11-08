@@ -63,7 +63,7 @@
 
             $('#select_tipo_devengado').change(function() {
                 var nodo = $(this).val()
-                switch (nodo) {                    
+                switch (nodo) {
                     case 'common_vacation':
                         document.getElementById("div_accrued_value").style.display = "block";
                         document.getElementById("div_add_accrueds").style.display = "block";
@@ -100,23 +100,23 @@
 
 
 
-            $('#add_accrued').click(function (e) {
+            $('#add_accrued').click(function(e) {
                 e.preventDefault();
                 var nodo = document.getElementById("select_tipo_devengado").value;
                 var tipo = $('#select_tipo_devengado option:selected').html();
-            
+
                 if (validar_campos(nodo) == false) {
                     return false
                 }
-            
+
                 var accrued = JSON.parse(document.getElementById("accrued").value);
-            
+
                 var val_accrueds = Number(document.getElementById("accrued_total").value);
-            
+
                 switch (nodo) {
                     case 'other_concepts':
                         var n_other_concepts = accrued.devengados.other_concepts.length;
-            
+
                         var val_accrued = Number(document.getElementById("val_accrued").value);
                         var id = (Math.floor(Math.random() * (999 - 100 + 1) + 100) + n_other_concepts);
                         array = {
@@ -124,7 +124,7 @@
                             'value': val_accrued,
                             'name': tipo
                         };
-            
+
                         $("#tbl_accrueds>tbody").append('<tr id="other_concepts-' + id + '"><td>' +
                             tipo +
                             '</td><td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i> $' +
@@ -134,18 +134,18 @@
                             ",'other_accrueds'," + val_accrued +
                             ')" class="btn btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a></td></tr>'
                         );
-            
+
                         accrued.devengados.other_concepts.push(array);
                         val_accrueds = (val_accrueds + val_accrued);
                         break;
                     case 'common_vacation':
                         var n_common_vacation = accrued.devengados.common_vacation.length;
-            
+
                         var fechaInicio = document.getElementById("start_date_a").value;
                         var fechaFin = document.getElementById("end_date_a").value;
                         var cantidad = Number(document.getElementById("quantity_a").value);
                         var val_accrued = Number(document.getElementById("val_accrued").value);
-            
+
                         var id = (Math.floor(Math.random() * (999 - 100 + 1) + 100) + n_common_vacation);
                         array = {
                             'id': id,
@@ -155,9 +155,10 @@
                             'payment': val_accrued,
                             'name': tipo
                         };
-            
+
                         $("#tbl_accrueds>tbody").append('<tr id="common_vacation-' + id + '"><td>' +
-                            tipo + ' Fecha: (' + fechaInicio + ' / ' + fechaFin + ') Dias: ' + cantidad +
+                            tipo + ' Fecha: (' + fechaInicio + ' / ' + fechaFin + ') Dias: ' +
+                            cantidad +
                             '</td><td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i> $' +
                             parseFloat(val_accrued, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
                                 "$1,").toString() + '</td>' +
@@ -165,19 +166,19 @@
                             ",'common_vacation'," + val_accrued +
                             ')" class="btn btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a></td></tr>'
                         );
-            
+
                         accrued.devengados.common_vacation.push(array);
                         val_accrueds = (val_accrueds + val_accrued);
                         break;
-            
+
                     case 'paid_vacation':
                         var n_paid_vacation = accrued.devengados.paid_vacation.length;
-            
+
                         var fechaInicio = document.getElementById("start_date_a").value;
                         var fechaFin = document.getElementById("end_date_a").value;
                         var cantidad = Number(document.getElementById("quantity_a").value);
                         var val_accrued = Number(document.getElementById("val_accrued").value);
-            
+
                         var id = (Math.floor(Math.random() * (999 - 100 + 1) + 100) + n_paid_vacation);
                         array = {
                             'id': id,
@@ -187,9 +188,10 @@
                             'payment': val_accrued,
                             'name': tipo
                         };
-            
+
                         $("#tbl_accrueds>tbody").append('<tr id="common_vacation-' + id + '"><td>' +
-                            tipo + ' Fecha: (' + fechaInicio + ' / ' + fechaFin + ') Dias: ' + cantidad +
+                            tipo + ' Fecha: (' + fechaInicio + ' / ' + fechaFin + ') Dias: ' +
+                            cantidad +
                             '</td><td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i> $' +
                             parseFloat(val_accrued, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
                                 "$1,").toString() + '</td>' +
@@ -197,18 +199,18 @@
                             ",'common_vacation'," + val_accrued +
                             ')" class="btn btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a></td></tr>'
                         );
-            
+
                         accrued.devengados.paid_vacation.push(array);
                         val_accrueds = (val_accrueds + val_accrued);
                         break;
                     case 'maternity_leave':
                         var n_maternity_leave = accrued.devengados.maternity_leave.length;
-            
+
                         var fechaInicio = document.getElementById("start_date_a").value;
                         var fechaFin = document.getElementById("end_date_a").value;
                         var cantidad = Number(document.getElementById("quantity_a").value);
                         var val_accrued = Number(document.getElementById("val_accrued").value);
-            
+
                         var id = (Math.floor(Math.random() * (999 - 100 + 1) + 100) + n_maternity_leave);
                         array = {
                             'id': id,
@@ -218,9 +220,10 @@
                             'payment': val_accrued,
                             'name': tipo
                         };
-            
+
                         $("#tbl_accrueds>tbody").append('<tr id="maternity_leave-' + id + '"><td>' +
-                            tipo + ' Fecha: (' + fechaInicio + ' / ' + fechaFin + ') Dias: ' + cantidad +
+                            tipo + ' Fecha: (' + fechaInicio + ' / ' + fechaFin + ') Dias: ' +
+                            cantidad +
                             '</td><td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i> $' +
                             parseFloat(val_accrued, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
                                 "$1,").toString() + '</td>' +
@@ -228,18 +231,18 @@
                             ",'maternity_leave'," + val_accrued +
                             ')" class="btn btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a></td></tr>'
                         );
-            
+
                         accrued.devengados.maternity_leave.push(array);
                         val_accrueds = (val_accrueds + val_accrued);
                         break;
                     case 'paid_leave':
                         var n_paid_leave = accrued.devengados.paid_leave.length;
-            
+
                         var fechaInicio = document.getElementById("start_date_a").value;
                         var fechaFin = document.getElementById("end_date_a").value;
                         var cantidad = Number(document.getElementById("quantity_a").value);
                         var val_accrued = Number(document.getElementById("val_accrued").value);
-            
+
                         var id = (Math.floor(Math.random() * (999 - 100 + 1) + 100) + n_paid_leave);
                         array = {
                             'id': id,
@@ -249,9 +252,10 @@
                             'payment': val_accrued,
                             'name': tipo
                         };
-            
+
                         $("#tbl_accrueds>tbody").append('<tr id="paid_leave-' + id + '"><td>' +
-                            tipo + ' Fecha: (' + fechaInicio + ' / ' + fechaFin + ') Dias: ' + cantidad +
+                            tipo + ' Fecha: (' + fechaInicio + ' / ' + fechaFin + ') Dias: ' +
+                            cantidad +
                             '</td><td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i> $' +
                             parseFloat(val_accrued, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
                                 "$1,").toString() + '</td>' +
@@ -259,18 +263,18 @@
                             ",'paid_leave'," + val_accrued +
                             ')" class="btn btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a></td></tr>'
                         );
-            
+
                         accrued.devengados.paid_leave.push(array);
                         val_accrueds = (val_accrueds + val_accrued);
                         break;
                     case 'legal_strike':
                         var n_paid_vacation = accrued.devengados.legal_strike.length;
-            
+
                         var fechaInicio = document.getElementById("start_date_a").value;
                         var fechaFin = document.getElementById("end_date_a").value;
                         var cantidad = Number(document.getElementById("quantity_a").value);
                         var val_accrued = Number(document.getElementById("val_accrued").value);
-            
+
                         var id = (Math.floor(Math.random() * (999 - 100 + 1) + 100) + n_legal_strike);
                         array = {
                             'id': id,
@@ -280,9 +284,10 @@
                             'payment': val_accrued,
                             'name': tipo
                         };
-            
+
                         $("#tbl_accrueds>tbody").append('<tr id="legal_strike-' + id + '"><td>' +
-                            tipo + ' Fecha: (' + fechaInicio + ' / ' + fechaFin + ') Dias: ' + cantidad +
+                            tipo + ' Fecha: (' + fechaInicio + ' / ' + fechaFin + ') Dias: ' +
+                            cantidad +
                             '</td><td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i> $' +
                             parseFloat(val_accrued, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
                                 "$1,").toString() + '</td>' +
@@ -290,22 +295,22 @@
                             ",'legal_strike'," + val_accrued +
                             ')" class="btn btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a></td></tr>'
                         );
-            
+
                         accrued.devengados.legal_strike.push(array);
                         val_accrueds = (val_accrueds + val_accrued);
                         break;
                 }
-            
+
                 //nada desde aca he revisado
-            
+
                 document.getElementById("accrued_total").value = val_accrueds;
                 document.getElementById("accrued").value = JSON.stringify(accrued);
-            
+
                 document.getElementById("tbl_accrueds").tFoot.innerHTML =
                     '<tr align="center"><th>TOTAL</th><th colspan="2"><i class="fa fa-sort-up" style="font-size:20px;color:#00D0C4;"></i> $' +
                     parseFloat(val_accrueds, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,")
-                        .toString() + '</th></tr>';
-            
+                    .toString() + '</th></tr>';
+
                 ocultar_controles();
                 recalcular_total();
             });
@@ -478,106 +483,106 @@
         function eliminar_accrued(id, tipo, valor) {
             var val_accrueds = Number(document.getElementById("accrued_total").value);
             var accrued = JSON.parse(document.getElementById("accrued").value);
-        
+
             switch (tipo) {
                 case 'other_concepts':
-                    accrued.devengados.other_concepts.forEach(function (currentValue, index, arr) {
+                    accrued.devengados.other_concepts.forEach(function(currentValue, index, arr) {
                         if (accrued.devengados.other_concepts[index].id == id) {
                             accrued.devengados.other_concepts.splice(index, 1);
                         }
                     })
-        
+
                     val_accrueds = (val_accrueds - valor);
                     document.getElementById("accrued_total").value = val_accrueds;
                     document.getElementById("accrued").value = JSON.stringify(accrued);
-        
+
                     var element = document.getElementById("other_concepts-" + id);
                     element.parentNode.removeChild(element);
                     break;
                 case 'common_vacation':
-                    accrued.devengados.common_vacation.forEach(function (currentValue, index, arr) {
+                    accrued.devengados.common_vacation.forEach(function(currentValue, index, arr) {
                         if (accrued.devengados.common_vacation[index].id == id) {
                             accrued.devengados.common_vacation.splice(index, 1);
                         }
                     })
-        
+
                     val_accrueds = (val_accrueds - valor);
                     document.getElementById("accrued_total").value = val_accrueds;
                     document.getElementById("accrued").value = JSON.stringify(accrued);
-        
+
                     var element = document.getElementById("common_vacation-" + id);
                     element.parentNode.removeChild(element);
 
                     break;
                 case 'paid_vacation':
-                    accrued.devengados.paid_vacation.forEach(function (currentValue, index, arr) {
+                    accrued.devengados.paid_vacation.forEach(function(currentValue, index, arr) {
                         if (accrued.devengados.paid_vacation[index].id == id) {
                             accrued.devengados.paid_vacation.splice(index, 1);
                         }
                     })
-        
+
                     val_accrueds = (val_accrueds - valor);
                     document.getElementById("accrued_total").value = val_accrueds;
                     document.getElementById("accrued").value = JSON.stringify(accrued);
-        
+
                     var element = document.getElementById("paid_vacation-" + id);
                     element.parentNode.removeChild(element);
-        
+
                     break;
                 case 'maternity_leave':
-                    accrued.devengados.maternity_leave.forEach(function (currentValue, index, arr) {
+                    accrued.devengados.maternity_leave.forEach(function(currentValue, index, arr) {
                         if (accrued.devengados.maternity_leave[index].id == id) {
                             accrued.devengados.maternity_leave.splice(index, 1);
                         }
                     })
-        
+
                     val_accrueds = (val_accrueds - valor);
                     document.getElementById("accrued_total").value = val_accrueds;
                     document.getElementById("accrued").value = JSON.stringify(accrued);
-        
+
                     var element = document.getElementById("maternity_leave-" + id);
                     element.parentNode.removeChild(element);
-        
+
                     break;
                 case 'paid_leave':
-                    accrued.devengados.paid_leave.forEach(function (currentValue, index, arr) {
+                    accrued.devengados.paid_leave.forEach(function(currentValue, index, arr) {
                         if (accrued.devengados.paid_leave[index].id == id) {
                             accrued.devengados.paid_leave.splice(index, 1);
                         }
                     })
-        
+
                     val_accrueds = (val_accrueds - valor);
                     document.getElementById("accrued_total").value = val_accrueds;
                     document.getElementById("accrued").value = JSON.stringify(accrued);
-        
+
                     var element = document.getElementById("paid_leave-" + id);
                     element.parentNode.removeChild(element);
-                
+
                     break;
                 case 'legal_strike':
-                    accrued.devengados.legal_strike.forEach(function (currentValue, index, arr) {
+                    accrued.devengados.legal_strike.forEach(function(currentValue, index, arr) {
                         if (accrued.devengados.legal_strike[index].id == id) {
                             accrued.devengados.legal_strike.splice(index, 1);
                         }
                     })
-        
+
                     val_accrueds = (val_accrueds - valor);
                     document.getElementById("accrued_total").value = val_accrueds;
                     document.getElementById("accrued").value = JSON.stringify(accrued);
-        
+
                     var element = document.getElementById("legal_strike-" + id);
                     element.parentNode.removeChild(element);
-        
+
                     break;
             }
 
             document.getElementById("tbl_accrueds").tFoot.innerHTML =
-            '<tr align="center"><th>TOTAL</th><th colspan="2"><i class="fa fa-sort-up" style="font-size:20px;color:#00D0C4;"></i> $' +
-            parseFloat(val_accrueds, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,")
+                '<tr align="center"><th>TOTAL</th><th colspan="2"><i class="fa fa-sort-up" style="font-size:20px;color:#00D0C4;"></i> $' +
+                parseFloat(val_accrueds, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,")
                 .toString() + '</th></tr>';
 
             recalcular_total();
-        
+
         }
 
 
@@ -615,11 +620,11 @@
             recalcular_total();
         }
 
-        
+
 
         function recalcular_total() {
             var total_devengado = 0;
-            var total_deducido = document.getElementById("deductions_total").value;
+            var total_deducido = 0;
             var dias = Number(document.getElementById("worked_days").value);
             var salario_mensual = Number(document.getElementById("salary").value);
             var aux_transporte_mensual = Number(document.getElementById("transportation_allowance_value").value);
@@ -628,30 +633,43 @@
             var aux_transporte_diario = (aux_transporte_mensual / 30);
             var salario_diario = (salario_mensual / 30)
 
+            var para_deduccion_paraFiscales = 0; //Este total es para calcular la deduccion de pension y salud
+
             //////////////////// DEVENGADOS/////////////////////////
             var accrued = JSON.parse(document.getElementById("accrued").value);
 
             accrued.devengados.salary.value = (salario_diario * dias)
             total_devengado = (salario_diario * dias);
-           
+
+            para_deduccion_paraFiscales = (salario_diario * dias);
+
             var json_common_vacation = accrued.devengados.common_vacation
-            var total_common_vacation = json_common_vacation.reduce((sum, value) => (typeof value.payment == "number" ? sum + value.payment : sum), 0);
+            var total_common_vacation = json_common_vacation.reduce((sum, value) => (typeof value.payment == "number" ?
+                sum + value.payment : sum), 0);
             total_devengado += (total_common_vacation)
 
+            para_deduccion_paraFiscales += (total_common_vacation)
+
             var json_paid_vacation = accrued.devengados.paid_vacation
-            var total_paid_vacation = json_paid_vacation.reduce((sum, value) => (typeof value.payment == "number" ? sum + value.payment : sum), 0);
+            var total_paid_vacation = json_paid_vacation.reduce((sum, value) => (typeof value.payment == "number" ? sum +
+                value.payment : sum), 0);
             total_devengado += (total_paid_vacation)
 
+            para_deduccion_paraFiscales += (total_paid_vacation)
+
             var json_maternity_leave = accrued.devengados.maternity_leave
-            var total_maternity_leave = json_maternity_leave.reduce((sum, value) => (typeof value.payment == "number" ? sum + value.payment : sum), 0);
+            var total_maternity_leave = json_maternity_leave.reduce((sum, value) => (typeof value.payment == "number" ?
+                sum + value.payment : sum), 0);
             total_devengado += (total_maternity_leave)
 
             var json_paid_leave = accrued.devengados.paid_leave
-            var total_paid_leave = json_paid_leave.reduce((sum, value) => (typeof value.payment == "number" ? sum + value.payment : sum), 0);
+            var total_paid_leave = json_paid_leave.reduce((sum, value) => (typeof value.payment == "number" ? sum + value
+                .payment : sum), 0);
             total_devengado += (total_paid_leave)
 
             var json_legal_strike = accrued.devengados.legal_strike
-            var total_legal_strike = json_legal_strike.reduce((sum, value) => (typeof value.payment == "number" ? sum + value.payment : sum), 0);
+            var total_legal_strike = json_legal_strike.reduce((sum, value) => (typeof value.payment == "number" ? sum +
+                value.payment : sum), 0);
             total_devengado += (total_legal_strike)
 
             //var json_other_concepts = accrued.devengados.other_concepts
@@ -664,7 +682,7 @@
                 aux_transporte1.parentNode.removeChild(aux_transporte1);
             }
 
-            {{-- Eliminar y agregar fila de salario --}}
+            //Eliminar y agregar fila de salario
             var salario1 = document.getElementById("salario1");
             salario1.parentNode.removeChild(salario1);
 
@@ -697,6 +715,66 @@
             document.getElementById("tbl_accrueds").tFoot.innerHTML =
                 '<tr align="center"><th>TOTAL</th><th colspan="2"><i class="fa fa-sort-up" style="font-size:20px;color:#00D0C4;"></i> $' +
                 parseFloat(total_devengado, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,")
+                .toString() + '</th></tr>';
+
+            ////////////////////////DEDUCIDOS///////////////////////////
+            var deductions = JSON.parse(document.getElementById("deductions").value);
+
+            var eps = deductions.deducciones.eps_type_law_deduction.name;
+            var pension = deductions.deducciones.pension_type_law_deductions.name;
+            var eps_percentage = 0;
+            var pension_percentage = 0;
+            var index_eps = eps.indexOf('% ');
+            var index_pension = pension.indexOf('% ');
+            var val_eps = 0;
+            var val_pension = 0;
+
+            if (index_eps !== -1) {
+                var largo = eps.length
+                eps_percentage = eps.substring((index_eps + 2), largo);
+                val_eps = (para_deduccion_paraFiscales * eps_percentage) / 100;
+                deductions.deducciones.eps_type_law_deduction.value = val_eps;
+
+                //Eliminar y agregar fila de eps
+                var eps1 = document.getElementById("eps1");
+                eps1.parentNode.removeChild(eps1);
+
+                total_deducido = val_eps;
+
+                $("#tbl_deductions>tbody").append('<tr id="eps1"><td>' + deductions.deducciones.eps_type_law_deduction.name +
+                    '</td><td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i> $' +
+                    parseFloat(val_eps, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
+                        "$1,").toString() + '</td>' +
+                    '<td><a href="" class="btn disabled btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a></td></tr>'
+                );
+            }
+
+            if (index_pension !== -1) {
+                var largo = pension.length
+                pension_percentage = pension.substring((index_pension + 2), largo);
+                val_pension = (para_deduccion_paraFiscales * pension_percentage) / 100;
+                deductions.deducciones.pension_type_law_deductions.value = val_pension;
+
+                //Eliminar y agregar fila de pension
+                var pension1 = document.getElementById("pension1");
+                pension1.parentNode.removeChild(pension1);
+
+                total_deducido += val_pension;
+
+                $("#tbl_deductions>tbody").append('<tr id="pension1"><td>' + deductions.deducciones.pension_type_law_deductions.name +
+                    '</td><td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i> $' +
+                    parseFloat(val_eps, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
+                        "$1,").toString() + '</td>' +
+                    '<td><a href="" class="btn disabled btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a></td></tr>'
+                );
+            }
+
+            document.getElementById("deductions_total").value = total_deducido;
+            document.getElementById("deductions").value = JSON.stringify(deductions);
+
+            document.getElementById("tbl_deductions").tFoot.innerHTML =
+                '<tr align="center"><th>TOTAL</th><th colspan="2"><i class="fa fa-sort-down" style="font-size:20px;color:#FF267B;"></i> $' +
+                parseFloat(total_deducido, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,")
                 .toString() + '</th></tr>';
 
             document.getElementById("payroll_total").value = (total_devengado - total_deducido)

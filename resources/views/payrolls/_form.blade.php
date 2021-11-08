@@ -363,7 +363,7 @@
                             
                         @endphp
 
-                        <tr>
+                        <tr id="eps1">
                             <td>{!! $eps_type_law_deduction['name'] !!}</td>
                             <td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i>
                                 ${!! number_format($eps_type_law_deduction['value'], 2) !!}</td>
@@ -372,7 +372,7 @@
 
                         </tr>
 
-                        <tr>
+                        <tr id="pension1">
                             <td>{!! $pension_type_law_deductions['name'] !!}</td>
                             <td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i>
                                 ${!! number_format($pension_type_law_deductions['value'], 2) !!}</td>

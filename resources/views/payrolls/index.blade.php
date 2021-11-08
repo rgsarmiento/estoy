@@ -14,6 +14,24 @@
             </div>
         </div>
 
+        @if ($errors->any())
+        <div class="alert alert-danger alert-dismissible fade show alert-has-icon p-4" role="alert">
+            <div class="alert-icon"><i class="fa fa-lightbulb"></i></div>
+            <div class="alert-body">
+                <div class="alert-title">Oh, no!</div>
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+
+            <button type="button" class="close" data-dismiss="alert" aria-label="close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @endif
+
 
 
         <div class="card card-primary">
@@ -116,10 +134,10 @@
                                                     @endphp
 
                                                     {!! $salary['name'] . ':<br><strong> +' . number_format($salary['value'], 2) . '</strong>' !!}
-                                                    
+
                                                     @if (count($transportation_allowance))
-                                                    <hr
-                                                        style="margin-top:0rem;margin-bottom:0rem;border-top:1px solid rgb(103 119 239)">
+                                                        <hr
+                                                            style="margin-top:0rem;margin-bottom:0rem;border-top:1px solid rgb(103 119 239)">
                                                         {!! $transportation_allowance['name'] . ':<br><strong> +' . number_format($transportation_allowance['value'], 2) . '</strong>' !!}
                                                     @endif
 
@@ -130,7 +148,7 @@
                                                     @foreach ($common_vacation as $value)
                                                         {!! $value['name'] . ':<br><strong> +' . number_format($value['payment'], 2) . '</strong>' !!} <br>
                                                     @endforeach
-                                                   
+
 
                                                     @if (count($paid_vacation))
                                                         <hr
@@ -166,7 +184,7 @@
                                                     @foreach ($legal_strike as $value)
                                                         {!! $value['name'] . ':<br><strong> +' . number_format($value['payment'], 2) . '</strong>' !!} <br>
                                                     @endforeach
-                                                   
+
 
                                                 </td>
                                                 <td style="white-space:nowrap;"><i class="fa fa-sort-up"
@@ -194,7 +212,7 @@
                                                     @endif
 
                                                     @foreach ($other_deductions as $value)
-                                                        {!! $value['name'] . ':<br><strong> +' . number_format($value['value'], 2) . '</strong>' !!} <br>
+                                                        {!! $value['name'] . ':<br><strong> -' . number_format($value['value'], 2) . '</strong>' !!} <br>
                                                     @endforeach
 
                                                     @if (count($other_deductions))
@@ -219,11 +237,11 @@
                                                                 class="fas fa-th-large"></i></button>
                                                         <div class="dropdown-menu dropleft">
 
-                                                            {!! Form::open(['method' => 'GET', 'route' => ['payrolls.send_payroll', $row], 'style' => 'display:inline']) !!}
+                                                            {!! Form::open(['method' => 'GET', 'route' => ['payrolls.send_payroll', $row], 'style' => 'display:inline', 'class' => 'shotDina', 'id' => $row->id]) !!}
 
                                                             {!! Form::text('periodo_ni', null, ['id' => 'periodo_ni']) !!}
                                                             {!! Form::text('fecha_pago_ni', null, ['id' => 'fecha_pago_ni']) !!}
-                                                            {!! Form::button('<i class="far fa-share-square"></i> Enviar DIAN', ['type' => 'submit', 'class' => 'dropdown-item btn-link me-2']) !!}
+                                                            {!! Form::button('<i class="far fa-share-square"></i> Enviar DIAN', ['type' => 'submit', 'class' => 'dropdown-item btn-link me-2', 'data-id' => $row->id]) !!}
 
                                                             {!! Form::close() !!}
 
@@ -257,7 +275,7 @@
 @section('scripts')
     <script>
         window.setTimeout(function() {
-            $(".alert").fadeTo(1500, 0).slideDown(1000,
+            $(".alert").fadeTo(9000, 0).slideDown(1000,
                 function() {
                     $(this).remove();
                 });
@@ -304,21 +322,30 @@
             });
         });
     </script>
+
     <script>
-        $(document).ready(function() {
-            document.getElementById("periodo_ni").value = document.getElementById("select_payroll_period_id").value
-            $('#select_payroll_period_id').change(function() {
-                var periodo
-                periodo = $(this).val()
-                document.getElementById("periodo_ni").value = periodo
+        $('.shotDina').submit(function(e) {
+            e.preventDefault();
+            var id = $(this).attr("id");
+
+            var fechaPago = document.getElementById("payment_date").value;
+            var periodo = document.getElementById("select_payroll_period_id").value;
+
+            $('input').each(function() {
+
+                if (this.id == 'periodo_ni') {
+                    this.value = periodo;
+                }
+
+                if (this.id == 'fecha_pago_ni') {
+                    this.value = fechaPago;
+                }
+
             });
 
-            document.getElementById("fecha_pago_ni").value = document.getElementById("payment_date").value
-            $('#payment_date').change(function() {
-                var fecha
-                fecha = $(this).val()
-                document.getElementById("fecha_pago_ni").value = fecha
-            });
+
+            this.submit();
+
         });
     </script>
 @endsection

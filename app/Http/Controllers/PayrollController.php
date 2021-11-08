@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\payroll\SendRequest;
 use App\Http\Requests\payroll\UpdateRequest;
 use App\Models\Company;
 use App\Models\Company_has_user;
@@ -158,8 +159,8 @@ class PayrollController extends Controller
     }
 
 
-    public function send_payroll(Payroll $payroll, Request $request)
-    {
+    public function send_payroll(Payroll $payroll, SendRequest $request)
+    {        
         $periodo_id = $request->periodo_ni;
         $fecha_pago = $request->fecha_pago_ni;
 
@@ -236,16 +237,18 @@ class PayrollController extends Controller
         $devengados_json = json_decode($payroll->accrued, true);
 
         $salario = $devengados_json['devengados']['salary']['value'];
-        $subsidio_transporte = $devengados_json['devengados']['transportation_allowance']['value'];
-
+       
         $accrued = array(
             'worked_days' => $payroll->worked_days,
             'salary' => $salario
         );
 
-        if ($subsidio_transporte)
+        
+        if (count($devengados_json['devengados']['transportation_allowance']) > 0){
+            $subsidio_transporte = $devengados_json['devengados']['transportation_allowance']['value'];
             $accrued['transportation_allowance'] = $subsidio_transporte;
-
+        }
+        
         $accrued["accrued_total"] = $payroll->accrued_total;
 
         $objeto_nomina->accrued = $accrued;
@@ -262,12 +265,13 @@ class PayrollController extends Controller
 
         $other_deductions = $deducciones_json['deducciones']['other_deductions'];
 
+        
 
         $deductions = array(
             'eps_type_law_deductions_id' => $deduction_eps_id,
-            'eps_deduction' => $deduction_eps,
+            'eps_deduction' => str_replace(',', '', number_format($deduction_eps, 2)),
             'pension_type_law_deductions_id' => $deduction_pension_id,
-            'pension_deduction' =>  $deduction_pension,
+            'pension_deduction' =>  str_replace(',', '', number_format($deduction_pension, 2)),
             'deductions_total' => $payroll->deductions_total
         );
 
@@ -309,6 +313,7 @@ class PayrollController extends Controller
 
     protected function send_apidian_payroll($company, $configuraciones, $objeto_nomina)
     {//55ed1dc8-1806-4325-9083-8bbb789f4454   
+
         $response = Http::accept('application/json')
             ->withToken($company->api_token)
             ->post(
