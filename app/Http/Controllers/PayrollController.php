@@ -213,7 +213,7 @@ class PayrollController extends Controller
             'municipality_id' => $payroll->worker->municipality_id,
             'type_contract_id' => $payroll->worker->type_contract_id,
             'high_risk_pension' => boolval($payroll->worker->high_risk_pension),
-            'identification_number' => strval($payroll->worker->identification_number),
+            'identification_number' => (int)$payroll->worker->identification_number,
             'surname' => $payroll->worker->surname,
             'second_surname' => is_null($payroll->worker->second_surname) ? '' : $payroll->worker->second_surname,
             'first_name' => $payroll->worker->first_name,
