@@ -2995,6 +2995,9 @@ body:not(.sidebar-mini) .sidebar-style-2 .sidebar-menu li.active ul.dropdown-men
 .bg-c-pink {
     background: linear-gradient(45deg,#fabdc8, #FF5370);
 }
+.bg-c-dian {
+  background: linear-gradient(90deg, rgba(250,250,250,0.6951155462184874) 63%, rgba(83,188,112,0.4962359943977591) 86%, rgba(0,191,220,0.4542191876750701) 100%);
+}
 .card {    
     -webkit-box-shadow: 0 1px 2.94px 0.06px rgba(4,26,55,0.16);
     box-shadow: 0 1px 2.94px 0.06px rgba(4,26,55,0.16);

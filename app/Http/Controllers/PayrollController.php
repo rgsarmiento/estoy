@@ -141,7 +141,8 @@ class PayrollController extends Controller
             'deductions' => $data['deductions'],
             'deductions_total' => $data['deductions_total'],
             'notes' => $data['notes'],
-            'payroll_total' => $data['payroll_total']
+            'payroll_total' => $data['payroll_total'],
+            'payroll_status' => 1
         ]);
 
         return redirect()->route('payrolls.index')->with('message', 'La Nomina del empleado ' . ' ' . $payroll->worker->first_name . ' ' . $payroll->worker->surname . ' ' . 'se actualizado con éxito');
@@ -368,9 +369,14 @@ class PayrollController extends Controller
             $isValid = ($response['ResponseDian']['Envelope']['Body']['SendNominaSyncResponse']['SendNominaSyncResult']['IsValid'] === 'true') ? true : false;
             if ($isValid) {
                 $this->store_documents($payroll->id, $periodo_id, $objeto_nomina, $response, 1, $fechaHora);
+                //aumentar prefijo
                 $resolution->increment('nex');
+                //cambiar estado a enviado ala dian
+                $payroll->update(['payroll_status' => 2]);
+                return redirect()->back()->with('message', 'La Nomina del empleado ' . ' ' . $payroll->worker->first_name . ' ' . $payroll->worker->surname . ' ' . 'se envio con éxito a la DIAN');
             } else {
                 $this->store_documents($payroll->id, $periodo_id, $objeto_nomina, $response, 0, $fechaHora);
+                return redirect()->back()->with('error', 'La Nomina del empleado ' . ' ' . $payroll->worker->first_name . ' ' . $payroll->worker->surname . ' ' . 'No se pudo enviar');
             }
         }
 

@@ -15,22 +15,22 @@
         </div>
 
         @if ($errors->any())
-        <div class="alert alert-danger alert-dismissible fade show alert-has-icon p-4" role="alert">
-            <div class="alert-icon"><i class="fa fa-lightbulb"></i></div>
-            <div class="alert-body">
-                <div class="alert-title">Oh, no!</div>
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
+            <div class="alert alert-danger alert-dismissible fade show alert-has-icon p-4" role="alert">
+                <div class="alert-icon"><i class="fa fa-lightbulb"></i></div>
+                <div class="alert-body">
+                    <div class="alert-title">Oh, no!</div>
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
 
-            <button type="button" class="close" data-dismiss="alert" aria-label="close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-    @endif
+                <button type="button" class="close" data-dismiss="alert" aria-label="close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        @endif
 
 
 
@@ -87,8 +87,8 @@
                                     </thead>
                                     <tbody>
                                         @foreach ($payrolls as $row)
-                                            @if ($row->payroll_status == 0)
-                                                <tr style="background-color: #FFE9E3;">
+                                            @if ($row->payroll_status == 2)
+                                                <tr class="bg-c-dian">
                                                 @else
                                                 <tr>
                                             @endif
@@ -241,7 +241,13 @@
 
                                                             {!! Form::hidden('periodo_ni', null, ['id' => 'periodo_ni']) !!}
                                                             {!! Form::hidden('fecha_pago_ni', null, ['id' => 'fecha_pago_ni']) !!}
-                                                            {!! Form::button('<i class="far fa-share-square"></i> Enviar DIAN', ['type' => 'submit', 'class' => 'dropdown-item btn-link me-2', 'data-id' => $row->id]) !!}
+
+                                                            @if ($row->payroll_status == 2)
+                                                            @else
+                                                                {!! Form::button('<i class="far fa-share-square"></i> Enviar DIAN', ['type' => 'submit', 'class' => 'dropdown-item btn-link me-2', 'data-id' => $row->id]) !!}
+                                                            @endif
+
+
 
                                                             {!! Form::close() !!}
 
@@ -288,6 +294,11 @@
         </script>
     @endif
 
+    @if (Session::has('error'))
+        <script>
+            Swal.fire("Oops...!", "{{ session()->get('message') }}", "error");
+        </script>
+    @endif
 
     @if (Session::has('eliminar'))
         <script>
