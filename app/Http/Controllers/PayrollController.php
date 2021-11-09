@@ -69,7 +69,7 @@ class PayrollController extends Controller
             })->where('company_id', $company_id);
         }
 
-        $payrolls = $payrolls->orderBy('updated_at', 'desc')->paginate(10);
+        $payrolls = $payrolls->orderBy('updated_at', 'desc')->orderBy('payroll_status', 'asc')->paginate(10);
 
         $periodo_nomina = Period::where('year', date('Y'))->where('month', '>=', date('m') - 1)->take(2)->get();
 
