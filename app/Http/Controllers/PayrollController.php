@@ -172,11 +172,11 @@ class PayrollController extends Controller
 
         $objeto_nomina = new stdClass();
         $objeto_nomina->type_document_id = 9; //nomina individual
-        $objeto_nomina->establishment_name = $payroll->company->name;
-        $objeto_nomina->establishment_address = $payroll->company->address;
-        $objeto_nomina->establishment_phone = $payroll->company->phone;
-        $objeto_nomina->establishment_municipality = $payroll->company->municipality_id;
-        $objeto_nomina->establishment_email = $payroll->company->email;
+        //$objeto_nomina->establishment_name = $payroll->company->name;
+        //$objeto_nomina->establishment_address = $payroll->company->address;
+        //$objeto_nomina->establishment_phone = $payroll->company->phone;
+        //$objeto_nomina->establishment_municipality = $payroll->company->municipality_id;
+        //$objeto_nomina->establishment_email = $payroll->company->email;
         //$objeto_nomina->head_note= "PRUEBA TEXTO CABEZA";
         //$objeto_nomina->foot_note= "PRUEBA TEXTO PIE";
 
