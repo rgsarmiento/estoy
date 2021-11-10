@@ -76,11 +76,47 @@
 
                             <form action="{{ route('payrolls.index') }}" method="get">
                                 <div class="form-row">
-                                    <div class="col-sm-6">
+
+                                    <div class="col-lg-4 col-md-4 col-sm-12">
+                                        <div class="card card-statistic-2">
+
+                                            <div class="card-icon shadow-primary bg-primary">
+                                                <i class="fas fa-archive"></i>
+                                            </div>
+                                            <div class="card-wrap">
+                                                <div class="card-header">
+                                                    <h4>Registros</h4>
+                                                </div>
+                                                <div class="card-body">
+                                                    {{ count($payrolls) }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-4 col-md-4 col-sm-12">
+                                        <div class="card card-statistic-2">
+
+                                            <div class="card-icon shadow-primary bg-primary">
+                                                <i class="fas fa-dollar-sign"></i>
+                                            </div>
+                                            <div class="card-wrap">
+                                                <div class="card-header">
+                                                    <h4>Total nomina</h4>
+                                                </div>
+                                                <div class="card-body">
+                                                    {{ number_format($payrolls->sum('payroll_total'), 2) }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-4 col-md-4 col-sm-12">
                                         <div class="form-group">
                                             <div class="input-group mb-3">
-                                                <input type="text" name="busqueda" id="txt_busqueda" class="form-control"
-                                                    placeholder="Ndi, Nombre1, Apellido1" aria-label="">
+                                                <input type="search" name="busqueda" id="txt_busqueda"
+                                                    class="form-control" placeholder="Buscar"
+                                                    aria-label="">
                                                 <div class="input-group-append">
                                                     <input type="submit" class="btn btn-primary" value="Buscar">
                                                 </div>
@@ -88,6 +124,8 @@
                                         </div>
 
                                     </div>
+
+
                                 </div>
                             </form>
 
@@ -105,7 +143,21 @@
                                     <tbody>
                                         @if (count($payrolls) <= 0)
                                             <tr>
-                                                <td colspan="6">No hay resultados</td>
+                                                <td colspan="6">
+                                                    <div class="card-body">
+                                                        <div class="empty-state" data-height="400"
+                                                            style="height: 400px;">
+                                                            <div class="empty-state-icon">
+                                                                <img src="{{ asset('img/avatar/oops.png') }}" alt="avatar"
+                                                                    width="70">
+                                                            </div>
+                                                            <h2>No hay registros para mostrar</h2>
+                                                            <p class="lead">
+                                                                Todos los registros existentes se mostrarán aquí.
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </td>
                                             </tr>
                                         @else
                                             @foreach ($payrolls as $row)
@@ -118,24 +170,16 @@
                                                 <td colspan="2">
                                                     {{ $row->worker->payroll_type_document_identification->name }} :
                                                     {{ $row->worker->identification_number }}<br>
-                                                    <i class="fas fa-user-clock" style="font-size:16px;color:#6777ef;">
-                                                    </i><a href="{{ route('workers.show', $row->worker) }}">
+                                                    <a href="{{ route('workers.show', $row->worker) }}"><img
+                                                            src="{{ asset('img/avatar/avatar-1.png') }}" alt="avatar"
+                                                            width="25" class="rounded-circle mr-1">
                                                         {{ $row->worker->first_name . ' ' . $row->worker->surname }}</a>
                                                 </td>
 
                                                 <td colspan="4"><i class="fas fa-cloud-sun"
                                                         style="font-size:16px;color:#F8C471;"> Días trabajados:</i>
                                                     {{ $row->worked_days }}</td>
-                                                {{-- <td>
-                                                {!! Form::open(['method' => 'PUT', 'route' => ['payrolls.change_status', $row], 'style' => 'display:inline']) !!}
 
-                                                @if ($row->payroll_status == 0)
-                                                    {{ Form::button('Inactivo', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm']) }}
-                                                @else
-                                                    {{ Form::button('Activo', ['type' => 'submit', 'class' => 'btn btn-success btn-sm']) }}
-                                                @endif
-                                                {!! Form::close() !!}
-                                            </td> --}}
                                                 </tr>
                                                 <tr>
                                                     <td style="display: none;">{{ $row->id }}</td>
@@ -312,7 +356,7 @@
             if (urlParams.has('busqueda')) {
                 document.getElementById("txt_busqueda").value = urlParams.get('busqueda');
             }
-            
+
 
             if (localStorage.fecha_pago_ni === undefined) {} else {
                 document.getElementById("payment_date").value = localStorage.getItem('fecha_pago_ni');
@@ -324,8 +368,8 @@
                 localStorage.removeItem('periodo_ni');
             }
 
-            
-            
+
+
 
         });
     </script>

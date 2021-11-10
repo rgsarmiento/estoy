@@ -25,7 +25,7 @@
                                         class="fas fa-plus"></i> Nuevo Empleado</a>
                             @endcan
 
-                            {{--  <div class="btn-group dropleft" style="float:right;width:50px;">
+                            {{-- <div class="btn-group dropleft" style="float:right;width:50px;">
                                 <button class="btn btn-sm btn-primary dropdown-toggle waves-light" type="button"
                                     id="dropdown3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i
                                         class="fas fa-bars"></i></button>
@@ -42,7 +42,7 @@
                                             class="icofont icofont-close m-r-10"></i>Remove</a>
                                 </div>
                                 <!-- end of dropdown menu -->
-                            </div>  --}}
+                            </div> --}}
 
                             <table class="table table-bordered table-hover table-striped mt-2">
                                 <thead style="background-color: #6777ef;">
@@ -54,43 +54,62 @@
                                     <th class="text-right" style="color: #fff;">Acciones</th>
                                 </thead>
                                 <tbody>
-                                    @foreach ($workers as $row)
+                                    @if (count($workers) <= 0)
                                         <tr>
-                                            <td style="display: none;">{{ $row->id }}</td>
-                                            <td>{{ $row->payroll_type_document_identification->name }} <br>
-                                                {{ $row->identification_number }}</td>
-                                            <td><a
-                                                    href="{{ route('workers.show', $row) }}">{{ $row->first_name . ' ' . $row->surname }}</a>
+                                            <td colspan="6">
+                                                <div class="card-body">
+                                                    <div class="empty-state" data-height="400" style="height: 400px;">
+                                                        <div class="empty-state-icon">
+                                                            <img src="{{ asset('img/avatar/oops.png') }}" alt="avatar"
+                                                                width="70">
+                                                        </div>
+                                                        <h2>No hay registros para mostrar</h2>
+                                                        <p class="lead">
+                                                            Todos los registros existentes se mostraran aquí.
+                                                        </p>
+                                                    </div>
+                                                </div>
                                             </td>
-                                            <td>{{ $row->email }}</td>
-                                            <td>
-                                                @if ($row->status == 'ACTIVO')
-                                                    <span class="badge badge-success">{{ $row->status }}</span>
-                                                @else
-                                                    <span class="badge badge-danger">{{ $row->status }}</span>
-                                                @endif
-                                            </td>
-                                            <td class="text-right">
+                                        </tr>
+                                    @else
+                                        @foreach ($workers as $row)
+                                            <tr>
+                                                <td style="display: none;">{{ $row->id }}</td>
+                                                <td>{{ $row->payroll_type_document_identification->name }} <br>
+                                                    {{ $row->identification_number }}</td>
+                                                <td><a
+                                                        href="{{ route('workers.show', $row) }}">{{ $row->first_name . ' ' . $row->surname }}</a>
+                                                </td>
+                                                <td>{{ $row->email }}</td>
+                                                <td>
+                                                    @if ($row->status == 'ACTIVO')
+                                                        <span class="badge badge-success">{{ $row->status }}</span>
+                                                    @else
+                                                        <span class="badge badge-danger">{{ $row->status }}</span>
+                                                    @endif
+                                                </td>
+                                                <td class="text-right">
 
-                                                <div class="btn-group dropleft" style="float:right;width:50px;">
-                                                    <button class="btn btn-sm btn-primary dropdown-toggle waves-light"
-                                                        type="button" id="dropdown3" data-toggle="dropdown"
-                                                        aria-haspopup="true" aria-expanded="false"><i
-                                                            class="fas fa-th-large"></i></button>
-                                                    <div class="dropdown-menu dropleft">
+                                                    <div class="btn-group dropleft" style="float:right;width:50px;">
+                                                        <button class="btn btn-sm btn-primary dropdown-toggle waves-light"
+                                                            type="button" id="dropdown3" data-toggle="dropdown"
+                                                            aria-haspopup="true" aria-expanded="false"><i
+                                                                class="fas fa-th-large"></i></button>
+                                                        <div class="dropdown-menu dropleft">
 
-                                                        @can('workers.eliminar')
-                                                            {!! Form::open(['method' => 'DELETE', 'route' => ['workers.destroy', $row], 'style' => 'display:inline', 'class' => 'form-delete']) !!}
-                                                            {!! Form::button('<i class="fas fa-trash-alt"></i> Eliminar', ['type' => 'submit', 'class' => 'dropdown-item btn-link me-2']) !!}
-                                                            {!! Form::close() !!}
-                                                        @endcan
-                                       
-                                                        @can('workers.editar')
-                                                                <a class="dropdown-item has-icon" href="{{ route('workers.edit', $row->id) }}"><i
-                                                                    class="far fa-edit"></i> Modificar</a>
-                                                    
+                                                            @can('workers.eliminar')
+                                                                {!! Form::open(['method' => 'DELETE', 'route' => ['workers.destroy', $row], 'style' => 'display:inline', 'class' => 'form-delete']) !!}
+                                                                {!! Form::button('<i class="fas fa-trash-alt"></i> Eliminar', ['type' => 'submit', 'class' => 'dropdown-item btn-link me-2']) !!}
+                                                                {!! Form::close() !!}
+                                                            @endcan
+
+                                                            @can('workers.editar')
+                                                                <a class="dropdown-item has-icon"
+                                                                    href="{{ route('workers.edit', $row->id) }}"><i
+                                                                        class="far fa-edit"></i> Modificar</a>
+
                                                                 {!! Form::open(['method' => 'PUT', 'route' => ['workers.change_status', $row], 'style' => 'display:inline']) !!}
-            
+
                                                                 @if ($row->status == 'ACTIVO')
                                                                     {!! Form::button('<i class="fas fa-ban" style="color:#FF267B;"></i> Inactivar', ['type' => 'submit', 'class' => 'dropdown-item btn-link me-2']) !!}
                                                                 @else
@@ -99,18 +118,15 @@
                                                                 {!! Form::close() !!}
                                                             @endcan
 
+                                                        </div>
+                                                        <!-- end of dropdown menu -->
                                                     </div>
-                                                    <!-- end of dropdown menu -->
-                                                </div>
 
+                                                </td>
 
-
-
-                                               
-                                            </td>
-
-                                        </tr>
-                                    @endforeach
+                                            </tr>
+                                        @endforeach
+                                    @endif
                                 </tbody>
                             </table>
                             <div class="pagination justify-content-end">
