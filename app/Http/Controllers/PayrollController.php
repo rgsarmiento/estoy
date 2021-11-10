@@ -76,11 +76,13 @@ class PayrollController extends Controller
             ->orWhere('identification_number', 'LIKE', '%'.$busqueda.'%');
         });
 
+        $totalNomina = $payrolls->sum('payroll_total');
+        $nRegistros = count($payrolls->get());
         $payrolls = $payrolls->orderBy('payroll_status', 'asc')->orderBy('updated_at', 'desc')->paginate(10);
 
         $periodo_nomina = Period::where('year', date('Y'))->where('month', '>=', date('m') - 1)->take(2)->get();
 
-        return view('payrolls.index', compact('payrolls', 'periodo_nomina'));
+        return view('payrolls.index', compact('payrolls', 'periodo_nomina', 'totalNomina', 'nRegistros'));
     }
 
 

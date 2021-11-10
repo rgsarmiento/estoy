@@ -88,7 +88,7 @@
                                                     <h4>Registros</h4>
                                                 </div>
                                                 <div class="card-body">
-                                                    {{ count($payrolls) }}
+                                                    {{ $nRegistros }}
                                                 </div>
                                             </div>
                                         </div>
@@ -105,7 +105,7 @@
                                                     <h4>Total nomina</h4>
                                                 </div>
                                                 <div class="card-body">
-                                                    {{ number_format($payrolls->sum('payroll_total'), 2) }}
+                                                    {{ number_format($totalNomina, 2) }}
                                                 </div>
                                             </div>
                                         </div>
