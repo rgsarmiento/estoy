@@ -30,7 +30,7 @@ class PayrollController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         // $configuraciones = Configuration::first();
         // $respuesta = $this->status_zip_apidian_payroll($configuraciones);
@@ -39,9 +39,10 @@ class PayrollController extends Controller
         //     $jsonRespuesta = json_decode($respuesta, true);
         //     dd($jsonRespuesta['ResponseDian']['Envelope']['Body']);
         // }
-
-
         //pruebas arriba 
+
+        $busqueda = strval(trim($request->get('busqueda'))); //para filtrar busqueda
+
         $user = auth()->user();
         $role_user = auth()->user()->roles->first()->id;
         $company_id = 0;
@@ -68,6 +69,12 @@ class PayrollController extends Controller
                 return $query->where('status', 'ACTIVO');
             })->where('company_id', $company_id);
         }
+
+        $payrolls = Payroll::whereHas('worker', function ($query) use ($busqueda) {
+            return $query->where('first_name', 'LIKE', '%'.$busqueda.'%')
+            ->orWhere('surname', 'LIKE', '%'.$busqueda.'%')
+            ->orWhere('identification_number', 'LIKE', '%'.$busqueda.'%');
+        });
 
         $payrolls = $payrolls->orderBy('payroll_status', 'asc')->orderBy('updated_at', 'desc')->paginate(10);
 

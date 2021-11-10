@@ -74,6 +74,23 @@
                     <div class="card">
                         <div class="card-body">
 
+                            <form action="{{ route('payrolls.index') }}" method="get">
+                                <div class="form-row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <div class="input-group mb-3">
+                                                <input type="text" name="busqueda" id="txt_busqueda" class="form-control"
+                                                    placeholder="Ndi, Nombre1, Apellido1" aria-label="">
+                                                <div class="input-group-append">
+                                                    <input type="submit" class="btn btn-primary" value="Buscar">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </form>
+
                             <div class="table-responsive">
                                 <table class="table table-bordered table-hover border-primary table-striped mt-2">
                                     <thead style="background-color: #6777ef;">
@@ -86,25 +103,30 @@
                                         <th class="text-right" style="color: #fff;">Acciones</th>
                                     </thead>
                                     <tbody>
-                                        @foreach ($payrolls as $row)
-                                            @if ($row->payroll_status == 2)
-                                                <tr class="bg-c-dian">
-                                                @else
-                                                <tr>
-                                            @endif
+                                        @if (count($payrolls) <= 0)
+                                            <tr>
+                                                <td colspan="6">No hay resultados</td>
+                                            </tr>
+                                        @else
+                                            @foreach ($payrolls as $row)
+                                                @if ($row->payroll_status == 2)
+                                                    <tr class="bg-c-dian">
+                                                    @else
+                                                    <tr>
+                                                @endif
 
-                                            <td colspan="2">
-                                                {{ $row->worker->payroll_type_document_identification->name }} :
-                                                {{ $row->worker->identification_number }}<br>
-                                                <i class="fas fa-user-clock" style="font-size:16px;color:#6777ef;">
-                                                </i><a href="{{ route('workers.show', $row->worker) }}">
-                                                    {{ $row->worker->first_name . ' ' . $row->worker->surname }}</a>
-                                            </td>
+                                                <td colspan="2">
+                                                    {{ $row->worker->payroll_type_document_identification->name }} :
+                                                    {{ $row->worker->identification_number }}<br>
+                                                    <i class="fas fa-user-clock" style="font-size:16px;color:#6777ef;">
+                                                    </i><a href="{{ route('workers.show', $row->worker) }}">
+                                                        {{ $row->worker->first_name . ' ' . $row->worker->surname }}</a>
+                                                </td>
 
-                                            <td colspan="4"><i class="fas fa-cloud-sun"
-                                                    style="font-size:16px;color:#F8C471;"> Días trabajados:</i>
-                                                {{ $row->worked_days }}</td>
-                                            {{-- <td>
+                                                <td colspan="4"><i class="fas fa-cloud-sun"
+                                                        style="font-size:16px;color:#F8C471;"> Días trabajados:</i>
+                                                    {{ $row->worked_days }}</td>
+                                                {{-- <td>
                                                 {!! Form::open(['method' => 'PUT', 'route' => ['payrolls.change_status', $row], 'style' => 'display:inline']) !!}
 
                                                 @if ($row->payroll_status == 0)
@@ -114,154 +136,156 @@
                                                 @endif
                                                 {!! Form::close() !!}
                                             </td> --}}
-                                            </tr>
-                                            <tr>
-                                                <td style="display: none;">{{ $row->id }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="display: none;">{{ $row->id }}</td>
 
-                                                <td>
+                                                    <td>
 
-                                                    @php
-                                                        $devengados_json = json_decode($row->accrued, true);
-                                                        
-                                                        $salary = $devengados_json['devengados']['salary'];
-                                                        $transportation_allowance = $devengados_json['devengados']['transportation_allowance'];
-                                                        
-                                                        $common_vacation = $devengados_json['devengados']['common_vacation'];
-                                                        $paid_vacation = $devengados_json['devengados']['paid_vacation'];
-                                                        $maternity_leave = $devengados_json['devengados']['maternity_leave'];
-                                                        $paid_leave = $devengados_json['devengados']['paid_leave'];
-                                                        $legal_strike = $devengados_json['devengados']['legal_strike'];
-                                                    @endphp
+                                                        @php
+                                                            $devengados_json = json_decode($row->accrued, true);
+                                                            
+                                                            $salary = $devengados_json['devengados']['salary'];
+                                                            $transportation_allowance = $devengados_json['devengados']['transportation_allowance'];
+                                                            
+                                                            $common_vacation = $devengados_json['devengados']['common_vacation'];
+                                                            $paid_vacation = $devengados_json['devengados']['paid_vacation'];
+                                                            $maternity_leave = $devengados_json['devengados']['maternity_leave'];
+                                                            $paid_leave = $devengados_json['devengados']['paid_leave'];
+                                                            $legal_strike = $devengados_json['devengados']['legal_strike'];
+                                                        @endphp
 
-                                                    {!! $salary['name'] . ':<br><strong> +' . number_format($salary['value'], 2) . '</strong>' !!}
+                                                        {!! $salary['name'] . ':<br><strong> +' . number_format($salary['value'], 2) . '</strong>' !!}
 
-                                                    @if (count($transportation_allowance))
+                                                        @if (count($transportation_allowance))
+                                                            <hr
+                                                                style="margin-top:0rem;margin-bottom:0rem;border-top:1px solid rgb(103 119 239)">
+                                                            {!! $transportation_allowance['name'] . ':<br><strong> +' . number_format($transportation_allowance['value'], 2) . '</strong>' !!}
+                                                        @endif
+
+                                                        @if (count($common_vacation))
+                                                            <hr
+                                                                style="margin-top:0rem;margin-bottom:0rem;border-top:1px solid rgb(103 119 239)">
+                                                        @endif
+                                                        @foreach ($common_vacation as $value)
+                                                            {!! $value['name'] . ':<br><strong> +' . number_format($value['payment'], 2) . '</strong>' !!} <br>
+                                                        @endforeach
+
+
+                                                        @if (count($paid_vacation))
+                                                            <hr
+                                                                style="margin-top:0rem;margin-bottom:0rem;border-top:1px solid rgb(103 119 239)">
+                                                        @endif
+                                                        @foreach ($paid_vacation as $value)
+                                                            {!! $value['name'] . ':<br><strong> +' . number_format($value['payment'], 2) . '</strong>' !!} <br>
+                                                        @endforeach
+
+
+                                                        @if (count($maternity_leave))
+                                                            <hr
+                                                                style="margin-top:0rem;margin-bottom:0rem;border-top:1px solid rgb(103 119 239)">
+                                                        @endif
+                                                        @foreach ($maternity_leave as $value)
+                                                            {!! $value['name'] . ':<br><strong> +' . number_format($value['payment'], 2) . '</strong>' !!} <br>
+                                                        @endforeach
+
+
+                                                        @if (count($paid_leave))
+                                                            <hr
+                                                                style="margin-top:0rem;margin-bottom:0rem;border-top:1px solid rgb(103 119 239)">
+                                                        @endif
+                                                        @foreach ($paid_leave as $value)
+                                                            {!! $value['name'] . ':<br><strong> +' . number_format($value['payment'], 2) . '</strong>' !!} <br>
+                                                        @endforeach
+
+
+                                                        @if (count($legal_strike))
+                                                            <hr
+                                                                style="margin-top:0rem;margin-bottom:0rem;border-top:1px solid rgb(103 119 239)">
+                                                        @endif
+                                                        @foreach ($legal_strike as $value)
+                                                            {!! $value['name'] . ':<br><strong> +' . number_format($value['payment'], 2) . '</strong>' !!} <br>
+                                                        @endforeach
+
+
+                                                    </td>
+                                                    <td style="white-space:nowrap;"><i class="fa fa-sort-up"
+                                                            style="font-size:18px;color:#00D0C4;"></i> $
+                                                        {{ number_format($row->accrued_total, 2) }}</td>
+                                                    <td>
+
+                                                        @php
+                                                            $deducciones_json = json_decode($row->deductions, true);
+                                                            
+                                                            $eps_type_law_deduction = $deducciones_json['deducciones']['eps_type_law_deduction'];
+                                                            $pension_type_law_deductions = $deducciones_json['deducciones']['pension_type_law_deductions'];
+                                                            $other_deductions = $deducciones_json['deducciones']['other_deductions'];
+                                                            
+                                                        @endphp
+
+                                                        {!! $eps_type_law_deduction['name'] . ':<strong> -' . number_format($eps_type_law_deduction['value'], 2) . '</strong>' !!}
                                                         <hr
                                                             style="margin-top:0rem;margin-bottom:0rem;border-top:1px solid rgb(103 119 239)">
-                                                        {!! $transportation_allowance['name'] . ':<br><strong> +' . number_format($transportation_allowance['value'], 2) . '</strong>' !!}
-                                                    @endif
+                                                        {!! $pension_type_law_deductions['name'] . ':<strong> -' . number_format($pension_type_law_deductions['value'], 2) . '</strong>' !!}
 
-                                                    @if (count($common_vacation))
-                                                        <hr
-                                                            style="margin-top:0rem;margin-bottom:0rem;border-top:1px solid rgb(103 119 239)">
-                                                    @endif
-                                                    @foreach ($common_vacation as $value)
-                                                        {!! $value['name'] . ':<br><strong> +' . number_format($value['payment'], 2) . '</strong>' !!} <br>
-                                                    @endforeach
+                                                        @if (count($other_deductions))
+                                                            <hr
+                                                                style="margin-top:0rem;margin-bottom:0rem;border-top:1px solid rgb(103 119 239)">
+                                                        @endif
 
+                                                        @foreach ($other_deductions as $value)
+                                                            {!! $value['name'] . ':<br><strong> -' . number_format($value['value'], 2) . '</strong>' !!} <br>
+                                                        @endforeach
 
-                                                    @if (count($paid_vacation))
-                                                        <hr
-                                                            style="margin-top:0rem;margin-bottom:0rem;border-top:1px solid rgb(103 119 239)">
-                                                    @endif
-                                                    @foreach ($paid_vacation as $value)
-                                                        {!! $value['name'] . ':<br><strong> +' . number_format($value['payment'], 2) . '</strong>' !!} <br>
-                                                    @endforeach
+                                                        @if (count($other_deductions))
+                                                            <hr
+                                                                style="margin-top:0rem;margin-bottom:0rem;border-top:1px solid rgb(103 119 239)">
+                                                        @endif
 
 
-                                                    @if (count($maternity_leave))
-                                                        <hr
-                                                            style="margin-top:0rem;margin-bottom:0rem;border-top:1px solid rgb(103 119 239)">
-                                                    @endif
-                                                    @foreach ($maternity_leave as $value)
-                                                        {!! $value['name'] . ':<br><strong> +' . number_format($value['payment'], 2) . '</strong>' !!} <br>
-                                                    @endforeach
+                                                    </td>
+                                                    <td style="white-space:nowrap;"><i class="fa fa-sort-down"
+                                                            style="font-size:18px;color:#FF267B;"></i> $
+                                                        {{ number_format($row->deductions_total, 2) }}</td>
+                                                    <td style="white-space:nowrap;"><i class="fa fa-equals"
+                                                            style="font-size:15px;color:#00D0C4;"></i> $
+                                                        {{ number_format($row->payroll_total, 2) }}</td>
 
+                                                    <td>
+                                                        <div class="btn-group dropleft" style="float:right;width:50px;">
+                                                            <button
+                                                                class="btn btn-sm btn-primary dropdown-toggle waves-light"
+                                                                type="button" id="dropdown3" data-toggle="dropdown"
+                                                                aria-haspopup="true" aria-expanded="false"><i
+                                                                    class="fas fa-th-large"></i></button>
+                                                            <div class="dropdown-menu dropleft">
 
-                                                    @if (count($paid_leave))
-                                                        <hr
-                                                            style="margin-top:0rem;margin-bottom:0rem;border-top:1px solid rgb(103 119 239)">
-                                                    @endif
-                                                    @foreach ($paid_leave as $value)
-                                                        {!! $value['name'] . ':<br><strong> +' . number_format($value['payment'], 2) . '</strong>' !!} <br>
-                                                    @endforeach
+                                                                {!! Form::open(['method' => 'GET', 'route' => ['payrolls.send_payroll', $row], 'style' => 'display:inline', 'class' => 'shotDina', 'id' => $row->id]) !!}
 
+                                                                {!! Form::hidden('periodo_ni', null, ['id' => 'periodo_ni']) !!}
+                                                                {!! Form::hidden('fecha_pago_ni', null, ['id' => 'fecha_pago_ni']) !!}
 
-                                                    @if (count($legal_strike))
-                                                        <hr
-                                                            style="margin-top:0rem;margin-bottom:0rem;border-top:1px solid rgb(103 119 239)">
-                                                    @endif
-                                                    @foreach ($legal_strike as $value)
-                                                        {!! $value['name'] . ':<br><strong> +' . number_format($value['payment'], 2) . '</strong>' !!} <br>
-                                                    @endforeach
-
-
-                                                </td>
-                                                <td style="white-space:nowrap;"><i class="fa fa-sort-up"
-                                                        style="font-size:18px;color:#00D0C4;"></i> $
-                                                    {{ number_format($row->accrued_total, 2) }}</td>
-                                                <td>
-
-                                                    @php
-                                                        $deducciones_json = json_decode($row->deductions, true);
-                                                        
-                                                        $eps_type_law_deduction = $deducciones_json['deducciones']['eps_type_law_deduction'];
-                                                        $pension_type_law_deductions = $deducciones_json['deducciones']['pension_type_law_deductions'];
-                                                        $other_deductions = $deducciones_json['deducciones']['other_deductions'];
-                                                        
-                                                    @endphp
-
-                                                    {!! $eps_type_law_deduction['name'] . ':<strong> -' . number_format($eps_type_law_deduction['value'], 2) . '</strong>' !!}
-                                                    <hr
-                                                        style="margin-top:0rem;margin-bottom:0rem;border-top:1px solid rgb(103 119 239)">
-                                                    {!! $pension_type_law_deductions['name'] . ':<strong> -' . number_format($pension_type_law_deductions['value'], 2) . '</strong>' !!}
-
-                                                    @if (count($other_deductions))
-                                                        <hr
-                                                            style="margin-top:0rem;margin-bottom:0rem;border-top:1px solid rgb(103 119 239)">
-                                                    @endif
-
-                                                    @foreach ($other_deductions as $value)
-                                                        {!! $value['name'] . ':<br><strong> -' . number_format($value['value'], 2) . '</strong>' !!} <br>
-                                                    @endforeach
-
-                                                    @if (count($other_deductions))
-                                                        <hr
-                                                            style="margin-top:0rem;margin-bottom:0rem;border-top:1px solid rgb(103 119 239)">
-                                                    @endif
-
-
-                                                </td>
-                                                <td style="white-space:nowrap;"><i class="fa fa-sort-down"
-                                                        style="font-size:18px;color:#FF267B;"></i> $
-                                                    {{ number_format($row->deductions_total, 2) }}</td>
-                                                <td style="white-space:nowrap;"><i class="fa fa-equals"
-                                                        style="font-size:15px;color:#00D0C4;"></i> $
-                                                    {{ number_format($row->payroll_total, 2) }}</td>
-
-                                                <td>
-                                                    <div class="btn-group dropleft" style="float:right;width:50px;">
-                                                        <button class="btn btn-sm btn-primary dropdown-toggle waves-light"
-                                                            type="button" id="dropdown3" data-toggle="dropdown"
-                                                            aria-haspopup="true" aria-expanded="false"><i
-                                                                class="fas fa-th-large"></i></button>
-                                                        <div class="dropdown-menu dropleft">
-
-                                                            {!! Form::open(['method' => 'GET', 'route' => ['payrolls.send_payroll', $row], 'style' => 'display:inline', 'class' => 'shotDina', 'id' => $row->id]) !!}
-
-                                                            {!! Form::hidden('periodo_ni', null, ['id' => 'periodo_ni']) !!}
-                                                            {!! Form::hidden('fecha_pago_ni', null, ['id' => 'fecha_pago_ni']) !!}
-
-                                                            @if ($row->payroll_status == 2)
-                                                            @else
-                                                                {!! Form::button('<i class="far fa-share-square"></i> Enviar DIAN', ['type' => 'submit', 'class' => 'dropdown-item btn-link me-2', 'data-id' => $row->id]) !!}
-                                                            @endif
+                                                                @if ($row->payroll_status == 2)
+                                                                @else
+                                                                    {!! Form::button('<i class="far fa-share-square"></i> Enviar DIAN', ['type' => 'submit', 'class' => 'dropdown-item btn-link me-2', 'data-id' => $row->id]) !!}
+                                                                @endif
 
 
 
-                                                            {!! Form::close() !!}
+                                                                {!! Form::close() !!}
 
-                                                            <a class="dropdown-item has-icon"
-                                                                href="{{ route('payrolls.edit', $row->id) }}"><i
-                                                                    class="far fa-edit"></i> Modificar</a>
+                                                                <a class="dropdown-item has-icon"
+                                                                    href="{{ route('payrolls.edit', $row->id) }}"><i
+                                                                        class="far fa-edit"></i> Modificar</a>
 
+                                                            </div>
+                                                            <!-- end of dropdown menu -->
                                                         </div>
-                                                        <!-- end of dropdown menu -->
-                                                    </div>
-                                                </td>
+                                                    </td>
 
-                                            </tr>
-                                        @endforeach
+                                                </tr>
+                                            @endforeach
+                                        @endif
                                     </tbody>
                                 </table>
                                 <div class="pagination justify-content-end">
@@ -279,6 +303,33 @@
 @endsection
 
 @section('scripts')
+    <script>
+        $(document).ready(function() {
+            //Código que se ejecutará al cargar la página
+            var queryString = window.location.search;
+            var urlParams = new URLSearchParams(queryString);
+
+            if (urlParams.has('busqueda')) {
+                document.getElementById("txt_busqueda").value = urlParams.get('busqueda');
+            }
+            
+
+            if (localStorage.fecha_pago_ni === undefined) {} else {
+                document.getElementById("payment_date").value = localStorage.getItem('fecha_pago_ni');
+                localStorage.removeItem('fecha_pago_ni');
+            }
+
+            if (localStorage.periodo_ni === undefined) {} else {
+                document.getElementById("select_payroll_period_id").value = localStorage.getItem('periodo_ni');
+                localStorage.removeItem('periodo_ni');
+            }
+
+            
+            
+
+        });
+    </script>
+
     <script>
         window.setTimeout(function() {
             $(".alert").fadeTo(9000, 0).slideDown(1000,
@@ -341,6 +392,10 @@
 
             var fechaPago = document.getElementById("payment_date").value;
             var periodo = document.getElementById("select_payroll_period_id").value;
+
+            localStorage.setItem('periodo_ni', periodo);
+            localStorage.setItem('fecha_pago_ni', fechaPago);
+
 
             $('input').each(function() {
 
