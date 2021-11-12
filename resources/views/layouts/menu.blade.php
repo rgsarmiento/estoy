@@ -25,7 +25,7 @@
     </ul>
 </li>
 
-//beep beep-sidebar
+
 <li class="nav-item dropdown">
     <a href="#" class="nav-link has-dropdown"><i class="fas fa-address-book"></i><span>Nomina</span></a>
     <ul class="dropdown-menu">
@@ -33,7 +33,10 @@
             <a class="nav-link" href="/workers"><i class="fa fa-user-clock"></i>Empleados</a>
         </li>
         <li class="side-menus {{ Request::is('payrolls') ? 'active' : '' }}">
-            <a class="nav-link" href="/payrolls"><i class="fa fa-receipt"></i>Comprobante</a>
+            <a class="nav-link" href="/payrolls"><i class="fa fa-calculator"></i>Comprobante</a>
+        </li>
+        <li class="side-menus {{ Request::is('documents') ? 'active' : '' }}">
+            <a class="nav-link beep beep-sidebar" href="/documents"><i class="fa fa-file-invoice"></i>Emitidos</a>
         </li>
     </ul>
 </li>

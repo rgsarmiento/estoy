@@ -7,6 +7,7 @@ use App\Http\Controllers\RolController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\WorkerController;
 use App\Http\Controllers\CompanyHasUserController;
+use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\PayrollController;
 
 /*
@@ -48,6 +49,8 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/payrolls/send_payroll/{payroll}', [App\Http\Controllers\PayrollController::class, 'send_payroll'])->name('payrolls.send_payroll');    
     Route::put('/payrolls/change_status/{payroll}', [App\Http\Controllers\PayrollController::class, 'change_status'])->name('payrolls.change_status');    
 
+    Route::resource('documents', DocumentController::class);
+    Route::get('/documents/download_apidian_payroll/{document}/{type}', [App\Http\Controllers\DocumentController::class, 'download_apidian_payroll'])->name('documents.download_apidian_payroll');
 
 
 });
