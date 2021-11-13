@@ -32,7 +32,7 @@ class PayrollController extends Controller
      */
     public function index(Request $request)
     {
-      
+
         // if ($respuesta->successful()) {
         //     $jsonRespuesta = json_decode($respuesta, true);
         //     dd($jsonRespuesta['ResponseDian']['Envelope']['Body']);
@@ -68,9 +68,9 @@ class PayrollController extends Controller
         }
 
         $payrolls = $payrolls->whereHas('worker', function ($query) use ($busqueda) {
-            return $query->where('first_name', 'LIKE', '%'.$busqueda.'%')
-            ->orWhere('surname', 'LIKE', '%'.$busqueda.'%')
-            ->orWhere('identification_number', 'LIKE', '%'.$busqueda.'%');
+            return $query->where('first_name', 'LIKE', '%' . $busqueda . '%')
+                ->orWhere('surname', 'LIKE', '%' . $busqueda . '%')
+                ->orWhere('identification_number', 'LIKE', '%' . $busqueda . '%');
         });
 
         $totalNomina = $payrolls->sum('payroll_total');
@@ -250,6 +250,16 @@ class PayrollController extends Controller
         $paid_leave = $devengados_json['devengados']['paid_leave'];
         $legal_strike = $devengados_json['devengados']['legal_strike'];
 
+        $HEDs = $devengados_json['devengados']['HEDs'];
+        $HENs = $devengados_json['devengados']['HENs'];
+        $HRNs = $devengados_json['devengados']['HRNs'];
+        $HEDDFs = $devengados_json['devengados']['HEDDFs'];
+        $HRDDFs = $devengados_json['devengados']['HRDDFs'];
+        $HENDFs = $devengados_json['devengados']['HENDFs'];
+        $HRNDFs = $devengados_json['devengados']['HRNDFs'];
+
+        $work_disabilities = $devengados_json['devengados']['work_disabilities'];
+
         $accrued = array(
             'worked_days' => $payroll->worked_days,
             'salary' => str_replace(',', '', number_format($salario, 2))
@@ -325,6 +335,117 @@ class PayrollController extends Controller
             }
         }
 
+        if (count($HEDs) > 0) {
+            $accrued['HEDs'] = array();
+            foreach ($HEDs as $key) {
+                $HEDs = array(
+                    'start_time' => $key['start_time'].':00',
+                    'end_time' => $key['end_time'].':00',
+                    'quantity' => $key['quantity'],
+                    'percentage' => $key['percentage'],
+                    'payment' => str_replace(',', '', number_format($key['payment'], 2))
+                );
+                array_push($accrued['HEDs'], $HEDs);
+            }
+        }
+
+        if (count($HENs) > 0) {
+            $accrued['HENs'] = array();
+            foreach ($HENs as $key) {
+                $HENs = array(
+                    'start_time' => $key['start_time'].':00',
+                    'end_time' => $key['end_time'].':00',
+                    'quantity' => $key['quantity'],
+                    'percentage' => $key['percentage'],
+                    'payment' => str_replace(',', '', number_format($key['payment'], 2))
+                );
+                array_push($accrued['HENs'], $HENs);
+            }
+        }
+
+        if (count($HRNs) > 0) {
+            $accrued['HRNs'] = array();
+            foreach ($HRNs as $key) {
+                $HRNs = array(
+                    'start_time' => $key['start_time'].':00',
+                    'end_time' => $key['end_time'].':00',
+                    'quantity' => $key['quantity'],
+                    'percentage' => $key['percentage'],
+                    'payment' => str_replace(',', '', number_format($key['payment'], 2))
+                );
+                array_push($accrued['HRNs'], $HRNs);
+            }
+        }
+
+        if (count($HEDDFs) > 0) {
+            $accrued['HEDDFs'] = array();
+            foreach ($HEDDFs as $key) {
+                $HEDDFs = array(
+                    'start_time' => $key['start_time'].':00',
+                    'end_time' => $key['end_time'].':00',
+                    'quantity' => $key['quantity'],
+                    'percentage' => $key['percentage'],
+                    'payment' => str_replace(',', '', number_format($key['payment'], 2))
+                );
+                array_push($accrued['HEDDFs'], $HEDDFs);
+            }
+        }
+
+        if (count($HRDDFs) > 0) {
+            $accrued['HRDDFs'] = array();
+            foreach ($HRDDFs as $key) {
+                $HRDDFs = array(
+                    'start_time' => $key['start_time'].':00',
+                    'end_time' => $key['end_time'].':00',
+                    'quantity' => $key['quantity'],
+                    'percentage' => $key['percentage'],
+                    'payment' => str_replace(',', '', number_format($key['payment'], 2))
+                );
+                array_push($accrued['HRDDFs'], $HRDDFs);
+            }
+        }
+
+        if (count($HENDFs) > 0) {
+            $accrued['HENDFs'] = array();
+            foreach ($HENDFs as $key) {
+                $HENDFs = array(
+                    'start_time' => $key['start_time'].':00',
+                    'end_time' => $key['end_time'].':00',
+                    'quantity' => $key['quantity'],
+                    'percentage' => $key['percentage'],
+                    'payment' => str_replace(',', '', number_format($key['payment'], 2))
+                );
+                array_push($accrued['HENDFs'], $HENDFs);
+            }
+        }
+
+        if (count($HRNDFs) > 0) {
+            $accrued['HRNDFs'] = array();
+            foreach ($HRNDFs as $key) {
+                $HRNDFs = array(
+                    'start_time' => $key['start_time'].':00',
+                    'end_time' => $key['end_time'].':00',
+                    'quantity' => $key['quantity'],
+                    'percentage' => $key['percentage'],
+                    'payment' => str_replace(',', '', number_format($key['payment'], 2))
+                );
+                array_push($accrued['HRNDFs'], $HRNDFs);
+            }
+        }
+
+        if (count($work_disabilities) > 0) {
+            $accrued['work_disabilities'] = array();
+            foreach ($work_disabilities as $key) {
+                $work_disabilities = array(
+                    'start_date' => $key['start_date'],
+                    'end_date' => $key['end_date'],
+                    'type' => $key['type'],
+                    'quantity' => $key['quantity'],
+                    'payment' => str_replace(',', '', number_format($key['payment'], 2))
+                );
+                array_push($accrued['work_disabilities'], $work_disabilities);
+            }
+        }
 
 
         $accrued["accrued_total"] = $payroll->accrued_total;
@@ -476,8 +597,4 @@ class PayrollController extends Controller
 
         $document->save();
     }
-
-
-   
-
 }

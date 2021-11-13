@@ -115,8 +115,7 @@
                                         <div class="form-group">
                                             <div class="input-group mb-3">
                                                 <input type="search" name="busqueda" id="txt_busqueda"
-                                                    class="form-control" placeholder="Buscar"
-                                                    aria-label="">
+                                                    class="form-control" placeholder="Buscar" aria-label="">
                                                 <div class="input-group-append">
                                                     <input type="submit" class="btn btn-primary" value="Buscar">
                                                 </div>
@@ -197,6 +196,16 @@
                                                             $maternity_leave = $devengados_json['devengados']['maternity_leave'];
                                                             $paid_leave = $devengados_json['devengados']['paid_leave'];
                                                             $legal_strike = $devengados_json['devengados']['legal_strike'];
+                                                            
+                                                            $HEDs = $devengados_json['devengados']['HEDs'];
+                                                            $HENs = $devengados_json['devengados']['HENs'];
+                                                            $HRNs = $devengados_json['devengados']['HRNs'];
+                                                            $HEDDFs = $devengados_json['devengados']['HEDDFs'];
+                                                            $HRDDFs = $devengados_json['devengados']['HRDDFs'];
+                                                            $HENDFs = $devengados_json['devengados']['HENDFs'];
+                                                            $HRNDFs = $devengados_json['devengados']['HRNDFs'];
+
+                                                            $work_disabilities = $devengados_json['devengados']['work_disabilities'];
                                                         @endphp
 
                                                         {!! $salary['name'] . ':<br><strong> +' . number_format($salary['value'], 2) . '</strong>' !!}
@@ -248,6 +257,70 @@
                                                                 style="margin-top:0rem;margin-bottom:0rem;border-top:1px solid rgb(103 119 239)">
                                                         @endif
                                                         @foreach ($legal_strike as $value)
+                                                            {!! $value['name'] . ':<br><strong> +' . number_format($value['payment'], 2) . '</strong>' !!} <br>
+                                                        @endforeach
+
+                                                        @if (count($HEDs))
+                                                            <hr
+                                                                style="margin-top:0rem;margin-bottom:0rem;border-top:1px solid rgb(103 119 239)">
+                                                        @endif
+                                                        @foreach ($HEDs as $value)
+                                                            {!! '('.$value['quantity'].')'.' '.$value['name'] . ':<br><strong> +' . number_format($value['payment'], 2) . '</strong>' !!} <br>
+                                                        @endforeach
+
+                                                        @if (count($HENs))
+                                                            <hr
+                                                                style="margin-top:0rem;margin-bottom:0rem;border-top:1px solid rgb(103 119 239)">
+                                                        @endif
+                                                        @foreach ($HENs as $value)
+                                                            {!! '('.$value['quantity'].')'.' '.$value['name'] . ':<br><strong> +' . number_format($value['payment'], 2) . '</strong>' !!} <br>
+                                                        @endforeach
+
+                                                        @if (count($HRNs))
+                                                            <hr
+                                                                style="margin-top:0rem;margin-bottom:0rem;border-top:1px solid rgb(103 119 239)">
+                                                        @endif
+                                                        @foreach ($HRNs as $value)
+                                                            {!! '('.$value['quantity'].')'.' '.$value['name'] . ':<br><strong> +' . number_format($value['payment'], 2) . '</strong>' !!} <br>
+                                                        @endforeach
+
+                                                        @if (count($HEDDFs))
+                                                            <hr
+                                                                style="margin-top:0rem;margin-bottom:0rem;border-top:1px solid rgb(103 119 239)">
+                                                        @endif
+                                                        @foreach ($HEDDFs as $value)
+                                                            {!! '('.$value['quantity'].')'.' '.$value['name'] . ':<br><strong> +' . number_format($value['payment'], 2) . '</strong>' !!} <br>
+                                                        @endforeach
+
+                                                        @if (count($HRDDFs))
+                                                            <hr
+                                                                style="margin-top:0rem;margin-bottom:0rem;border-top:1px solid rgb(103 119 239)">
+                                                        @endif
+                                                        @foreach ($HRDDFs as $value)
+                                                            {!! '('.$value['quantity'].')'.' '.$value['name'] . ':<br><strong> +' . number_format($value['payment'], 2) . '</strong>' !!} <br>
+                                                        @endforeach
+
+                                                        @if (count($HENDFs))
+                                                            <hr
+                                                                style="margin-top:0rem;margin-bottom:0rem;border-top:1px solid rgb(103 119 239)">
+                                                        @endif
+                                                        @foreach ($HENDFs as $value)
+                                                            {!! '('.$value['quantity'].')'.' '.$value['name'] . ':<br><strong> +' . number_format($value['payment'], 2) . '</strong>' !!} <br>
+                                                        @endforeach
+
+                                                        @if (count($HRNDFs))
+                                                            <hr
+                                                                style="margin-top:0rem;margin-bottom:0rem;border-top:1px solid rgb(103 119 239)">
+                                                        @endif
+                                                        @foreach ($HRNDFs as $value)
+                                                            {!! '('.$value['quantity'].')'.' '.$value['name'] . ':<br><strong> +' . number_format($value['payment'], 2) . '</strong>' !!} <br>
+                                                        @endforeach
+                                                        
+                                                        @if (count($work_disabilities))
+                                                            <hr
+                                                                style="margin-top:0rem;margin-bottom:0rem;border-top:1px solid rgb(103 119 239)">
+                                                        @endif
+                                                        @foreach ($work_disabilities as $value)
                                                             {!! $value['name'] . ':<br><strong> +' . number_format($value['payment'], 2) . '</strong>' !!} <br>
                                                         @endforeach
 

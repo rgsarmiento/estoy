@@ -179,11 +179,50 @@
                     </div>
                 </div>
 
+                <div class="row" id="div_rango_fecha_h_a">
+                    <div class="col-sm-12 col-xl-6 m-b-30">
+                        <div class="form-group">
+                            <label>Hora Inicio</label>
+                            <input type="datetime-local" class="form-control" id="start_date_h_a">
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 col-xl-6 m-b-30">
+                        <div class="form-group">
+                            <label>Hora Fin</label>
+                            <input type="datetime-local" class="form-control" id="end_date_h_a">
+                        </div>
+                    </div>
+                </div>
+                
+                {{--  solo para incapacidades  --}}
+                <div class="row" id="div_type_incapacidad_a">
+                    <div class="col-md-4 col-12">
+                        <div class="form-group">
+                            <label>Tipo Incapacidad</label>
+                            <select class="form-control" id="type_incapacidad_a">
+                                <option value=1>Común</option>
+                                <option value=2>Profesional</option>
+                                <option value=3>Laboral</option>
+                              </select>                            
+                        </div>
+                    </div>
+                </div>
+
                 <div class="row" id="div_quantity_a">
                     <div class="col-md-4 col-12">
                         <div class="form-group">
                             <label>Cantidad de Dias</label>
                             <input type="number" class="form-control" id="quantity_a">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" id="div_quantity_h_a">
+                    <div class="col-md-4 col-12">
+                        <div class="form-group">
+                            <label>Cantidad de Horas</label>
+                            <input type="number" class="form-control" id="quantity_h_a">
                         </div>
                     </div>
                 </div>
@@ -198,7 +237,7 @@
                 </div>
 
                 <div class="col-md-6 col-12" id="div_add_accrueds">
-                    <button type="button" class="btn btn-info" id="add_accrued">Add. pago</button>
+                    <button type="button" class="btn btn-success" id="add_accrued">Agregar</button>
                 </div>
 
                 <br>
@@ -206,7 +245,6 @@
                     <div class="col-md-12 col-12">
                     </div>
                 </div>
-
 
 
                 <table id="tbl_accrueds" class="table table-bordered table-hover border-primary table-striped mt-2">
@@ -224,6 +262,15 @@
                             $paid_leave = $devengados_json['devengados']['paid_leave'];
                             $legal_strike = $devengados_json['devengados']['legal_strike'];
                             
+                            $HEDs = $devengados_json['devengados']['HEDs'];
+                            $HENs = $devengados_json['devengados']['HENs'];
+                            $HRNs = $devengados_json['devengados']['HRNs'];
+                            $HEDDFs = $devengados_json['devengados']['HEDDFs'];
+                            $HRDDFs = $devengados_json['devengados']['HRDDFs'];
+                            $HENDFs = $devengados_json['devengados']['HENDFs'];
+                            $HRNDFs = $devengados_json['devengados']['HRNDFs'];
+
+                            $work_disabilities = $devengados_json['devengados']['work_disabilities'];
                         @endphp
 
                         <tr id="salario1">
@@ -246,7 +293,8 @@
 
                         @foreach ($common_vacation as $value)
                             <tr id="common_vacation-{!! $value['id'] !!}">
-                                <td>{!! $value['name'] !!} Fecha: ({!! $value['start_date'] !!} / {!! $value['end_date'] !!}) Dias: {!! $value['quantity'] !!}</td>
+                                <td>PAGO DE {!! $value['quantity'] !!} DIA(S) DE {!! $value['name'] !!} DESDE
+                                    {!! $value['start_date'] !!} HASTA {!! $value['end_date'] !!}</td>
                                 <td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i>
                                     ${!! number_format($value['payment'], 2) !!}</td>
                                 <td><a href="javascript:eliminar_accrued({!! $value['id'] !!},'common_vacation', {!! $value['payment'] !!})"
@@ -255,45 +303,136 @@
                         @endforeach
 
                         @foreach ($paid_vacation as $value)
-                        <tr id="paid_vacation-{!! $value['id'] !!}">
-                            <td>{!! $value['name'] !!} Fecha: ({!! $value['start_date'] !!} / {!! $value['end_date'] !!}) Dias: {!! $value['quantity'] !!}</td>
-                            <td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i>
-                                ${!! number_format($value['payment'], 2) !!}</td>
-                            <td><a href="javascript:eliminar_accrued({!! $value['id'] !!},'paid_vacation', {!! $value['payment'] !!})"
-                                    class="btn btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a></td>
-                        </tr>
-                    @endforeach
+                            <tr id="paid_vacation-{!! $value['id'] !!}">
+                                <td>PAGO DE {!! $value['quantity'] !!} DIA(S) DE {!! $value['name'] !!} DESDE
+                                    {!! $value['start_date'] !!} HASTA {!! $value['end_date'] !!}</td>
+                                <td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i>
+                                    ${!! number_format($value['payment'], 2) !!}</td>
+                                <td><a href="javascript:eliminar_accrued({!! $value['id'] !!},'paid_vacation', {!! $value['payment'] !!})"
+                                        class="btn btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a></td>
+                            </tr>
+                        @endforeach
 
-                    @foreach ($maternity_leave as $value)
-                        <tr id="maternity_leave-{!! $value['id'] !!}">
-                            <td>{!! $value['name'] !!} Fecha: ({!! $value['start_date'] !!} / {!! $value['end_date'] !!}) Dias: {!! $value['quantity'] !!}</td>
-                            <td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i>
-                                ${!! number_format($value['payment'], 2) !!}</td>
-                            <td><a href="javascript:eliminar_accrued({!! $value['id'] !!},'maternity_leave', {!! $value['payment'] !!})"
-                                    class="btn btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a></td>
-                        </tr>
-                    @endforeach
+                        @foreach ($maternity_leave as $value)
+                            <tr id="maternity_leave-{!! $value['id'] !!}">
+                                <td>PAGO DE {!! $value['quantity'] !!} DIA(S) DE {!! $value['name'] !!} DESDE
+                                    {!! $value['start_date'] !!} HASTA {!! $value['end_date'] !!}</td>
+                                <td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i>
+                                    ${!! number_format($value['payment'], 2) !!}</td>
+                                <td><a href="javascript:eliminar_accrued({!! $value['id'] !!},'maternity_leave', {!! $value['payment'] !!})"
+                                        class="btn btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a></td>
+                            </tr>
+                        @endforeach
 
-                    @foreach ($paid_leave as $value)
-                        <tr id="paid_leave-{!! $value['id'] !!}">
-                            <td>{!! $value['name'] !!} Fecha: ({!! $value['start_date'] !!} / {!! $value['end_date'] !!}) Dias: {!! $value['quantity'] !!}</td>
-                            <td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i>
-                                ${!! number_format($value['payment'], 2) !!}</td>
-                            <td><a href="javascript:eliminar_accrued({!! $value['id'] !!},'paid_leave', {!! $value['payment'] !!})"
-                                    class="btn btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a></td>
-                        </tr>
-                    @endforeach
+                        @foreach ($paid_leave as $value)
+                            <tr id="paid_leave-{!! $value['id'] !!}">
+                                <td>PAGO DE {!! $value['quantity'] !!} DIA(S) DE {!! $value['name'] !!} DESDE
+                                    {!! $value['start_date'] !!} HASTA {!! $value['end_date'] !!}</td>
+                                <td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i>
+                                    ${!! number_format($value['payment'], 2) !!}</td>
+                                <td><a href="javascript:eliminar_accrued({!! $value['id'] !!},'paid_leave', {!! $value['payment'] !!})"
+                                        class="btn btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a></td>
+                            </tr>
+                        @endforeach
 
-                    @foreach ($legal_strike as $value)
-                        <tr id="legal_strike-{!! $value['id'] !!}">
-                            <td>{!! $value['name'] !!} Fecha: ({!! $value['start_date'] !!} / {!! $value['end_date'] !!}) Dias: {!! $value['quantity'] !!}</td>
-                            <td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i>
-                                ${!! number_format($value['payment'], 2) !!}</td>
-                            <td><a href="javascript:eliminar_accrued({!! $value['id'] !!},'legal_strike', {!! $value['payment'] !!})"
-                                    class="btn btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a></td>
-                        </tr>
-                    @endforeach
+                        @foreach ($legal_strike as $value)
+                            <tr id="legal_strike-{!! $value['id'] !!}">
+                                <td>PAGO DE {!! $value['quantity'] !!} DIA(S) DE {!! $value['name'] !!} DESDE
+                                    {!! $value['start_date'] !!} HASTA {!! $value['end_date'] !!}</td>
+                                <td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i>
+                                    ${!! number_format($value['payment'], 2) !!}</td>
+                                <td><a href="javascript:eliminar_accrued({!! $value['id'] !!},'legal_strike', {!! $value['payment'] !!})"
+                                        class="btn btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a></td>
+                            </tr>
+                        @endforeach
 
+                        @foreach ($HEDs as $value)
+                            <tr id="HEDs-{!! $value['id'] !!}">
+                                <td>PAGO DE {!! $value['quantity'] !!} {!! $value['name'] !!} DESDE
+                                    {!! $value['start_time'] !!} HASTA {!! $value['end_time'] !!}</td>
+                                <td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i>
+                                    ${!! number_format($value['payment'], 2) !!}</td>
+                                <td><a href="javascript:eliminar_accrued({!! $value['id'] !!},'HEDs', {!! $value['payment'] !!})"
+                                        class="btn btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a></td>
+                            </tr>
+                        @endforeach
+
+                        @foreach ($HENs as $value)
+                            <tr id="HENs-{!! $value['id'] !!}">
+                                <td>PAGO DE {!! $value['quantity'] !!} {!! $value['name'] !!} DESDE
+                                    {!! $value['start_time'] !!} HASTA {!! $value['end_time'] !!}</td>
+                                <td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i>
+                                    ${!! number_format($value['payment'], 2) !!}</td>
+                                <td><a href="javascript:eliminar_accrued({!! $value['id'] !!},'HENs', {!! $value['payment'] !!})"
+                                        class="btn btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a></td>
+                            </tr>
+                        @endforeach
+
+                        @foreach ($HRNs as $value)
+                            <tr id="HRNs-{!! $value['id'] !!}">
+                                <td>PAGO DE {!! $value['quantity'] !!} {!! $value['name'] !!} DESDE
+                                    {!! $value['start_time'] !!} HASTA {!! $value['end_time'] !!}</td>
+                                <td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i>
+                                    ${!! number_format($value['payment'], 2) !!}</td>
+                                <td><a href="javascript:eliminar_accrued({!! $value['id'] !!},'HRNs', {!! $value['payment'] !!})"
+                                        class="btn btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a></td>
+                            </tr>
+                        @endforeach
+
+                        @foreach ($HEDDFs as $value)
+                            <tr id="HEDDFs-{!! $value['id'] !!}">
+                                <td>PAGO DE {!! $value['quantity'] !!} {!! $value['name'] !!} DESDE
+                                    {!! $value['start_time'] !!} HASTA {!! $value['end_time'] !!}</td>
+                                <td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i>
+                                    ${!! number_format($value['payment'], 2) !!}</td>
+                                <td><a href="javascript:eliminar_accrued({!! $value['id'] !!},'HEDDFs', {!! $value['payment'] !!})"
+                                        class="btn btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a></td>
+                            </tr>
+                        @endforeach
+
+                        @foreach ($HRDDFs as $value)
+                            <tr id="HRDDFs-{!! $value['id'] !!}">
+                                <td>PAGO DE {!! $value['quantity'] !!} {!! $value['name'] !!} DESDE
+                                    {!! $value['start_time'] !!} HASTA {!! $value['end_time'] !!}</td>
+                                <td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i>
+                                    ${!! number_format($value['payment'], 2) !!}</td>
+                                <td><a href="javascript:eliminar_accrued({!! $value['id'] !!},'HRDDFs', {!! $value['payment'] !!})"
+                                        class="btn btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a></td>
+                            </tr>
+                        @endforeach
+
+                        @foreach ($HENDFs as $value)
+                            <tr id="HENDFs-{!! $value['id'] !!}">
+                                <td>PAGO DE {!! $value['quantity'] !!} {!! $value['name'] !!} DESDE
+                                    {!! $value['start_time'] !!} HASTA {!! $value['end_time'] !!}</td>
+                                <td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i>
+                                    ${!! number_format($value['payment'], 2) !!}</td>
+                                <td><a href="javascript:eliminar_accrued({!! $value['id'] !!},'HENDFs', {!! $value['payment'] !!})"
+                                        class="btn btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a></td>
+                            </tr>
+                        @endforeach
+
+                        @foreach ($HRNDFs as $value)
+                            <tr id="HRNDFs-{!! $value['id'] !!}">
+                                <td>PAGO DE {!! $value['quantity'] !!} {!! $value['name'] !!} DESDE
+                                    {!! $value['start_time'] !!} HASTA {!! $value['end_time'] !!}</td>
+                                <td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i>
+                                    ${!! number_format($value['payment'], 2) !!}</td>
+                                <td><a href="javascript:eliminar_accrued({!! $value['id'] !!},'HRNDFs', {!! $value['payment'] !!})"
+                                        class="btn btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a></td>
+                            </tr>
+                        @endforeach
+
+                        @foreach ($work_disabilities as $value)
+                            <tr id="work_disabilities-{!! $value['id'] !!}">
+                                <td>PAGO DE {!! $value['quantity'] !!} DIA(S) DE {!! $value['name'] !!} DESDE
+                                    {!! $value['start_date'] !!} HASTA {!! $value['end_date'] !!}</td>
+                                <td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i>
+                                    ${!! number_format($value['payment'], 2) !!}</td>
+                                <td><a href="javascript:eliminar_accrued({!! $value['id'] !!},'work_disabilities', {!! $value['payment'] !!})"
+                                        class="btn btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a></td>
+                            </tr>
+                        @endforeach
 
 
                     </tbody>

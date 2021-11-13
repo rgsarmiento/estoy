@@ -64,6 +64,7 @@
 
             $('#select_tipo_devengado').change(function() {
                 var nodo = $(this).val()
+                limpiar_controles();
                 switch (nodo) {
                     case 'common_vacation':
                         document.getElementById("div_accrued_value").style.display = "block";
@@ -94,6 +95,55 @@
                         document.getElementById("div_add_accrueds").style.display = "block";
                         document.getElementById("div_quantity_a").style.display = "block";
                         document.getElementById("div_rango_fecha_a").style.display = "block";
+                        break;
+                    case 'HEDs':
+                        document.getElementById("div_accrued_value").style.display = "block";
+                        document.getElementById("div_add_accrueds").style.display = "block";
+                        document.getElementById("div_quantity_h_a").style.display = "block";
+                        document.getElementById("div_rango_fecha_h_a").style.display = "block";
+                        break;
+                    case 'HENs':
+                        document.getElementById("div_accrued_value").style.display = "block";
+                        document.getElementById("div_add_accrueds").style.display = "block";
+                        document.getElementById("div_quantity_h_a").style.display = "block";
+                        document.getElementById("div_rango_fecha_h_a").style.display = "block";
+                        break;
+                    case 'HRNs':
+                        document.getElementById("div_accrued_value").style.display = "block";
+                        document.getElementById("div_add_accrueds").style.display = "block";
+                        document.getElementById("div_quantity_h_a").style.display = "block";
+                        document.getElementById("div_rango_fecha_h_a").style.display = "block";
+                        break;
+                    case 'HEDDFs':
+                        document.getElementById("div_accrued_value").style.display = "block";
+                        document.getElementById("div_add_accrueds").style.display = "block";
+                        document.getElementById("div_quantity_h_a").style.display = "block";
+                        document.getElementById("div_rango_fecha_h_a").style.display = "block";
+                        break;
+                    case 'HRDDFs':
+                        document.getElementById("div_accrued_value").style.display = "block";
+                        document.getElementById("div_add_accrueds").style.display = "block";
+                        document.getElementById("div_quantity_h_a").style.display = "block";
+                        document.getElementById("div_rango_fecha_h_a").style.display = "block";
+                        break;
+                    case 'HENDFs':
+                        document.getElementById("div_accrued_value").style.display = "block";
+                        document.getElementById("div_add_accrueds").style.display = "block";
+                        document.getElementById("div_quantity_h_a").style.display = "block";
+                        document.getElementById("div_rango_fecha_h_a").style.display = "block";
+                        break;
+                    case 'HRNDFs':
+                        document.getElementById("div_accrued_value").style.display = "block";
+                        document.getElementById("div_add_accrueds").style.display = "block";
+                        document.getElementById("div_quantity_h_a").style.display = "block";
+                        document.getElementById("div_rango_fecha_h_a").style.display = "block";
+                        break;
+                    case 'work_disabilities':
+                        document.getElementById("div_accrued_value").style.display = "block";
+                        document.getElementById("div_add_accrueds").style.display = "block";
+                        document.getElementById("div_quantity_a").style.display = "block";
+                        document.getElementById("div_rango_fecha_a").style.display = "block";
+                        document.getElementById("div_type_incapacidad_a").style.display = "block";
                         break;
                 }
             });
@@ -127,7 +177,7 @@
                         };
 
                         $("#tbl_accrueds>tbody").append('<tr id="other_concepts-' + id + '"><td>' +
-                            tipo +
+                            'PAGO DE ' + tipo +
                             '</td><td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i> $' +
                             parseFloat(val_accrued, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
                                 "$1,").toString() + '</td>' +
@@ -158,8 +208,8 @@
                         };
 
                         $("#tbl_accrueds>tbody").append('<tr id="common_vacation-' + id + '"><td>' +
-                            tipo + ' Fecha: (' + fechaInicio + ' / ' + fechaFin + ') Dias: ' +
-                            cantidad +
+                            'PAGO DE ' + cantidad + ' DIA(S) DE ' + tipo + ' DESDE ' + fechaInicio +
+                            ' HASTA ' + fechaFin +
                             '</td><td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i> $' +
                             parseFloat(val_accrued, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
                                 "$1,").toString() + '</td>' +
@@ -191,8 +241,8 @@
                         };
 
                         $("#tbl_accrueds>tbody").append('<tr id="common_vacation-' + id + '"><td>' +
-                            tipo + ' Fecha: (' + fechaInicio + ' / ' + fechaFin + ') Dias: ' +
-                            cantidad +
+                            'PAGO DE ' + cantidad + ' DIA(S) DE ' + tipo + ' DESDE ' + fechaInicio +
+                            ' HASTA ' + fechaFin +
                             '</td><td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i> $' +
                             parseFloat(val_accrued, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
                                 "$1,").toString() + '</td>' +
@@ -223,8 +273,8 @@
                         };
 
                         $("#tbl_accrueds>tbody").append('<tr id="maternity_leave-' + id + '"><td>' +
-                            tipo + ' Fecha: (' + fechaInicio + ' / ' + fechaFin + ') Dias: ' +
-                            cantidad +
+                            'PAGO DE ' + cantidad + ' DIA(S) DE ' + tipo + ' DESDE ' + fechaInicio +
+                            ' HASTA ' + fechaFin +
                             '</td><td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i> $' +
                             parseFloat(val_accrued, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
                                 "$1,").toString() + '</td>' +
@@ -255,8 +305,8 @@
                         };
 
                         $("#tbl_accrueds>tbody").append('<tr id="paid_leave-' + id + '"><td>' +
-                            tipo + ' Fecha: (' + fechaInicio + ' / ' + fechaFin + ') Dias: ' +
-                            cantidad +
+                            'PAGO DE ' + cantidad + ' DIA(S) DE ' + tipo + ' DESDE ' + fechaInicio +
+                            ' HASTA ' + fechaFin +
                             '</td><td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i> $' +
                             parseFloat(val_accrued, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
                                 "$1,").toString() + '</td>' +
@@ -287,8 +337,8 @@
                         };
 
                         $("#tbl_accrueds>tbody").append('<tr id="legal_strike-' + id + '"><td>' +
-                            tipo + ' Fecha: (' + fechaInicio + ' / ' + fechaFin + ') Dias: ' +
-                            cantidad +
+                            'PAGO DE ' + cantidad + ' DIA(S) DE ' + tipo + ' DESDE ' + fechaInicio +
+                            ' HASTA ' + fechaFin +
                             '</td><td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i> $' +
                             parseFloat(val_accrued, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
                                 "$1,").toString() + '</td>' +
@@ -300,9 +350,274 @@
                         accrued.devengados.legal_strike.push(array);
                         val_accrueds = (val_accrueds + val_accrued);
                         break;
+                    case 'HEDs': ///////////////////////////////////////////////////////////////
+                        var n_element = accrued.devengados.HEDs.length;
+
+                        var fechaInicio = document.getElementById("start_date_h_a").value;
+                        var fechaFin = document.getElementById("end_date_h_a").value;
+                        var cantidad = Number(document.getElementById("quantity_h_a").value);
+                        var val_accrued = Number(document.getElementById("val_accrued").value);
+
+                        var id = (Math.floor(Math.random() * (999 - 100 + 1) + 100) + n_element);
+                        array = {
+                            'id': id,
+                            'start_time': fechaInicio,
+                            'end_time': fechaFin,
+                            'quantity': cantidad,
+                            'payment': val_accrued,
+                            'name': tipo,
+                            'percentage': 1,
+                        };
+
+                        $("#tbl_accrueds>tbody").append('<tr id="HEDs-' + id + '"><td>' +
+                            'PAGO DE ' + cantidad + ' ' + tipo + ' DESDE ' + fechaInicio + ' HASTA ' +
+                            fechaFin +
+                            '</td><td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i> $' +
+                            parseFloat(val_accrued, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
+                                "$1,").toString() + '</td>' +
+                            '<td><a href="javascript:eliminar_accrued(' + id +
+                            ",'HEDs'," + val_accrued +
+                            ')" class="btn btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a></td></tr>'
+                        );
+
+                        accrued.devengados.HEDs.push(array);
+                        val_accrueds = (val_accrueds + val_accrued);
+                        break;
+                    case 'HENs':
+                        var n_element = accrued.devengados.HENs.length;
+
+                        var fechaInicio = document.getElementById("start_date_h_a").value;
+                        var fechaFin = document.getElementById("end_date_h_a").value;
+                        var cantidad = Number(document.getElementById("quantity_h_a").value);
+                        var val_accrued = Number(document.getElementById("val_accrued").value);
+
+                        var id = (Math.floor(Math.random() * (999 - 100 + 1) + 100) + n_element);
+                        array = {
+                            'id': id,
+                            'start_time': fechaInicio,
+                            'end_time': fechaFin,
+                            'quantity': cantidad,
+                            'payment': val_accrued,
+                            'name': tipo,
+                            'percentage': 2,
+                        };
+
+                        $("#tbl_accrueds>tbody").append('<tr id="HENs-' + id + '"><td>' +
+                            'PAGO DE ' + cantidad + ' ' + tipo + ' DESDE ' + fechaInicio + ' HASTA ' +
+                            fechaFin +
+                            '</td><td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i> $' +
+                            parseFloat(val_accrued, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
+                                "$1,").toString() + '</td>' +
+                            '<td><a href="javascript:eliminar_accrued(' + id +
+                            ",'HENs'," + val_accrued +
+                            ')" class="btn btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a></td></tr>'
+                        );
+
+                        accrued.devengados.HENs.push(array);
+                        val_accrueds = (val_accrueds + val_accrued);
+                        break;
+                    case 'HRNs':
+                        var n_element = accrued.devengados.HRNs.length;
+
+                        var fechaInicio = document.getElementById("start_date_h_a").value;
+                        var fechaFin = document.getElementById("end_date_h_a").value;
+                        var cantidad = Number(document.getElementById("quantity_h_a").value);
+                        var val_accrued = Number(document.getElementById("val_accrued").value);
+
+                        var id = (Math.floor(Math.random() * (999 - 100 + 1) + 100) + n_element);
+                        array = {
+                            'id': id,
+                            'start_time': fechaInicio,
+                            'end_time': fechaFin,
+                            'quantity': cantidad,
+                            'payment': val_accrued,
+                            'name': tipo,
+                            'percentage': 3,
+                        };
+
+                        $("#tbl_accrueds>tbody").append('<tr id="HRNs-' + id + '"><td>' +
+                            'PAGO DE ' + cantidad + ' ' + tipo + ' DESDE ' + fechaInicio + ' HASTA ' +
+                            fechaFin +
+                            '</td><td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i> $' +
+                            parseFloat(val_accrued, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
+                                "$1,").toString() + '</td>' +
+                            '<td><a href="javascript:eliminar_accrued(' + id +
+                            ",'HRNs'," + val_accrued +
+                            ')" class="btn btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a></td></tr>'
+                        );
+
+                        accrued.devengados.HRNs.push(array);
+                        val_accrueds = (val_accrueds + val_accrued);
+                        break;
+                    case 'HEDDFs':
+                        var n_element = accrued.devengados.HEDDFs.length;
+
+                        var fechaInicio = document.getElementById("start_date_h_a").value;
+                        var fechaFin = document.getElementById("end_date_h_a").value;
+                        var cantidad = Number(document.getElementById("quantity_h_a").value);
+                        var val_accrued = Number(document.getElementById("val_accrued").value);
+
+                        var id = (Math.floor(Math.random() * (999 - 100 + 1) + 100) + n_element);
+                        array = {
+                            'id': id,
+                            'start_time': fechaInicio,
+                            'end_time': fechaFin,
+                            'quantity': cantidad,
+                            'payment': val_accrued,
+                            'name': tipo,
+                            'percentage': 4,
+                        };
+
+                        $("#tbl_accrueds>tbody").append('<tr id="HEDDFs-' + id + '"><td>' +
+                            'PAGO DE ' + cantidad + ' ' + tipo + ' DESDE ' + fechaInicio + ' HASTA ' +
+                            fechaFin +
+                            '</td><td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i> $' +
+                            parseFloat(val_accrued, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
+                                "$1,").toString() + '</td>' +
+                            '<td><a href="javascript:eliminar_accrued(' + id +
+                            ",'HEDDFs'," + val_accrued +
+                            ')" class="btn btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a></td></tr>'
+                        );
+
+                        accrued.devengados.HEDDFs.push(array);
+                        val_accrueds = (val_accrueds + val_accrued);
+                        break;
+                    case 'HRDDFs':
+                        var n_element = accrued.devengados.HRDDFs.length;
+
+                        var fechaInicio = document.getElementById("start_date_h_a").value;
+                        var fechaFin = document.getElementById("end_date_h_a").value;
+                        var cantidad = Number(document.getElementById("quantity_h_a").value);
+                        var val_accrued = Number(document.getElementById("val_accrued").value);
+
+                        var id = (Math.floor(Math.random() * (999 - 100 + 1) + 100) + n_element);
+                        array = {
+                            'id': id,
+                            'start_time': fechaInicio,
+                            'end_time': fechaFin,
+                            'quantity': cantidad,
+                            'payment': val_accrued,
+                            'name': tipo,
+                            'percentage': 5,
+                        };
+
+                        $("#tbl_accrueds>tbody").append('<tr id="HRDDFs-' + id + '"><td>' +
+                            'PAGO DE ' + cantidad + ' ' + tipo + ' DESDE ' + fechaInicio + ' HASTA ' +
+                            fechaFin +
+                            '</td><td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i> $' +
+                            parseFloat(val_accrued, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
+                                "$1,").toString() + '</td>' +
+                            '<td><a href="javascript:eliminar_accrued(' + id +
+                            ",'HRDDFs'," + val_accrued +
+                            ')" class="btn btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a></td></tr>'
+                        );
+
+                        accrued.devengados.HRDDFs.push(array);
+                        val_accrueds = (val_accrueds + val_accrued);
+                        break;
+                    case 'HENDFs':
+                        var n_element = accrued.devengados.HENDFs.length;
+
+                        var fechaInicio = document.getElementById("start_date_h_a").value;
+                        var fechaFin = document.getElementById("end_date_h_a").value;
+                        var cantidad = Number(document.getElementById("quantity_h_a").value);
+                        var val_accrued = Number(document.getElementById("val_accrued").value);
+
+                        var id = (Math.floor(Math.random() * (999 - 100 + 1) + 100) + n_element);
+                        array = {
+                            'id': id,
+                            'start_time': fechaInicio,
+                            'end_time': fechaFin,
+                            'quantity': cantidad,
+                            'payment': val_accrued,
+                            'name': tipo,
+                            'percentage': 6,
+                        };
+
+                        $("#tbl_accrueds>tbody").append('<tr id="HENDFs-' + id + '"><td>' +
+                            'PAGO DE ' + cantidad + ' ' + tipo + ' DESDE ' + fechaInicio + ' HASTA ' +
+                            fechaFin +
+                            '</td><td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i> $' +
+                            parseFloat(val_accrued, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
+                                "$1,").toString() + '</td>' +
+                            '<td><a href="javascript:eliminar_accrued(' + id +
+                            ",'HENDFs'," + val_accrued +
+                            ')" class="btn btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a></td></tr>'
+                        );
+
+                        accrued.devengados.HENDFs.push(array);
+                        val_accrueds = (val_accrueds + val_accrued);
+                        break;
+                    case 'HRNDFs':
+                        var n_element = accrued.devengados.HRNDFs.length;
+
+                        var fechaInicio = document.getElementById("start_date_h_a").value;
+                        var fechaFin = document.getElementById("end_date_h_a").value;
+                        var cantidad = Number(document.getElementById("quantity_h_a").value);
+                        var val_accrued = Number(document.getElementById("val_accrued").value);
+
+                        var id = (Math.floor(Math.random() * (999 - 100 + 1) + 100) + n_element);
+                        array = {
+                            'id': id,
+                            'start_time': fechaInicio,
+                            'end_time': fechaFin,
+                            'quantity': cantidad,
+                            'payment': val_accrued,
+                            'name': tipo,
+                            'percentage': 7,
+                        };
+
+                        $("#tbl_accrueds>tbody").append('<tr id="HRNDFs-' + id + '"><td>' +
+                            'PAGO DE ' + cantidad + ' ' + tipo + ' DESDE ' + fechaInicio + ' HASTA ' +
+                            fechaFin +
+                            '</td><td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i> $' +
+                            parseFloat(val_accrued, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
+                                "$1,").toString() + '</td>' +
+                            '<td><a href="javascript:eliminar_accrued(' + id +
+                            ",'HRNDFs'," + val_accrued +
+                            ')" class="btn btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a></td></tr>'
+                        );
+
+                        accrued.devengados.HRNDFs.push(array);
+                        val_accrueds = (val_accrueds + val_accrued);
+                        break;
+                    case 'work_disabilities':
+                        var n_element = accrued.devengados.work_disabilities.length;
+
+                        var fechaInicio = document.getElementById("start_date_a").value;
+                        var fechaFin = document.getElementById("end_date_a").value;
+                        var cantidad = Number(document.getElementById("quantity_a").value);
+                        var val_accrued = Number(document.getElementById("val_accrued").value);
+                        var val_tipo_incapacidad = document.getElementById("type_incapacidad_a").value;
+                        var tipo_incapacidad = $('#type_incapacidad_a option:selected').html();
+
+                        var id = (Math.floor(Math.random() * (999 - 100 + 1) + 100) + n_element);
+                        array = {
+                            'id': id,
+                            'start_date': fechaInicio,
+                            'end_date': fechaFin,
+                            'quantity': cantidad,
+                            'payment': val_accrued,
+                            'name': tipo + ' ' + tipo_incapacidad,
+                            'type': val_tipo_incapacidad
+                        };
+
+                        $("#tbl_accrueds>tbody").append('<tr id="work_disabilities-' + id + '"><td>' +
+                            'PAGO DE ' + cantidad + ' DIA(S) DE ' + tipo + ' ' + tipo_incapacidad +
+                            ' DESDE ' + fechaInicio + ' HASTA ' + fechaFin +
+                            '</td><td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i> $' +
+                            parseFloat(val_accrued, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
+                                "$1,").toString() + '</td>' +
+                            '<td><a href="javascript:eliminar_accrued(' + id +
+                            ",'work_disabilities'," + val_accrued +
+                            ')" class="btn btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a></td></tr>'
+                        );
+
+                        accrued.devengados.work_disabilities.push(array);
+                        val_accrueds = (val_accrueds + val_accrued);
+                        break;
                 }
 
-                //nada desde aca he revisado
 
                 document.getElementById("accrued_total").value = val_accrueds;
                 document.getElementById("accrued").value = JSON.stringify(accrued);
@@ -314,6 +629,9 @@
 
                 ocultar_controles();
                 recalcular_total();
+
+                var tbl = document.getElementById("tbl_accrueds");
+                tbl.scrollIntoView();
             });
 
 
@@ -399,16 +717,34 @@
                 document.getElementById("div_add_accrueds").style.display = "none";
                 document.getElementById("div_quantity_a").style.display = "none";
 
-                document.getElementById("start_date_a").value = "";
-                document.getElementById("end_date_a").value = "";
-                document.getElementById("quantity_a").value = "";
-                document.getElementById("val_accrued").value = "";
+                document.getElementById("div_quantity_h_a").style.display = "none";
+                document.getElementById("div_rango_fecha_h_a").style.display = "none";
+
+                document.getElementById("div_type_incapacidad_a").style.display = "none";
+
 
 
                 //deducciones
                 document.getElementById("div_deduction_value").style.display = "none";
                 document.getElementById("div_add_deductions").style.display = "none";
+
+                limpiar_controles();
+            }
+
+            function limpiar_controles() {
+                //devengados
+                document.getElementById("start_date_a").value = "";
+                document.getElementById("end_date_a").value = "";
+                document.getElementById("quantity_a").value = "";
+                document.getElementById("val_accrued").value = "";
+
+                document.getElementById("start_date_h_a").value = "";
+                document.getElementById("end_date_h_a").value = "";
+                document.getElementById("quantity_h_a").value = "";
+
+                //deducciones
                 document.getElementById("val_deduction").value = "";
+
             }
 
         });
@@ -426,7 +762,7 @@
                     var fechaFin = document.getElementById("end_date_a").value;
                     var cantidad = Number(document.getElementById("quantity_a").value);
                     var valor = Number(document.getElementById("val_accrued").value);
-                    if (valor <= 0 && cantidad <= 0 && fechaInicio != "" && fechaFin != "") {
+                    if (valor <= 0 || cantidad <= 0 || fechaInicio.length == 0 || fechaFin.length == 0) {
                         return false
                     }
                     break;
@@ -435,7 +771,7 @@
                     var fechaFin = document.getElementById("end_date_a").value;
                     var cantidad = Number(document.getElementById("quantity_a").value);
                     var valor = Number(document.getElementById("val_accrued").value);
-                    if (valor <= 0 && cantidad <= 0 && fechaInicio != "" && fechaFin != "") {
+                    if (valor <= 0 || cantidad <= 0 || fechaInicio.length == 0 || fechaFin.length == 0) {
                         return false
                     }
                     break;
@@ -444,7 +780,7 @@
                     var fechaFin = document.getElementById("end_date_a").value;
                     var cantidad = Number(document.getElementById("quantity_a").value);
                     var valor = Number(document.getElementById("val_accrued").value);
-                    if (valor <= 0 && cantidad <= 0 && fechaInicio != "" && fechaFin != "") {
+                    if (valor <= 0 || cantidad <= 0 || fechaInicio.length == 0 || fechaFin.length == 0) {
                         return false
                     }
                     break;
@@ -453,7 +789,7 @@
                     var fechaFin = document.getElementById("end_date_a").value;
                     var cantidad = Number(document.getElementById("quantity_a").value);
                     var valor = Number(document.getElementById("val_accrued").value);
-                    if (valor <= 0 && cantidad <= 0 && fechaInicio != "" && fechaFin != "") {
+                    if (valor <= 0 || cantidad <= 0 || fechaInicio.length == 0 || fechaFin.length == 0) {
                         return false
                     }
                     break;
@@ -462,7 +798,7 @@
                     var fechaFin = document.getElementById("end_date_a").value;
                     var cantidad = Number(document.getElementById("quantity_a").value);
                     var valor = Number(document.getElementById("val_accrued").value);
-                    if (valor <= 0 && cantidad <= 0 && fechaInicio != "" && fechaFin != "") {
+                    if (valor <= 0 || cantidad <= 0 || fechaInicio.length == 0 || fechaFin.length == 0) {
                         return false
                     }
                     break;
@@ -471,7 +807,81 @@
                     var fechaFin = document.getElementById("end_date_a").value;
                     var cantidad = Number(document.getElementById("quantity_a").value);
                     var valor = Number(document.getElementById("val_accrued").value);
-                    if (valor <= 0 && cantidad <= 0 && fechaInicio != "" && fechaFin != "") {
+                    if (valor <= 0 || cantidad <= 0 || fechaInicio.length == 0 || fechaFin.length == 0) {
+                        return false
+                    }
+                    break;
+                case 'HEDs':
+                    var fechaInicio = document.getElementById("start_date_h_a").value;
+                    var fechaFin = document.getElementById("end_date_h_a").value;
+                    var cantidad = Number(document.getElementById("quantity_h_a").value);
+                    var valor = Number(document.getElementById("val_accrued").value);
+                    if (valor <= 0 || cantidad <= 0 || fechaInicio.length == 0 || fechaFin.length == 0) {
+                        return false
+                    }
+                    break;
+                case 'HENs':
+                    var fechaInicio = document.getElementById("start_date_h_a").value;
+                    var fechaFin = document.getElementById("end_date_h_a").value;
+                    var cantidad = Number(document.getElementById("quantity_h_a").value);
+                    var valor = Number(document.getElementById("val_accrued").value);
+                    if (valor <= 0 || cantidad <= 0 || fechaInicio.length == 0 || fechaFin.length == 0) {
+                        return false
+                    }
+                    break;
+                case 'HRNs':
+                    var fechaInicio = document.getElementById("start_date_h_a").value;
+                    var fechaFin = document.getElementById("end_date_h_a").value;
+                    var cantidad = Number(document.getElementById("quantity_h_a").value);
+                    var valor = Number(document.getElementById("val_accrued").value);
+                    if (valor <= 0 || cantidad <= 0 || fechaInicio.length == 0 || fechaFin.length == 0) {
+                        return false
+                    }
+                    break;
+                case 'HEDDFs':
+                    var fechaInicio = document.getElementById("start_date_h_a").value;
+                    var fechaFin = document.getElementById("end_date_h_a").value;
+                    var cantidad = Number(document.getElementById("quantity_h_a").value);
+                    var valor = Number(document.getElementById("val_accrued").value);
+                    if (valor <= 0 || cantidad <= 0 || fechaInicio.length == 0 || fechaFin.length == 0) {
+                        return false
+                    }
+                    break;
+                case 'HRDDFs':
+                    var fechaInicio = document.getElementById("start_date_h_a").value;
+                    var fechaFin = document.getElementById("end_date_h_a").value;
+                    var cantidad = Number(document.getElementById("quantity_h_a").value);
+                    var valor = Number(document.getElementById("val_accrued").value);
+                    if (valor <= 0 || cantidad <= 0 || fechaInicio.length == 0 || fechaFin.length == 0) {
+                        return false
+                    }
+                    break;
+                case 'HENDFs':
+                    var fechaInicio = document.getElementById("start_date_h_a").value;
+                    var fechaFin = document.getElementById("end_date_h_a").value;
+                    var cantidad = Number(document.getElementById("quantity_h_a").value);
+                    var valor = Number(document.getElementById("val_accrued").value);
+                    if (valor <= 0 || cantidad <= 0 || fechaInicio.length == 0 || fechaFin.length == 0) {
+                        return false
+                    }
+                    break;
+                case 'HRNDFs':
+                    var fechaInicio = document.getElementById("start_date_h_a").value;
+                    var fechaFin = document.getElementById("end_date_h_a").value;
+                    var cantidad = Number(document.getElementById("quantity_h_a").value);
+                    var valor = Number(document.getElementById("val_accrued").value);
+                    if (valor <= 0 || cantidad <= 0 || fechaInicio.length == 0 || fechaFin.length == 0) {
+                        return false
+                    }
+                    break;
+                case 'work_disabilities':
+                    var val_tipo_incapacidad = document.getElementById("type_incapacidad_a").value;
+                    var fechaInicio = document.getElementById("start_date_a").value;
+                    var fechaFin = document.getElementById("end_date_a").value;
+                    var cantidad = Number(document.getElementById("quantity_a").value);
+                    var valor = Number(document.getElementById("val_accrued").value);
+                    if (val_tipo_incapacidad <= 0 || valor <= 0 || cantidad <= 0 || fechaInicio.length == 0 || fechaFin
+                        .length == 0) {
                         return false
                     }
                     break;
@@ -573,7 +983,111 @@
 
                     var element = document.getElementById("legal_strike-" + id);
                     element.parentNode.removeChild(element);
+                    break;
+                case 'HEDs':
+                    accrued.devengados.HEDs.forEach(function(currentValue, index, arr) {
+                        if (accrued.devengados.HEDs[index].id == id) {
+                            accrued.devengados.HEDs.splice(index, 1);
+                        }
+                    })
+                    val_accrueds = (val_accrueds - valor);
+                    document.getElementById("accrued_total").value = val_accrueds;
+                    document.getElementById("accrued").value = JSON.stringify(accrued);
 
+                    var element = document.getElementById("HEDs-" + id);
+                    element.parentNode.removeChild(element);
+                    break;
+                case 'HENs':
+                    accrued.devengados.HENs.forEach(function(currentValue, index, arr) {
+                        if (accrued.devengados.HENs[index].id == id) {
+                            accrued.devengados.HENs.splice(index, 1);
+                        }
+                    })
+                    val_accrueds = (val_accrueds - valor);
+                    document.getElementById("accrued_total").value = val_accrueds;
+                    document.getElementById("accrued").value = JSON.stringify(accrued);
+
+                    var element = document.getElementById("HENs-" + id);
+                    element.parentNode.removeChild(element);
+                    break;
+                case 'HRNs':
+                    accrued.devengados.HRNs.forEach(function(currentValue, index, arr) {
+                        if (accrued.devengados.HRNs[index].id == id) {
+                            accrued.devengados.HRNs.splice(index, 1);
+                        }
+                    })
+                    val_accrueds = (val_accrueds - valor);
+                    document.getElementById("accrued_total").value = val_accrueds;
+                    document.getElementById("accrued").value = JSON.stringify(accrued);
+
+                    var element = document.getElementById("HRNs-" + id);
+                    element.parentNode.removeChild(element);
+                    break;
+                case 'HEDDFs':
+                    accrued.devengados.HEDDFs.forEach(function(currentValue, index, arr) {
+                        if (accrued.devengados.HEDDFs[index].id == id) {
+                            accrued.devengados.HEDDFs.splice(index, 1);
+                        }
+                    })
+                    val_accrueds = (val_accrueds - valor);
+                    document.getElementById("accrued_total").value = val_accrueds;
+                    document.getElementById("accrued").value = JSON.stringify(accrued);
+
+                    var element = document.getElementById("HEDDFs-" + id);
+                    element.parentNode.removeChild(element);
+                    break;
+                case 'HRDDFs':
+                    accrued.devengados.HRDDFs.forEach(function(currentValue, index, arr) {
+                        if (accrued.devengados.HRDDFs[index].id == id) {
+                            accrued.devengados.HRDDFs.splice(index, 1);
+                        }
+                    })
+                    val_accrueds = (val_accrueds - valor);
+                    document.getElementById("accrued_total").value = val_accrueds;
+                    document.getElementById("accrued").value = JSON.stringify(accrued);
+
+                    var element = document.getElementById("HRDDFs-" + id);
+                    element.parentNode.removeChild(element);
+                    break;
+                case 'HENDFs':
+                    accrued.devengados.HENDFs.forEach(function(currentValue, index, arr) {
+                        if (accrued.devengados.HENDFs[index].id == id) {
+                            accrued.devengados.HENDFs.splice(index, 1);
+                        }
+                    })
+                    val_accrueds = (val_accrueds - valor);
+                    document.getElementById("accrued_total").value = val_accrueds;
+                    document.getElementById("accrued").value = JSON.stringify(accrued);
+
+                    var element = document.getElementById("HENDFs-" + id);
+                    element.parentNode.removeChild(element);
+                    break;
+                case 'HRNDFs':
+                    accrued.devengados.HRNDFs.forEach(function(currentValue, index, arr) {
+                        if (accrued.devengados.HRNDFs[index].id == id) {
+                            accrued.devengados.HRNDFs.splice(index, 1);
+                        }
+                    })
+                    val_accrueds = (val_accrueds - valor);
+                    document.getElementById("accrued_total").value = val_accrueds;
+                    document.getElementById("accrued").value = JSON.stringify(accrued);
+
+                    var element = document.getElementById("HRNDFs-" + id);
+                    element.parentNode.removeChild(element);
+                    break;
+                case 'work_disabilities':
+                    accrued.devengados.work_disabilities.forEach(function(currentValue, index, arr) {
+                        if (accrued.devengados.work_disabilities[index].id == id) {
+                            accrued.devengados.work_disabilities.splice(index, 1);
+                        }
+                    })
+
+                    val_accrueds = (val_accrueds - valor);
+                    document.getElementById("accrued_total").value = val_accrueds;
+                    document.getElementById("accrued").value = JSON.stringify(accrued);
+
+                    var element = document.getElementById("work_disabilities-" + id);
+                    element.parentNode.removeChild(element);
                     break;
             }
 
@@ -673,6 +1187,47 @@
                 value.payment : sum), 0);
             total_devengado += (total_legal_strike)
 
+            //Horas extras
+            var json_HEDs = accrued.devengados.HEDs
+            var total_HEDs = json_HEDs.reduce((sum, value) => (typeof value.payment == "number" ? sum +
+                value.payment : sum), 0);
+            total_devengado += (total_HEDs)
+
+            var json_HENs = accrued.devengados.HENs
+            var total_HENs = json_HENs.reduce((sum, value) => (typeof value.payment == "number" ? sum +
+                value.payment : sum), 0);
+            total_devengado += (total_HENs)
+
+            var json_HRNs = accrued.devengados.HRNs
+            var total_HRNs = json_HRNs.reduce((sum, value) => (typeof value.payment == "number" ? sum +
+                value.payment : sum), 0);
+            total_devengado += (total_HRNs)
+
+            var json_HEDDFs = accrued.devengados.HEDDFs
+            var total_HEDDFs = json_HEDDFs.reduce((sum, value) => (typeof value.payment == "number" ? sum +
+                value.payment : sum), 0);
+            total_devengado += (total_HEDDFs)
+
+            var json_HRDDFs = accrued.devengados.HRDDFs
+            var total_HRDDFs = json_HRDDFs.reduce((sum, value) => (typeof value.payment == "number" ? sum +
+                value.payment : sum), 0);
+            total_devengado += (total_HRDDFs)
+
+            var json_HENDFs = accrued.devengados.HENDFs
+            var total_HENDFs = json_HENDFs.reduce((sum, value) => (typeof value.payment == "number" ? sum +
+                value.payment : sum), 0);
+            total_devengado += (total_HENDFs)
+
+            var json_HRNDFs = accrued.devengados.HRNDFs
+            var total_HRNDFs = json_HRNDFs.reduce((sum, value) => (typeof value.payment == "number" ? sum +
+                value.payment : sum), 0);
+            total_devengado += (total_HRNDFs)
+
+            //Incapacidad
+            var json_work_disabilities = accrued.devengados.work_disabilities
+            var total_work_disabilities = json_work_disabilities.reduce((sum, value) => (typeof value.payment == "number" ?
+                sum + value.payment : sum), 0);
+            total_devengado += (total_work_disabilities)
             //var json_other_concepts = accrued.devengados.other_concepts
             //var total_other_concepts = json_other_concepts.reduce((sum, value) => (typeof value.payment == "number" ? sum + value.payment : sum), 0);
             //total_devengado += (total_other_concepts)
@@ -792,6 +1347,57 @@
                 .toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,")
                 .toString()
 
+        }
+
+        $("#quantity_h_a").keyup(function() {
+            recalcular_horas_extras();
+        });
+
+        function recalcular_horas_extras() {
+            var nodo = document.getElementById("select_tipo_devengado").value;
+
+            var cantidad = Number(document.getElementById("quantity_h_a").value);
+            var salario_mensual = Number(document.getElementById("salary").value);
+            var horaOrdinaria = (salario_mensual / 240);
+            var hora = 0.00;
+            switch (nodo) {
+                case 'HEDs':
+                    var porcentaje = 0.25;
+                    var recargo = (horaOrdinaria * porcentaje);
+                    hora = (horaOrdinaria + recargo) * cantidad;
+                    break;
+                case 'HENs':
+                    var porcentaje = 0.75;
+                    var recargo = (horaOrdinaria * porcentaje);
+                    hora = (horaOrdinaria + recargo) * cantidad;
+                    break;
+                case 'HRNs':
+                    var porcentaje = 0.35;
+                    var recargo = (horaOrdinaria * porcentaje);
+                    hora = (horaOrdinaria + recargo) * cantidad;
+                    break;
+                case 'HEDDFs':
+                    var porcentaje = 1;
+                    var recargo = (horaOrdinaria * porcentaje);
+                    hora = (horaOrdinaria + recargo) * cantidad;
+                    break;
+                case 'HRDDFs':
+                    var porcentaje = 0.75;
+                    var recargo = (horaOrdinaria * porcentaje);
+                    hora = (horaOrdinaria + recargo) * cantidad;
+                    break;
+                case 'HENDFs':
+                    var porcentaje = 1.5;
+                    var recargo = (horaOrdinaria * porcentaje);
+                    hora = (horaOrdinaria + recargo) * cantidad;
+                    break;
+                case 'HRNDFs':
+                    var porcentaje = 1.1;
+                    var recargo = (horaOrdinaria * porcentaje);
+                    hora = (horaOrdinaria + recargo) * cantidad;
+                    break;
+            }
+            document.getElementById("val_accrued").value = parseFloat(hora, 10).toFixed(2);
         }
     </script>
 
