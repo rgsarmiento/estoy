@@ -371,10 +371,10 @@
                                                     <td>
                                                         <div class="btn-group dropleft" style="float:right;width:50px;">
                                                             <button
-                                                                class="btn btn-sm btn-primary dropdown-toggle waves-light"
+                                                                class="btn btn-sm btn-light  waves-light"
                                                                 type="button" id="dropdown3" data-toggle="dropdown"
                                                                 aria-haspopup="true" aria-expanded="false"><i
-                                                                    class="fas fa-th-large"></i></button>
+                                                                    class="fas fa-ellipsis-h"></i></button>
                                                             <div class="dropdown-menu dropleft">
 
                                                                 {!! Form::open(['method' => 'GET', 'route' => ['payrolls.send_payroll', $row], 'style' => 'display:inline', 'class' => 'shotDina', 'id' => $row->id]) !!}

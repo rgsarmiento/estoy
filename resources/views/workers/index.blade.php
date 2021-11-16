@@ -14,6 +14,9 @@
             </div>
         </div>
 
+        <p class="section-lead">Los empleados que tienes activos son los que se incluirán al crear una nómina.
+          </p>
+
         <div class="section-body">
             <div class="row">
                 <div class="col-lg-12">
@@ -25,94 +28,96 @@
                                         class="fas fa-plus"></i> Nuevo Empleado</a>
                             @endcan
 
-                            
+
                             <div class="table-responsive">
-                            <table class="table table-bordered table-hover table-striped mt-2">
-                                <thead style="background-color: #6777ef;">
-                                    <th style="display: none;">Id</th>
-                                    <th style="color: #fff;">Documento</th>
-                                    <th style="color: #fff;">Nombre</th>
-                                    <th style="color: #fff;">E-mail</th>
-                                    <th style="color: #fff;">Estado</th>
-                                    <th class="text-right" style="color: #fff;">Acciones</th>
-                                </thead>
-                                <tbody>
-                                    @if (count($workers) <= 0)
-                                        <tr>
-                                            <td colspan="6">
-                                                <div class="card-body">
-                                                    <div class="empty-state" data-height="400" style="height: 400px;">
-                                                        <div class="empty-state-icon">
-                                                            <img src="{{ asset('img/avatar/oops.png') }}" alt="avatar"
-                                                                width="70">
-                                                        </div>
-                                                        <h2>No hay registros para mostrar</h2>
-                                                        <p class="lead">
-                                                            Todos los registros existentes se mostraran aquí.
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    @else
-                                        @foreach ($workers as $row)
+                                <table class="table table-bordered table-hover table-striped mt-2">
+                                    <thead style="background-color: #6777ef;">
+                                        <th style="display: none;">Id</th>
+                                        <th style="color: #fff;">Documento</th>
+                                        <th style="color: #fff;">Nombre</th>
+                                        <th style="color: #fff;">E-mail</th>
+                                        <th style="color: #fff;">Estado</th>
+                                        <th class="text-right" style="color: #fff;">Acciones</th>
+                                    </thead>
+                                    <tbody>
+                                        @if (count($workers) <= 0)
                                             <tr>
-                                                <td style="display: none;">{{ $row->id }}</td>
-                                                <td>{{ $row->payroll_type_document_identification->name }} <br>
-                                                    {{ $row->identification_number }}</td>
-                                                <td><a
-                                                        href="{{ route('workers.show', $row) }}">{{ $row->first_name . ' ' . $row->surname }}</a>
-                                                </td>
-                                                <td>{{ $row->email }}</td>
-                                                <td>
-                                                    @if ($row->status == 'ACTIVO')
-                                                        <span class="badge badge-success">{{ $row->status }}</span>
-                                                    @else
-                                                        <span class="badge badge-danger">{{ $row->status }}</span>
-                                                    @endif
-                                                </td>
-                                                <td class="text-right">
-
-                                                    <div class="btn-group dropleft" style="float:right;width:50px;">
-                                                        <button class="btn btn-sm btn-primary dropdown-toggle waves-light"
-                                                            type="button" id="dropdown3" data-toggle="dropdown"
-                                                            aria-haspopup="true" aria-expanded="false"><i
-                                                                class="fas fa-th-large"></i></button>
-                                                        <div class="dropdown-menu dropleft">
-
-                                                            @can('workers.eliminar')
-                                                                {!! Form::open(['method' => 'DELETE', 'route' => ['workers.destroy', $row], 'style' => 'display:inline', 'class' => 'form-delete']) !!}
-                                                                {!! Form::button('<i class="fas fa-trash-alt"></i> Eliminar', ['type' => 'submit', 'class' => 'dropdown-item btn-link me-2']) !!}
-                                                                {!! Form::close() !!}
-                                                            @endcan
-
-                                                            @can('workers.editar')
-                                                                <a class="dropdown-item has-icon"
-                                                                    href="{{ route('workers.edit', $row->id) }}"><i
-                                                                        class="far fa-edit"></i> Modificar</a>
-
-                                                                {!! Form::open(['method' => 'PUT', 'route' => ['workers.change_status', $row], 'style' => 'display:inline']) !!}
-
-                                                                @if ($row->status == 'ACTIVO')
-                                                                    {!! Form::button('<i class="fas fa-ban" style="color:#FF267B;"></i> Inactivar', ['type' => 'submit', 'class' => 'dropdown-item btn-link me-2']) !!}
-                                                                @else
-                                                                    {!! Form::button('<i class="fas fa-check-circle" style="color:#47c363;"></i> Activar', ['type' => 'submit', 'class' => 'dropdown-item btn-link me-2']) !!}
-                                                                @endif
-                                                                {!! Form::close() !!}
-                                                            @endcan
-
+                                                <td colspan="6">
+                                                    <div class="card-body">
+                                                        <div class="empty-state" data-height="400"
+                                                            style="height: 400px;">
+                                                            <div class="empty-state-icon">
+                                                                <img src="{{ asset('img/avatar/oops.png') }}" alt="avatar"
+                                                                    width="70">
+                                                            </div>
+                                                            <h2>No hay registros para mostrar</h2>
+                                                            <p class="lead">
+                                                                Todos los registros existentes se mostraran aquí.
+                                                            </p>
                                                         </div>
-                                                        <!-- end of dropdown menu -->
                                                     </div>
-
                                                 </td>
-
                                             </tr>
-                                        @endforeach
-                                    @endif
-                                </tbody>
-                            </table>
-                        </div>
+                                        @else
+                                            @foreach ($workers as $row)
+                                                <tr role="row" class="odd">
+                                                    <td style="display: none;">{{ $row->id }}</td>
+                                                    <td>{{ $row->payroll_type_document_identification->name }} <br>
+                                                        {{ $row->identification_number }}</td>
+                                                    <td><a
+                                                            href="{{ route('workers.show', $row) }}">{{ $row->first_name . ' ' . $row->surname }}</a>
+                                                    </td>
+                                                    <td>{{ $row->email }}</td>
+                                                    <td>
+                                                        @if ($row->status == 'ACTIVO')
+                                                            <div class="badge badge-success">{{ $row->status }}</div>
+                                                        @else
+                                                            <div class="badge badge-danger">{{ $row->status }}</div>
+                                                        @endif
+                                                    </td>
+                                                    <td class="text-right">
+
+                                                        <div class="btn-group dropleft" style="float:right;width:50px;">
+                                                            <button
+                                                                class="btn btn-sm btn-light  waves-light"
+                                                                type="button" id="dropdown3" data-toggle="dropdown"
+                                                                aria-haspopup="true" aria-expanded="false"><i
+                                                                    class="fas fa-ellipsis-h"></i></button>
+                                                            <div class="dropdown-menu dropleft">
+
+                                                                @can('workers.eliminar')
+                                                                    {!! Form::open(['method' => 'DELETE', 'route' => ['workers.destroy', $row], 'style' => 'display:inline', 'class' => 'form-delete']) !!}
+                                                                    {!! Form::button('<i class="fas fa-trash-alt"></i> Eliminar', ['type' => 'submit', 'class' => 'dropdown-item btn-link me-2']) !!}
+                                                                    {!! Form::close() !!}
+                                                                @endcan
+
+                                                                @can('workers.editar')
+                                                                    <a class="dropdown-item has-icon"
+                                                                        href="{{ route('workers.edit', $row->id) }}"><i
+                                                                            class="far fa-edit"></i> Modificar</a>
+
+                                                                    {!! Form::open(['method' => 'PUT', 'route' => ['workers.change_status', $row], 'style' => 'display:inline']) !!}
+
+                                                                    @if ($row->status == 'ACTIVO')
+                                                                        {!! Form::button('<i class="fas fa-ban" style="color:#FF267B;"></i> Inactivar', ['type' => 'submit', 'class' => 'dropdown-item btn-link me-2']) !!}
+                                                                    @else
+                                                                        {!! Form::button('<i class="fas fa-check-circle" style="color:#47c363;"></i> Activar', ['type' => 'submit', 'class' => 'dropdown-item btn-link me-2']) !!}
+                                                                    @endif
+                                                                    {!! Form::close() !!}
+                                                                @endcan
+
+                                                            </div>
+                                                            <!-- end of dropdown menu -->
+                                                        </div>
+
+                                                    </td>
+
+                                                </tr>
+                                            @endforeach
+                                        @endif
+                                    </tbody>
+                                </table>
+                            </div>
                             <div class="pagination justify-content-end">
                                 {!! $workers->links() !!}
                             </div>

@@ -14,6 +14,9 @@
             </div>
         </div>
 
+        <p class="section-lead">Listado de nóminas electrónicas que has emitido a la DIAN.
+        </p>
+
         @if ($errors->any())
             <div class="alert alert-danger alert-dismissible fade show alert-has-icon p-4" role="alert">
                 <div class="alert-icon"><i class="fa fa-lightbulb"></i></div>
@@ -194,10 +197,10 @@
                                                     <td>
                                                         <div class="btn-group dropleft" style="float:right;width:50px;">
                                                             <button
-                                                                class="btn btn-sm btn-primary dropdown-toggle waves-light"
+                                                                class="btn btn-sm btn-light  waves-light"
                                                                 type="button" id="dropdown3" data-toggle="dropdown"
                                                                 aria-haspopup="true" aria-expanded="false"><i
-                                                                    class="fas fa-th-large"></i></button>
+                                                                    class="fas fa-ellipsis-h"></i></button>
                                                             <div class="dropdown-menu dropleft">
 
                                                                 <a class="dropdown-item has-icon"
