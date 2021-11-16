@@ -33,7 +33,7 @@
 
                             @can('companies.crear')
                                 <a class="btn btn-info btn-icon icon-left" href="{{ route('companies.create') }}"><i
-                                    class="fas fa-plus"></i> Nueva Empresa</a>
+                                        class="fas fa-plus"></i> Nueva Empresa</a>
                             @endcan
 
                             <div class="btn-group dropleft" style="float:right;width:50px;">
@@ -54,39 +54,43 @@
                                 </div>
                                 <!-- end of dropdown menu -->
                             </div>
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped mt-2">
+                                    <thead style="background-color: #6777ef;">
+                                        <th style="display: none;">Id</th>
+                                        <th style="color: #fff;">NDI</th>
+                                        <th style="color: #fff;">Nombre</th>
+                                        <th style="color: #fff;">E-mail</th>
+                                        <th class="text-right" style="color: #fff;">Acciones</th>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($datatable as $row)
+                                            <tr>
+                                                <td style="display: none;">{{ $row->id }}</td>
+                                                <td>{{ $row->type_document_identification->name }} <br>
+                                                    {{ $row->identification_number }}</td>
+                                                <td><a href="{{ route('companies.show', $row) }}">{{ $row->name }}</a>
+                                                    <br> <span style="font-size: .6em" class="badge badge-light">
+                                                        {{ $row->api_token }} </span> </td>
+                                                <td>{{ $row->email }}</td>
+                                                <td class="text-right">
+                                                    @can('companies.editar')
+                                                        <a class="btn btn-warning btn-sm btn-icon icon-left"
+                                                            href="{{ route('companies.edit', $row->id) }}"><i
+                                                                class="fas fa-edit"></i></a>
+                                                    @endcan
+                                                    @can('companies.eliminar')
+                                                        {!! Form::open(['method' => 'DELETE', 'route' => ['companies.destroy', $row->id], 'style' => 'display:inline']) !!}
+                                                        {!! Form::button('<i class="fas fa-trash-alt"></i>', ['class' => 'btn btn-danger btn-sm btn-icon icon-left']) !!}
+                                                        {!! Form::close() !!}
+                                                    @endcan
+                                                </td>
 
-                            <table class="table table-bordered table-striped mt-2">
-                                <thead style="background-color: #6777ef;">
-                                    <th style="display: none;">Id</th>
-                                    <th style="color: #fff;">NDI</th>
-                                    <th style="color: #fff;">Nombre</th>
-                                    <th style="color: #fff;">E-mail</th>
-                                    <th class="text-right" style="color: #fff;">Acciones</th>
-                                </thead>
-                                <tbody>
-                                    @foreach ($datatable as $row)
-                                        <tr>
-                                            <td style="display: none;">{{ $row->id }}</td>
-                                            <td>{{ $row->type_document_identification->name }} <br> {{ $row->identification_number }}</td>
-                                            <td><a href="{{ route('companies.show', $row) }}">{{ $row->name }}</a> <br> <span style="font-size: .6em" class="badge badge-light"> {{ $row->api_token }} </span> </td>
-                                            <td>{{ $row->email }}</td>
-                                            <td class="text-right">
-                                                @can('companies.editar')
-                                                    <a class="btn btn-warning btn-sm btn-icon icon-left"
-                                                        href="{{ route('companies.edit', $row->id) }}"><i
-                                                        class="fas fa-edit"></i></a>
-                                                @endcan
-                                                @can('companies.eliminar')
-                                                    {!! Form::open(['method' => 'DELETE', 'route' => ['companies.destroy', $row->id], 'style' => 'display:inline']) !!}
-                                                    {!! Form::button('<i class="fas fa-trash-alt"></i>', ['class' => 'btn btn-danger btn-sm btn-icon icon-left']) !!}
-                                                    {!! Form::close() !!}
-                                                @endcan
-                                            </td>
-
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
                             <div class="pagination justify-content-end">
                                 {!! $datatable->links() !!}
                             </div>
@@ -108,14 +112,14 @@
                 });
         }, 3000);
 
-        $(document).ready(function () {
-            $('#btn-delete').click(function(){
+        $(document).ready(function() {
+            $('#btn-delete').click(function() {
                 delete_item(id);
             });
         });
 
         function delete_item(id) {
-            
+
         }
     </script>
 

@@ -63,6 +63,7 @@
 
 
             $('#select_tipo_devengado').change(function() {
+                
                 var nodo = $(this).val()
                 limpiar_controles();
                 switch (nodo) {

@@ -25,25 +25,8 @@
                                         class="fas fa-plus"></i> Nuevo Empleado</a>
                             @endcan
 
-                            {{-- <div class="btn-group dropleft" style="float:right;width:50px;">
-                                <button class="btn btn-sm btn-primary dropdown-toggle waves-light" type="button"
-                                    id="dropdown3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i
-                                        class="fas fa-bars"></i></button>
-                                <div class="dropdown-menu dropleft">
-                                    <a class="dropdown-item has-icon" href="#"><i class="far fa-heart"></i> Action</a>
-                                    <a class="dropdown-item has-icon" href="#"><i class="far fa-file"></i> Another
-                                        action</a>
-                                    <a class="dropdown-item has-icon" href="#"><i class="far fa-clock"></i> Something else
-                                        here</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item waves-light waves-effect" href="#!"><i
-                                            class="icofont icofont-edit-alt m-r-10"></i>Edit task</a>
-                                    <a class="dropdown-item waves-light waves-effect" href="#!"><i
-                                            class="icofont icofont-close m-r-10"></i>Remove</a>
-                                </div>
-                                <!-- end of dropdown menu -->
-                            </div> --}}
-
+                            
+                            <div class="table-responsive">
                             <table class="table table-bordered table-hover table-striped mt-2">
                                 <thead style="background-color: #6777ef;">
                                     <th style="display: none;">Id</th>
@@ -129,6 +112,7 @@
                                     @endif
                                 </tbody>
                             </table>
+                        </div>
                             <div class="pagination justify-content-end">
                                 {!! $workers->links() !!}
                             </div>

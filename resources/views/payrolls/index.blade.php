@@ -421,6 +421,7 @@
 
 @section('scripts')
     <script>
+        
         $(document).ready(function() {
             //Código que se ejecutará al cargar la página
             var queryString = window.location.search;
@@ -484,7 +485,7 @@
     <script>
         $('.form-delete').submit(function(e) {
             e.preventDefault();
-
+            
             Swal.fire({
                 title: 'Esta seguro?',
                 text: "Este empleado se eliminara definitivamente!",
@@ -513,7 +514,7 @@
             localStorage.setItem('periodo_ni', periodo);
             localStorage.setItem('fecha_pago_ni', fechaPago);
 
-
+            $('.loader').show();
             $('input').each(function() {
 
                 if (this.id == 'periodo_ni') {
@@ -531,4 +532,5 @@
 
         });
     </script>
+       
 @endsection
