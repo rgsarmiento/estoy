@@ -4,7 +4,7 @@ namespace App\Http\Requests\payroll;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class SendRequest extends FormRequest
+class PayrollPeriodProgressRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,20 +22,18 @@ class SendRequest extends FormRequest
      * @return array
      */
     public function rules()
-    {
+    {        
         return [
-            'periodo_ni' => 'required',
-            'fecha_pago_ni' => 'required'            
+            'payroll_period_id' => 'required',
+            'payment_date' => 'required'            
         ];
     }
 
     public function messages()
     {
         return [
-
-            'periodo_ni.required' => 'Se requiere que se seleccione un periodo',
-            'fecha_pago_ni.required' => 'Se requiere una fecha de pago' 
-
+            'payroll_period_id.required' => 'Se requiere que se seleccione un periodo',
+            'payment_date.required' => 'Se requiere una fecha de pago' 
             ];
     }
 

@@ -34,40 +34,200 @@
 
 
 
-        <div class="card card-primary">
-            <div class="card-body">
-                <div class="card-header">
-                    <h5>Periodo de Nomina</h5>
-                </div>
-                <div class="card-block">
 
-                    <div class="row">
-                        <div class="col-sm-12 col-xl-6 m-b-30">
-                            <div class="form-group">
-                                {!! Html::decode(Form::label('payroll_period_id', 'Periodo de Nomina<span class="text-danger">(*)</span>')) !!}
-                                {!! Form::select('payroll_period_id', $periodo_nomina->pluck('description', 'id'), null, ['class' => 'form-control', 'id' => 'select_payroll_period_id', 'placeholder' => '-- Seleccionar --']) !!}
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('payroll_period_id') }}
-                                </div>
-                            </div>
-                        </div>
 
-                        <div class="col-sm-12 col-xl-3 m-b-30">
-                            <div class="form-group">
-                                {!! Html::decode(Form::label('payment_date', 'Fecha de Pago<span class="text-danger">(*)</span>')) !!}
-                                {!! Form::date('payment_date', null, ['class' => 'form-control', 'id' => 'payment_date']) !!}
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('payment_date') }}
-                                </div>
-                            </div>
+        {!! Form::open(['route' => 'payrolls.payroll_period_in_progress', 'method' => 'POST']) !!}
+
+        @if ($payroll_period_progress)
+
+        <p class="section-lead">Detalle del periodo de emisión de nómina.
+        </p>
+
+            <div class="row" style="display:flex;">
+                <div class="col-12 col-md-6 col-lg-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td style=" width: 100%;text-align: center;">
+                                            <div class="profile-widget-name">
+                                                <h6>Progreso de la emisión</h6>
+                                            </div>
+                                            <p>Se han emitido {!! $documents->count() !!} de {!! $nRegistros !!} empleados.
+                                            </p>
+
+                                        </td>
+                                        <td style=" width: 50%;text-align: center;">
+                                            <div class="bg">
+                                                <div class="circle-right">
+                                                    <div class="mask-right" style="transform:rotate(36deg)"></div>
+                                                </div>
+                                                <div class="text">{!! ($documents->count() / $nRegistros) * 100 !!}%</div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
+                </div>
 
+                <div class="col-12 col-md-6 col-lg-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <table style=" width: 100%;">
+                                <tbody>
+                                    <tr>
+                                        <td style=" width: 50%;text-align: left;">
+                                            <div class="profile-widget-name">
+                                                <h6>Periodo</h6>
+                                            </div>
+                                        </td>
+                                        <td style=" width: 100%;text-align: right;">
+                                            {!! $payroll_period_progress->period->description !!}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <hr>
+                                        </td>
+
+                                    </tr>
+                                    <tr>
+                                        <td style=" width: 50%;text-align: left;">
+                                            <div class="profile-widget-name">
+                                                <h6>Estado</h6>
+                                            </div>
+                                        </td>
+                                        <td style=" width: 100%;text-align: right;">
+                                            
+                                                @if ($nRegistros - $documents->count() == 0)
+                                                <div class="text-success mb-2">
+                                                    <h6>Completado</h6>
+                                                </div>
+                                                @else
+                                                <div class="text-warning mb-2">
+                                                    <h6>En proceso</h6>
+                                                </div>
+                                                @endif
+                                                
+                                            
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
+
+        @else
+            <div class="card card-primary">
+                <div class="card-body">
+                    <div class="card-header">
+                        <h5>Periodo de Nomina</h5>
+                    </div>
+                    <div class="card-block">
+                        <div class="row">
+
+                            <div class="col-sm-12 col-xl-6 m-b-30">
+                                <div class="form-group">
+                                    {!! Html::decode(Form::label('payroll_period_id', 'Periodo de Nomina<span class="text-danger">(*)</span>')) !!}
+                                    {!! Form::select('payroll_period_id', $periodo_nomina->pluck('description', 'id'), null, ['class' => 'form-control', 'id' => 'select_payroll_period_id', 'placeholder' => '-- Seleccionar --']) !!}
+                                    <div class="invalid-feedback">
+                                        {{ $errors->first('payroll_period_id') }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12 col-xl-3 m-b-30">
+                                <div class="form-group">
+                                    {!! Html::decode(Form::label('payment_date', 'Fecha de Pago<span class="text-danger">(*)</span>')) !!}
+                                    {!! Form::date('payment_date', null, ['class' => 'form-control', 'id' => 'payment_date']) !!}
+                                    <div class="invalid-feedback">
+                                        {{ $errors->first('payment_date') }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12 col-xl-3 m-b-30">
+                                <div class="form-group">
+                                    <br>
+                                    <button type="submit" class="btn btn-success">Aplicar Perido
+                                        Nómina</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        {!! Form::close() !!}
+                    </div>
+                </div>
+            </div>
+        @endif
+
+        <div class="form-row">
+
+            <div class="col-lg-4 col-md-4 col-sm-12">
+                <div class="card card-statistic-2">
+
+                    <div class="card-icon shadow-primary bg-primary">
+                        <i class="fas fa-paper-plane"></i>
+                    </div>
+                    <div class="card-wrap">
+                        <div class="card-header">
+                            <h4>Emiciones aceptadas</h4>
+                        </div>
+                        <div class="card-body">
+                            @if ($documents != null)
+                                {!! $documents->count() !!}
+                                @else                                    
+                               0
+                            @endif
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-4 col-sm-12">
+                <div class="card card-statistic-2">
+
+                    <div class="card-icon shadow-primary bg-primary">
+                        <i class="fas fa-archive"></i>
+                    </div>
+                    <div class="card-wrap">
+                        <div class="card-header">
+                            <h4>Registros</h4>
+                        </div>
+                        <div class="card-body">
+                            {{ $nRegistros }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-4 col-sm-12">
+                <div class="card card-statistic-2">
+
+                    <div class="card-icon shadow-primary bg-primary">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
+                    <div class="card-wrap">
+                        <div class="card-header">
+                            <h4>Total nomina</h4>
+                        </div>
+                        <div class="card-body">
+                            {{ number_format($totalNomina, 2) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
-
+        <p class="section-lead">Estos son los empleados que se incluirán en la nómina del periodo seleccionado, emite sus nomina uno a uno.
+        </p>
         <div class="section-body">
             <div class="row">
                 <div class="col-lg-12">
@@ -76,40 +236,6 @@
 
                             <form action="{{ route('payrolls.index') }}" method="get">
                                 <div class="form-row">
-
-                                    <div class="col-lg-4 col-md-4 col-sm-12">
-                                        <div class="card card-statistic-2">
-
-                                            <div class="card-icon shadow-primary bg-primary">
-                                                <i class="fas fa-archive"></i>
-                                            </div>
-                                            <div class="card-wrap">
-                                                <div class="card-header">
-                                                    <h4>Registros</h4>
-                                                </div>
-                                                <div class="card-body">
-                                                    {{ $nRegistros }}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-4 col-md-4 col-sm-12">
-                                        <div class="card card-statistic-2">
-
-                                            <div class="card-icon shadow-primary bg-primary">
-                                                <i class="fas fa-dollar-sign"></i>
-                                            </div>
-                                            <div class="card-wrap">
-                                                <div class="card-header">
-                                                    <h4>Total nomina</h4>
-                                                </div>
-                                                <div class="card-body">
-                                                    {{ number_format($totalNomina, 2) }}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
 
                                     <div class="col-lg-4 col-md-4 col-sm-12">
                                         <div class="form-group">
@@ -204,7 +330,7 @@
                                                             $HRDDFs = $devengados_json['devengados']['HRDDFs'];
                                                             $HENDFs = $devengados_json['devengados']['HENDFs'];
                                                             $HRNDFs = $devengados_json['devengados']['HRNDFs'];
-
+                                                            
                                                             $work_disabilities = $devengados_json['devengados']['work_disabilities'];
                                                         @endphp
 
@@ -265,7 +391,7 @@
                                                                 style="margin-top:0rem;margin-bottom:0rem;border-top:1px solid rgb(103 119 239)">
                                                         @endif
                                                         @foreach ($HEDs as $value)
-                                                            {!! '('.$value['quantity'].')'.' '.$value['name'] . ':<br><strong> +' . number_format($value['payment'], 2) . '</strong>' !!} <br>
+                                                            {!! '(' . $value['quantity'] . ')' . ' ' . $value['name'] . ':<br><strong> +' . number_format($value['payment'], 2) . '</strong>' !!} <br>
                                                         @endforeach
 
                                                         @if (count($HENs))
@@ -273,7 +399,7 @@
                                                                 style="margin-top:0rem;margin-bottom:0rem;border-top:1px solid rgb(103 119 239)">
                                                         @endif
                                                         @foreach ($HENs as $value)
-                                                            {!! '('.$value['quantity'].')'.' '.$value['name'] . ':<br><strong> +' . number_format($value['payment'], 2) . '</strong>' !!} <br>
+                                                            {!! '(' . $value['quantity'] . ')' . ' ' . $value['name'] . ':<br><strong> +' . number_format($value['payment'], 2) . '</strong>' !!} <br>
                                                         @endforeach
 
                                                         @if (count($HRNs))
@@ -281,7 +407,7 @@
                                                                 style="margin-top:0rem;margin-bottom:0rem;border-top:1px solid rgb(103 119 239)">
                                                         @endif
                                                         @foreach ($HRNs as $value)
-                                                            {!! '('.$value['quantity'].')'.' '.$value['name'] . ':<br><strong> +' . number_format($value['payment'], 2) . '</strong>' !!} <br>
+                                                            {!! '(' . $value['quantity'] . ')' . ' ' . $value['name'] . ':<br><strong> +' . number_format($value['payment'], 2) . '</strong>' !!} <br>
                                                         @endforeach
 
                                                         @if (count($HEDDFs))
@@ -289,7 +415,7 @@
                                                                 style="margin-top:0rem;margin-bottom:0rem;border-top:1px solid rgb(103 119 239)">
                                                         @endif
                                                         @foreach ($HEDDFs as $value)
-                                                            {!! '('.$value['quantity'].')'.' '.$value['name'] . ':<br><strong> +' . number_format($value['payment'], 2) . '</strong>' !!} <br>
+                                                            {!! '(' . $value['quantity'] . ')' . ' ' . $value['name'] . ':<br><strong> +' . number_format($value['payment'], 2) . '</strong>' !!} <br>
                                                         @endforeach
 
                                                         @if (count($HRDDFs))
@@ -297,7 +423,7 @@
                                                                 style="margin-top:0rem;margin-bottom:0rem;border-top:1px solid rgb(103 119 239)">
                                                         @endif
                                                         @foreach ($HRDDFs as $value)
-                                                            {!! '('.$value['quantity'].')'.' '.$value['name'] . ':<br><strong> +' . number_format($value['payment'], 2) . '</strong>' !!} <br>
+                                                            {!! '(' . $value['quantity'] . ')' . ' ' . $value['name'] . ':<br><strong> +' . number_format($value['payment'], 2) . '</strong>' !!} <br>
                                                         @endforeach
 
                                                         @if (count($HENDFs))
@@ -305,7 +431,7 @@
                                                                 style="margin-top:0rem;margin-bottom:0rem;border-top:1px solid rgb(103 119 239)">
                                                         @endif
                                                         @foreach ($HENDFs as $value)
-                                                            {!! '('.$value['quantity'].')'.' '.$value['name'] . ':<br><strong> +' . number_format($value['payment'], 2) . '</strong>' !!} <br>
+                                                            {!! '(' . $value['quantity'] . ')' . ' ' . $value['name'] . ':<br><strong> +' . number_format($value['payment'], 2) . '</strong>' !!} <br>
                                                         @endforeach
 
                                                         @if (count($HRNDFs))
@@ -313,9 +439,9 @@
                                                                 style="margin-top:0rem;margin-bottom:0rem;border-top:1px solid rgb(103 119 239)">
                                                         @endif
                                                         @foreach ($HRNDFs as $value)
-                                                            {!! '('.$value['quantity'].')'.' '.$value['name'] . ':<br><strong> +' . number_format($value['payment'], 2) . '</strong>' !!} <br>
+                                                            {!! '(' . $value['quantity'] . ')' . ' ' . $value['name'] . ':<br><strong> +' . number_format($value['payment'], 2) . '</strong>' !!} <br>
                                                         @endforeach
-                                                        
+
                                                         @if (count($work_disabilities))
                                                             <hr
                                                                 style="margin-top:0rem;margin-bottom:0rem;border-top:1px solid rgb(103 119 239)">
@@ -370,25 +496,17 @@
 
                                                     <td>
                                                         <div class="btn-group dropleft" style="float:right;width:50px;">
-                                                            <button
-                                                                class="btn btn-sm btn-light  waves-light"
-                                                                type="button" id="dropdown3" data-toggle="dropdown"
-                                                                aria-haspopup="true" aria-expanded="false"><i
+                                                            <button class="btn btn-sm btn-light  waves-light" type="button"
+                                                                id="dropdown3" data-toggle="dropdown" aria-haspopup="true"
+                                                                aria-expanded="false"><i
                                                                     class="fas fa-ellipsis-h"></i></button>
                                                             <div class="dropdown-menu dropleft">
 
                                                                 {!! Form::open(['method' => 'GET', 'route' => ['payrolls.send_payroll', $row], 'style' => 'display:inline', 'class' => 'shotDina', 'id' => $row->id]) !!}
-
-                                                                {!! Form::hidden('periodo_ni', null, ['id' => 'periodo_ni']) !!}
-                                                                {!! Form::hidden('fecha_pago_ni', null, ['id' => 'fecha_pago_ni']) !!}
-
                                                                 @if ($row->payroll_status == 2)
                                                                 @else
                                                                     {!! Form::button('<i class="far fa-share-square"></i> Enviar DIAN', ['type' => 'submit', 'class' => 'dropdown-item btn-link me-2', 'data-id' => $row->id]) !!}
                                                                 @endif
-
-
-
                                                                 {!! Form::close() !!}
 
                                                                 <a class="dropdown-item has-icon"
@@ -421,7 +539,6 @@
 
 @section('scripts')
     <script>
-        
         $(document).ready(function() {
             //Código que se ejecutará al cargar la página
             var queryString = window.location.search;
@@ -485,7 +602,7 @@
     <script>
         $('.form-delete').submit(function(e) {
             e.preventDefault();
-            
+
             Swal.fire({
                 title: 'Esta seguro?',
                 text: "Este empleado se eliminara definitivamente!",
@@ -506,7 +623,9 @@
     <script>
         $('.shotDina').submit(function(e) {
             e.preventDefault();
-            var id = $(this).attr("id");
+            $('.loader').show();
+            this.submit();
+            /* var id = $(this).attr("id");
 
             var fechaPago = document.getElementById("payment_date").value;
             var periodo = document.getElementById("select_payroll_period_id").value;
@@ -528,9 +647,61 @@
             });
 
 
-            this.submit();
+            this.submit(); */
 
         });
     </script>
-       
+
+
+    <script>
+        $(window).on("load", function() {
+            $(function() {
+                // Obtener el valor porcentual
+                var num = parseInt($('.text').html());
+
+                // Muestra el porcentaje de progreso de la transición a través de un temporizador
+                var temp = 0;
+                var timer = setInterval(function() {
+                    calculate(temp);
+                    // Limpia el temporizador para finalizar la llamada al método
+                    if (temp == num) {
+                        clearInterval(timer);
+                    }
+                    temp++;
+                }, 10)
+
+                // Cambiar el porcentaje de visualización de la página
+                function calculate(value) {
+                    // Cambiar el valor mostrado en la página
+                    $('.text').html(value + '%');
+
+                    // Limpia el efecto residual de la última llamada a este método
+                    $('.circle-left').remove();
+                    $('.mask-right').remove();
+
+                    // Cuando el porcentaje es menor o igual a 50
+                    if (value <= 50) {
+                        var html = '';
+
+                        html += '<div class="mask-right" style="transform:rotate(' + (value * 3.6) +
+                            'deg)"></div>';
+
+                        // Agrega elementos secundarios al elemento
+                        $('.circle-right').append(html);
+                    } else {
+                        value -= 50;
+                        var html = '';
+
+                        html += '<div class="circle-left">';
+                        html += '<div class="mask-left" style="transform:rotate(' + (value * 3.6) +
+                            'deg)"></div>';
+                        html += '</div>';
+
+                        // Agregar elemento tras elemento
+                        $('.circle-right').after(html);
+                    }
+                }
+            })
+        });
+    </script>
 @endsection

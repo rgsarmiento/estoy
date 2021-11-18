@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\payroll\SendRequest;
+use App\Http\Requests\payroll\PayrollPeriodProgressRequest;
 use App\Http\Requests\payroll\UpdateRequest;
 use App\Models\Company;
 use App\Models\Company_has_user;
@@ -10,6 +10,7 @@ use App\Models\Configuration;
 use App\Models\Document;
 use App\Models\Payroll;
 use App\Models\Payroll_period;
+use App\Models\Payroll_period_progress;
 use App\Models\Period;
 use App\Models\Resolution;
 use App\Models\Type_accrued;
@@ -33,6 +34,8 @@ class PayrollController extends Controller
     public function index(Request $request)
     {
 
+        //$user = auth()->user()->company_has_user->first()->company_id;
+
         // if ($respuesta->successful()) {
         //     $jsonRespuesta = json_decode($respuesta, true);
         //     dd($jsonRespuesta['ResponseDian']['Envelope']['Body']);
@@ -47,7 +50,7 @@ class PayrollController extends Controller
 
         if ($role_user <> 1) {
             $user_id = $user->id;
-            $company_has_user = Company_has_user::where('user_id', $user_id)->first();
+            $company_has_user = auth()->user()->company_has_user->first();
             //dd($company_id);
             if ($company_has_user == null) {
                 Auth::logout();
@@ -61,10 +64,12 @@ class PayrollController extends Controller
             $payrolls = Payroll::whereHas('worker', function ($query) {
                 return $query->where('status', 'ACTIVO');
             });
+            $payroll_period_progress = Payroll_period_progress::where('state_payroll_period_progress_id', 1)->first();
         } else {
             $payrolls = Payroll::whereHas('worker', function ($query) {
                 return $query->where('status', 'ACTIVO');
             })->where('company_id', $company_id);
+            $payroll_period_progress = Payroll_period_progress::where('company_id', $company_id)->where('state_payroll_period_progress_id', 1)->first();
         }
 
         $payrolls = $payrolls->whereHas('worker', function ($query) use ($busqueda) {
@@ -77,9 +82,26 @@ class PayrollController extends Controller
         $nRegistros = count($payrolls->get());
         $payrolls = $payrolls->orderBy('payroll_status', 'asc')->orderBy('updated_at', 'desc')->paginate(10);
 
-        $periodo_nomina = Period::where('year', date('Y'))->where('month', '>=', date('m') - 1)->take(2)->get();
+        $ultimoPeriodoEnviado = Payroll_period_progress::where('company_id', $company_id)->where('state_payroll_period_progress_id', 2)->orderBy('id', 'desc')->first();
+        //dd($ultimoPeriodoEnviado);
+        $periodo_nomina = Period::where('year', date('Y'))->where('month', '>=', date('m') - 1)->where('id', '<>', $ultimoPeriodoEnviado->period_id)->take(2)->get();
+        
 
-        return view('payrolls.index', compact('payrolls', 'periodo_nomina', 'totalNomina', 'nRegistros'));
+        $documents = null;
+        if ($payroll_period_progress) {
+            $documents = Document::where('company_id', $company_id)->where('period_id', $payroll_period_progress->period_id)->where('state_document_id', 1)->get();
+            $faltantes = $nRegistros - $documents->count();
+            if ($faltantes == 0) {
+                $payroll_period_progress->update(['state_payroll_period_progress_id' => 2]);
+                // Payroll::where('company_id', $company_id)
+                //     ->update(['payroll_status' => 1]);
+
+                return view('payrolls.index', compact('payrolls', 'periodo_nomina', 'totalNomina', 'nRegistros', 'payroll_period_progress', 'documents'))
+                    ->with('message', 'El periodo ' . $payroll_period_progress->period->description . ' se ha completado con exito.');
+            }
+        }
+
+        return view('payrolls.index', compact('payrolls', 'periodo_nomina', 'totalNomina', 'nRegistros', 'payroll_period_progress', 'documents'));
     }
 
 
@@ -166,10 +188,36 @@ class PayrollController extends Controller
     }
 
 
-    public function send_payroll(Payroll $payroll, SendRequest $request)
+    public function payroll_period_in_progress(PayrollPeriodProgressRequest $request)
     {
-        $periodo_id = $request->periodo_ni;
-        $fecha_pago = $request->fecha_pago_ni;
+        $company_id = auth()->user()->company_has_user->first()->company_id;
+        $periodo_id = $request->payroll_period_id;
+        $fecha_pago = array(array('payment_date' => $request->payment_date));
+
+        $payroll_period_progress = new Payroll_period_progress();
+        $payroll_period_progress->company_id = $company_id;
+        $payroll_period_progress->period_id = $periodo_id;
+        $payroll_period_progress->payment_date = json_encode($fecha_pago);
+        $payroll_period_progress->state_payroll_period_progress_id = 0;
+
+        $payroll_period_progress->save();
+
+        return redirect()->back()->with('message', 'Periodo de nómina seleccionado.');
+    }
+
+
+    public function send_payroll(Payroll $payroll)
+    {
+
+        $payroll_period_progress = Payroll_period_progress::where('company_id', $payroll->company_id)->where('state_payroll_period_progress_id', 1)->first();
+
+        if ($payroll_period_progress) {
+        } else {
+            return redirect()->back()->with('error', 'No se ha seleccionado un periodo de nomina');
+        }
+
+        $periodo_id = $payroll_period_progress->period_id;
+        $fecha_pago = $payroll_period_progress->payment_date;
 
         $periodo = Period::find($periodo_id);
         $company = Company::find($payroll->company_id);
@@ -236,7 +284,7 @@ class PayrollController extends Controller
             'account_number' => $payroll->worker->account_number
         );
 
-        $objeto_nomina->payment_dates = array(array('payment_date' => $fecha_pago));
+        $objeto_nomina->payment_dates = json_decode($fecha_pago, true);
 
 
         //Devengados
@@ -339,8 +387,8 @@ class PayrollController extends Controller
             $accrued['HEDs'] = array();
             foreach ($HEDs as $key) {
                 $HEDs = array(
-                    'start_time' => $key['start_time'].':00',
-                    'end_time' => $key['end_time'].':00',
+                    'start_time' => $key['start_time'] . ':00',
+                    'end_time' => $key['end_time'] . ':00',
                     'quantity' => $key['quantity'],
                     'percentage' => $key['percentage'],
                     'payment' => str_replace(',', '', number_format($key['payment'], 2))
@@ -353,8 +401,8 @@ class PayrollController extends Controller
             $accrued['HENs'] = array();
             foreach ($HENs as $key) {
                 $HENs = array(
-                    'start_time' => $key['start_time'].':00',
-                    'end_time' => $key['end_time'].':00',
+                    'start_time' => $key['start_time'] . ':00',
+                    'end_time' => $key['end_time'] . ':00',
                     'quantity' => $key['quantity'],
                     'percentage' => $key['percentage'],
                     'payment' => str_replace(',', '', number_format($key['payment'], 2))
@@ -367,8 +415,8 @@ class PayrollController extends Controller
             $accrued['HRNs'] = array();
             foreach ($HRNs as $key) {
                 $HRNs = array(
-                    'start_time' => $key['start_time'].':00',
-                    'end_time' => $key['end_time'].':00',
+                    'start_time' => $key['start_time'] . ':00',
+                    'end_time' => $key['end_time'] . ':00',
                     'quantity' => $key['quantity'],
                     'percentage' => $key['percentage'],
                     'payment' => str_replace(',', '', number_format($key['payment'], 2))
@@ -381,8 +429,8 @@ class PayrollController extends Controller
             $accrued['HEDDFs'] = array();
             foreach ($HEDDFs as $key) {
                 $HEDDFs = array(
-                    'start_time' => $key['start_time'].':00',
-                    'end_time' => $key['end_time'].':00',
+                    'start_time' => $key['start_time'] . ':00',
+                    'end_time' => $key['end_time'] . ':00',
                     'quantity' => $key['quantity'],
                     'percentage' => $key['percentage'],
                     'payment' => str_replace(',', '', number_format($key['payment'], 2))
@@ -395,8 +443,8 @@ class PayrollController extends Controller
             $accrued['HRDDFs'] = array();
             foreach ($HRDDFs as $key) {
                 $HRDDFs = array(
-                    'start_time' => $key['start_time'].':00',
-                    'end_time' => $key['end_time'].':00',
+                    'start_time' => $key['start_time'] . ':00',
+                    'end_time' => $key['end_time'] . ':00',
                     'quantity' => $key['quantity'],
                     'percentage' => $key['percentage'],
                     'payment' => str_replace(',', '', number_format($key['payment'], 2))
@@ -409,8 +457,8 @@ class PayrollController extends Controller
             $accrued['HENDFs'] = array();
             foreach ($HENDFs as $key) {
                 $HENDFs = array(
-                    'start_time' => $key['start_time'].':00',
-                    'end_time' => $key['end_time'].':00',
+                    'start_time' => $key['start_time'] . ':00',
+                    'end_time' => $key['end_time'] . ':00',
                     'quantity' => $key['quantity'],
                     'percentage' => $key['percentage'],
                     'payment' => str_replace(',', '', number_format($key['payment'], 2))
@@ -423,8 +471,8 @@ class PayrollController extends Controller
             $accrued['HRNDFs'] = array();
             foreach ($HRNDFs as $key) {
                 $HRNDFs = array(
-                    'start_time' => $key['start_time'].':00',
-                    'end_time' => $key['end_time'].':00',
+                    'start_time' => $key['start_time'] . ':00',
+                    'end_time' => $key['end_time'] . ':00',
                     'quantity' => $key['quantity'],
                     'percentage' => $key['percentage'],
                     'payment' => str_replace(',', '', number_format($key['payment'], 2))
@@ -487,8 +535,6 @@ class PayrollController extends Controller
         $this->save_file("app/public/json/" . $payroll->company->id, $objeto_nomina, "Env-" . $payroll->worker->identification_number . "-" . $resolution->prefix . "-" . $resolution->nex . ".json");
         $response =  $this->send_apidian_payroll($company, $configuraciones, $objeto_nomina);
         $this->save_file("app/public/json/" . $payroll->company->id, json_decode($response), "Rpta-" . $payroll->worker->identification_number . "-" . $resolution->prefix . "-" . $resolution->nex . ".json");
-
-
 
 
         if ($response->successful()) {

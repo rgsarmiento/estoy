@@ -3044,3 +3044,45 @@ body:not(.sidebar-mini) .sidebar-style-2 .sidebar-menu li.active ul.dropdown-men
       overflow: visible;
   }
 }
+
+
+/*circulo de progreso */
+.bg{
+  width: 100px;
+  height: 100px;
+  border-radius: 100%;
+  background: #E8ECEF;
+  position: relative;
+}
+.circle-right, .circle-left, .mask-right, .mask-left{
+  width: 100px;
+  height: 100px;
+  border-radius: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.circle-right, .circle-left{
+  background: #5D78EE;
+}
+.mask-right, .mask-left{
+  background: #E8ECEF;
+}
+.circle-right, .mask-right{
+  clip: rect(0,100px,100px,50px);
+}
+.circle-left, .mask-left{
+  clip: rect(0,50px,100px,0);
+}
+.text{
+  width: 80px;
+  height: 80px;
+  line-height: 80px;
+  text-align: center;
+  font-size: 24px;
+  border-radius: 100%;
+  background: #fff;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}

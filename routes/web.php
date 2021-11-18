@@ -48,6 +48,8 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('payrolls', PayrollController::class);
     Route::get('/payrolls/send_payroll/{payroll}', [App\Http\Controllers\PayrollController::class, 'send_payroll'])->name('payrolls.send_payroll');    
     Route::put('/payrolls/change_status/{payroll}', [App\Http\Controllers\PayrollController::class, 'change_status'])->name('payrolls.change_status');    
+    Route::post('/payrolls/payroll_period_in_progress', [App\Http\Controllers\PayrollController::class, 'payroll_period_in_progress'])->name('payrolls.payroll_period_in_progress');    
+    
 
     Route::resource('documents', DocumentController::class);
     Route::get('/documents/download_apidian_payroll/{document}/{type}', [App\Http\Controllers\DocumentController::class, 'download_apidian_payroll'])->name('documents.download_apidian_payroll');
