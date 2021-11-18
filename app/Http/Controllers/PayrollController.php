@@ -201,7 +201,7 @@ class PayrollController extends Controller
         $payroll_period_progress->company_id = $company_id;
         $payroll_period_progress->period_id = $periodo_id;
         $payroll_period_progress->payment_date = json_encode($fecha_pago);
-        $payroll_period_progress->state_payroll_period_progress_id = 0;
+        $payroll_period_progress->state_payroll_period_progress_id = 1;
 
         $payroll_period_progress->save();
 
