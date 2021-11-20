@@ -57,13 +57,48 @@
                         document.getElementById("div_deduction_value").style.display = "block";
                         document.getElementById("div_add_deductions").style.display = "block";
                         break;
-                    case '':
+                    case 'debt':
+                        document.getElementById("div_deduction_value").style.display = "block";
+                        document.getElementById("div_add_deductions").style.display = "block";
+                        break;
+                    case 'withholding_at_source':
+                        document.getElementById("div_deduction_value").style.display = "block";
+                        document.getElementById("div_add_deductions").style.display = "block";
+                        break;
+                    case 'afc':
+                        document.getElementById("div_deduction_value").style.display = "block";
+                        document.getElementById("div_add_deductions").style.display = "block";
+                        break;
+                    case 'cooperative':
+                        document.getElementById("div_deduction_value").style.display = "block";
+                        document.getElementById("div_add_deductions").style.display = "block";
+                        break;
+                    case 'tax_liens':
+                        document.getElementById("div_deduction_value").style.display = "block";
+                        document.getElementById("div_add_deductions").style.display = "block";
+                        break;
+                    case 'supplementary_plan':
+                        document.getElementById("div_deduction_value").style.display = "block";
+                        document.getElementById("div_add_deductions").style.display = "block";
+                        break;
+                    case 'education':
+                        document.getElementById("div_deduction_value").style.display = "block";
+                        document.getElementById("div_add_deductions").style.display = "block";
+                        break;
+                    case 'refund':
+                        document.getElementById("div_deduction_value").style.display = "block";
+                        document.getElementById("div_add_deductions").style.display = "block";
+                        break;
+                    case 'voluntary_pension':
+                        document.getElementById("div_deduction_value").style.display = "block";
+                        document.getElementById("div_add_deductions").style.display = "block";
+                        break;
                 }
             });
 
 
             $('#select_tipo_devengado').change(function() {
-                
+
                 var nodo = $(this).val()
                 limpiar_controles();
                 switch (nodo) {
@@ -649,16 +684,6 @@
                 }
 
                 var deductions = JSON.parse(document.getElementById("deductions").value);
-
-                switch (nodo) {
-                    case 'other_deductions':
-                        var n_other_deductions = deductions.deducciones.other_deductions.length;
-                        var other_deductions = deductions.deducciones.other_deductions;
-
-                        break;
-                    case '':
-                }
-
                 var val_deduction = Number(document.getElementById("val_deduction").value);
                 var val_deductions = Number(document.getElementById("deductions_total").value);
 
@@ -674,7 +699,8 @@
                         };
 
 
-                        $("#tbl_deductions>tbody").append('<tr id="other_deductions-' + id + '"><td>' +
+                        $("#tbl_deductions>tbody").append('<tr id="other_deductions-' + id +
+                            '"><td>DEDUCCION DE ' +
                             tipo +
                             '</td><td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i> $' +
                             parseFloat(val_deduction, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
@@ -687,7 +713,232 @@
                         deductions.deducciones.other_deductions.push(array);
 
                         break;
-                    case '':
+                    case 'debt':
+                        var id = 3;
+                        var array = {
+                            'id': id,
+                            'value': val_deduction,
+                            'name': tipo
+                        };
+
+                        Object.assign(deductions.deducciones.debt, array);
+
+                        var debt = document.getElementById("debt-3");
+                        if (debt) {
+                            debt.parentNode.removeChild(debt);
+                        }
+
+                        $("#tbl_deductions>tbody").append('<tr id="debt-' + id + '"><td>DEDUCCION DE ' +
+                            tipo +
+                            '</td><td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i> $' +
+                            parseFloat(val_deduction, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
+                                "$1,").toString() + '</td>' +
+                            '<td><a href="javascript:eliminar_deduccion(' + id +
+                            ",'debt'," + val_deduction +
+                            ')" class="btn btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a></td></tr>'
+                        );
+                        break;
+                        case 'voluntary_pension':
+                        var id = 4;
+                        var array = {
+                            'id': id,
+                            'value': val_deduction,
+                            'name': tipo
+                        };
+
+                        Object.assign(deductions.deducciones.voluntary_pension, array);
+
+                        var voluntary_pension = document.getElementById("voluntary_pension-4");
+                        if (voluntary_pension) {
+                            voluntary_pension.parentNode.removeChild(voluntary_pension);
+                        }
+
+                        $("#tbl_deductions>tbody").append('<tr id="voluntary_pension-' + id + '"><td>DEDUCCION DE ' +
+                            tipo +
+                            '</td><td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i> $' +
+                            parseFloat(val_deduction, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
+                                "$1,").toString() + '</td>' +
+                            '<td><a href="javascript:eliminar_deduccion(' + id +
+                            ",'voluntary_pension'," + val_deduction +
+                            ')" class="btn btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a></td></tr>'
+                        );
+                        break;
+                        case 'withholding_at_source':
+                        var id = 9;
+                        var array = {
+                            'id': id,
+                            'value': val_deduction,
+                            'name': tipo
+                        };
+
+                        Object.assign(deductions.deducciones.withholding_at_source, array);
+
+                        var withholding_at_source = document.getElementById("withholding_at_source-9");
+                        if (withholding_at_source) {
+                            withholding_at_source.parentNode.removeChild(withholding_at_source);
+                        }
+
+                        $("#tbl_deductions>tbody").append('<tr id="withholding_at_source-' + id + '"><td>DEDUCCION DE ' +
+                            tipo +
+                            '</td><td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i> $' +
+                            parseFloat(val_deduction, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
+                                "$1,").toString() + '</td>' +
+                            '<td><a href="javascript:eliminar_deduccion(' + id +
+                            ",'withholding_at_source'," + val_deduction +
+                            ')" class="btn btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a></td></tr>'
+                        );
+                        break;
+                        case 'afc':
+                        var id = 1;
+                        var array = {
+                            'id': id,
+                            'value': val_deduction,
+                            'name': tipo
+                        };
+
+                        Object.assign(deductions.deducciones.afc, array);
+
+                        var afc = document.getElementById("afc-1");
+                        if (afc) {
+                            afc.parentNode.removeChild(afc);
+                        }
+
+                        $("#tbl_deductions>tbody").append('<tr id="afc-' + id + '"><td>DEDUCCION DE ' +
+                            tipo +
+                            '</td><td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i> $' +
+                            parseFloat(val_deduction, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
+                                "$1,").toString() + '</td>' +
+                            '<td><a href="javascript:eliminar_deduccion(' + id +
+                            ",'afc'," + val_deduction +
+                            ')" class="btn btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a></td></tr>'
+                        );
+                        break;
+                        case 'cooperative':
+                        var id = 7;
+                        var array = {
+                            'id': id,
+                            'value': val_deduction,
+                            'name': tipo
+                        };
+
+                        Object.assign(deductions.deducciones.cooperative, array);
+
+                        var cooperative = document.getElementById("cooperative-7");
+                        if (cooperative) {
+                            cooperative.parentNode.removeChild(cooperative);
+                        }
+
+                        $("#tbl_deductions>tbody").append('<tr id="cooperative-' + id + '"><td>DEDUCCION DE ' +
+                            tipo +
+                            '</td><td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i> $' +
+                            parseFloat(val_deduction, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
+                                "$1,").toString() + '</td>' +
+                            '<td><a href="javascript:eliminar_deduccion(' + id +
+                            ",'cooperative'," + val_deduction +
+                            ')" class="btn btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a></td></tr>'
+                        );
+                        break;
+                        case 'tax_liens':
+                        var id = 2;
+                        var array = {
+                            'id': id,
+                            'value': val_deduction,
+                            'name': tipo
+                        };
+
+                        Object.assign(deductions.deducciones.tax_liens, array);
+
+                        var tax_liens = document.getElementById("tax_liens-2");
+                        if (tax_liens) {
+                            tax_liens.parentNode.removeChild(tax_liens);
+                        }
+
+                        $("#tbl_deductions>tbody").append('<tr id="tax_liens-' + id + '"><td>DEDUCCION DE ' +
+                            tipo +
+                            '</td><td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i> $' +
+                            parseFloat(val_deduction, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
+                                "$1,").toString() + '</td>' +
+                            '<td><a href="javascript:eliminar_deduccion(' + id +
+                            ",'tax_liens'," + val_deduction +
+                            ')" class="btn btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a></td></tr>'
+                        );
+                        break;
+                        case 'supplementary_plan':
+                        var id = 5;
+                        var array = {
+                            'id': id,
+                            'value': val_deduction,
+                            'name': tipo
+                        };
+
+                        Object.assign(deductions.deducciones.supplementary_plan, array);
+
+                        var supplementary_plan = document.getElementById("supplementary_plan-5");
+                        if (supplementary_plan) {
+                            supplementary_plan.parentNode.removeChild(supplementary_plan);
+                        }
+
+                        $("#tbl_deductions>tbody").append('<tr id="supplementary_plan-' + id + '"><td>DEDUCCION DE ' +
+                            tipo +
+                            '</td><td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i> $' +
+                            parseFloat(val_deduction, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
+                                "$1,").toString() + '</td>' +
+                            '<td><a href="javascript:eliminar_deduccion(' + id +
+                            ",'supplementary_plan'," + val_deduction +
+                            ')" class="btn btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a></td></tr>'
+                        );
+                        break;
+                        case 'education':
+                        var id = 6;
+                        var array = {
+                            'id': id,
+                            'value': val_deduction,
+                            'name': tipo
+                        };
+
+                        Object.assign(deductions.deducciones.education, array);
+
+                        var education = document.getElementById("education-6");
+                        if (education) {
+                            education.parentNode.removeChild(education);
+                        }
+
+                        $("#tbl_deductions>tbody").append('<tr id="education-' + id + '"><td>DEDUCCION DE ' +
+                            tipo +
+                            '</td><td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i> $' +
+                            parseFloat(val_deduction, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
+                                "$1,").toString() + '</td>' +
+                            '<td><a href="javascript:eliminar_deduccion(' + id +
+                            ",'education'," + val_deduction +
+                            ')" class="btn btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a></td></tr>'
+                        );
+                        break;
+                        case 'refund':
+                        var id = 8;
+                        var array = {
+                            'id': id,
+                            'value': val_deduction,
+                            'name': tipo
+                        };
+
+                        Object.assign(deductions.deducciones.refund, array);
+
+                        var refund = document.getElementById("refund-8");
+                        if (refund) {
+                            refund.parentNode.removeChild(refund);
+                        }
+
+                        $("#tbl_deductions>tbody").append('<tr id="refund-' + id + '"><td>DEDUCCION DE ' +
+                            tipo +
+                            '</td><td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i> $' +
+                            parseFloat(val_deduction, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
+                                "$1,").toString() + '</td>' +
+                            '<td><a href="javascript:eliminar_deduccion(' + id +
+                            ",'refund'," + val_deduction +
+                            ')" class="btn btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a></td></tr>'
+                        );
+                        break;
+
                 }
 
                 {{-- calculos totales --}}
@@ -753,6 +1004,60 @@
         function validar_campos(nodo) {
             switch (nodo) {
                 case 'other_deductions': //deducido
+                    var val_deduction = Number(document.getElementById("val_deduction").value);
+                    if (val_deduction <= 0) {
+                        return false
+                    }
+                    break;
+                case 'voluntary_pension': //deducido
+                    var val_deduction = Number(document.getElementById("val_deduction").value);
+                    if (val_deduction <= 0) {
+                        return false
+                    }
+                    break;
+                case 'withholding_at_source': //deducido
+                    var val_deduction = Number(document.getElementById("val_deduction").value);
+                    if (val_deduction <= 0) {
+                        return false
+                    }
+                    break;
+                case 'afc': //deducido
+                    var val_deduction = Number(document.getElementById("val_deduction").value);
+                    if (val_deduction <= 0) {
+                        return false
+                    }
+                    break;
+                case 'cooperative': //deducido
+                    var val_deduction = Number(document.getElementById("val_deduction").value);
+                    if (val_deduction <= 0) {
+                        return false
+                    }
+                    break;
+                case 'tax_liens': //deducido
+                    var val_deduction = Number(document.getElementById("val_deduction").value);
+                    if (val_deduction <= 0) {
+                        return false
+                    }
+                    break;
+                case 'supplementary_plan': //deducido
+                    var val_deduction = Number(document.getElementById("val_deduction").value);
+                    if (val_deduction <= 0) {
+                        return false
+                    }
+                    break;
+                case 'education': //deducido
+                    var val_deduction = Number(document.getElementById("val_deduction").value);
+                    if (val_deduction <= 0) {
+                        return false
+                    }
+                    break;
+                case 'refund': //deducido
+                    var val_deduction = Number(document.getElementById("val_deduction").value);
+                    if (val_deduction <= 0) {
+                        return false
+                    }
+                    break;
+                case 'debt': //deducido
                     var val_deduction = Number(document.getElementById("val_deduction").value);
                     if (val_deduction <= 0) {
                         return false
@@ -1126,12 +1431,93 @@
                     var element = document.getElementById("other_deductions-" + id);
                     element.parentNode.removeChild(element);
 
-                    document.getElementById("tbl_deductions").tFoot.innerHTML =
+                    {{-- document.getElementById("tbl_deductions").tFoot.innerHTML =
                         '<tr align="center"><th>TOTAL</th><th colspan="2"><i class="fa fa-sort-down" style="font-size:20px;color:#FF267B;"></i> $' +
                         parseFloat(val_deductions, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,")
-                        .toString() + '</th></tr>';
+                        .toString() + '</th></tr>'; --}}
                     break;
-                case '':
+                case 'debt':
+                    deductions.deducciones.debt = {};
+                    var element = document.getElementById("debt-3");
+                    element.parentNode.removeChild(element);
+
+                    val_deductions = (val_deductions - valor);
+                    document.getElementById("deductions_total").value = val_deductions;
+                    document.getElementById("deductions").value = JSON.stringify(deductions);
+                    break;
+                case 'voluntary_pension':
+                    deductions.deducciones.voluntary_pension = {};
+                    var element = document.getElementById("voluntary_pension-4");
+                    element.parentNode.removeChild(element);
+
+                    val_deductions = (val_deductions - valor);
+                    document.getElementById("deductions_total").value = val_deductions;
+                    document.getElementById("deductions").value = JSON.stringify(deductions);
+                    break;
+                case 'withholding_at_source':
+                    deductions.deducciones.withholding_at_source = {};
+                    var element = document.getElementById("withholding_at_source-9");
+                    element.parentNode.removeChild(element);
+
+                    val_deductions = (val_deductions - valor);
+                    document.getElementById("deductions_total").value = val_deductions;
+                    document.getElementById("deductions").value = JSON.stringify(deductions);
+                    break;
+                case 'afc':
+                    deductions.deducciones.afc = {};
+                    var element = document.getElementById("afc-1");
+                    element.parentNode.removeChild(element);
+
+                    val_deductions = (val_deductions - valor);
+                    document.getElementById("deductions_total").value = val_deductions;
+                    document.getElementById("deductions").value = JSON.stringify(deductions);
+                    break;
+                case 'cooperative':
+                    deductions.deducciones.cooperative = {};
+                    var element = document.getElementById("cooperative-7");
+                    element.parentNode.removeChild(element);
+
+                    val_deductions = (val_deductions - valor);
+                    document.getElementById("deductions_total").value = val_deductions;
+                    document.getElementById("deductions").value = JSON.stringify(deductions);
+                    break;
+                case 'tax_liens':
+                    deductions.deducciones.tax_liens = {};
+                    var element = document.getElementById("tax_liens-2");
+                    element.parentNode.removeChild(element);
+
+                    val_deductions = (val_deductions - valor);
+                    document.getElementById("deductions_total").value = val_deductions;
+                    document.getElementById("deductions").value = JSON.stringify(deductions);
+                    break;
+                case 'supplementary_plan':
+                    deductions.deducciones.supplementary_plan = {};
+                    var element = document.getElementById("supplementary_plan-5");
+                    element.parentNode.removeChild(element);
+
+                    val_deductions = (val_deductions - valor);
+                    document.getElementById("deductions_total").value = val_deductions;
+                    document.getElementById("deductions").value = JSON.stringify(deductions);
+                    break;
+                case 'education':
+                    deductions.deducciones.education = {};
+                    var element = document.getElementById("education-6");
+                    element.parentNode.removeChild(element);
+
+                    val_deductions = (val_deductions - valor);
+                    document.getElementById("deductions_total").value = val_deductions;
+                    document.getElementById("deductions").value = JSON.stringify(deductions);
+                    break;
+                case 'refund':
+                    deductions.deducciones.refund = {};
+                    var element = document.getElementById("refund-8");
+                    element.parentNode.removeChild(element);
+
+                    val_deductions = (val_deductions - valor);
+                    document.getElementById("deductions_total").value = val_deductions;
+                    document.getElementById("deductions").value = JSON.stringify(deductions);
+                    break;
+
             }
             recalcular_total();
         }
@@ -1298,7 +1684,8 @@
 
                 total_deducido = val_eps;
 
-                $("#tbl_deductions>tbody").append('<tr id="eps1"><td>' + deductions.deducciones.eps_type_law_deduction
+                $("#tbl_deductions>tbody").append('<tr id="eps1"><td>DEDUCCION DE ' + deductions.deducciones
+                    .eps_type_law_deduction
                     .name +
                     '</td><td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i> $' +
                     parseFloat(val_eps, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
@@ -1319,7 +1706,7 @@
 
                 total_deducido += val_pension;
 
-                $("#tbl_deductions>tbody").append('<tr id="pension1"><td>' + deductions.deducciones
+                $("#tbl_deductions>tbody").append('<tr id="pension1"><td>DEDUCCION DE ' + deductions.deducciones
                     .pension_type_law_deductions.name +
                     '</td><td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i> $' +
                     parseFloat(val_eps, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
@@ -1328,11 +1715,55 @@
                 );
             }
 
-
             var json_other_deductions = deductions.deducciones.other_deductions
             var total_other_deductions = json_other_deductions.reduce((sum, value) => (typeof value.value == "number" ?
                 sum + value.value : sum), 0);
             total_deducido += (total_other_deductions)
+
+            if (deductions.deducciones.debt.value > 0) {
+                var total_debt = deductions.deducciones.debt.value;
+                total_deducido += total_debt;
+            }
+
+            if (deductions.deducciones.voluntary_pension.value > 0) {
+                var total_voluntary_pension = deductions.deducciones.voluntary_pension.value;
+                total_deducido += total_voluntary_pension;
+            }
+
+            if (deductions.deducciones.withholding_at_source.value > 0) {
+                var total_withholding_at_source = deductions.deducciones.withholding_at_source.value;
+                total_deducido += total_withholding_at_source;
+            }
+
+            if (deductions.deducciones.afc.value > 0) {
+                var total_afc = deductions.deducciones.afc.value;
+                total_deducido += total_afc;
+            }
+
+            if (deductions.deducciones.cooperative.value > 0) {
+                var total_cooperative = deductions.deducciones.cooperative.value;
+                total_deducido += total_cooperative;
+            }
+
+            if (deductions.deducciones.tax_liens.value > 0) {
+                var total_tax_liens = deductions.deducciones.tax_liens.value;
+                total_deducido += total_tax_liens;
+            }
+
+            if (deductions.deducciones.supplementary_plan.value > 0) {
+                var total_supplementary_plan = deductions.deducciones.supplementary_plan.value;
+                total_deducido += total_supplementary_plan;
+            }
+
+            if (deductions.deducciones.education.value > 0) {
+                var total_education = deductions.deducciones.education.value;
+                total_deducido += total_education;
+            }
+
+            if (deductions.deducciones.refund.value > 0) {
+                var total_refund = deductions.deducciones.refund.value;
+                total_deducido += total_refund;
+            }
 
 
             document.getElementById("deductions_total").value = total_deducido;

@@ -40,8 +40,8 @@
 
         @if ($payroll_period_progress)
 
-        <p class="section-lead">Detalle del periodo de emisión de nómina.
-        </p>
+            <p class="section-lead">Detalle del periodo de emisión de nómina.
+            </p>
 
             <div class="row" style="display:flex;">
                 <div class="col-12 col-md-6 col-lg-6">
@@ -101,18 +101,18 @@
                                             </div>
                                         </td>
                                         <td style=" width: 100%;text-align: right;">
-                                            
-                                                @if ($nRegistros - $documents->count() == 0)
+
+                                            @if ($nRegistros - $documents->count() == 0)
                                                 <div class="text-success mb-2">
                                                     <h6>Completado</h6>
                                                 </div>
-                                                @else
+                                            @else
                                                 <div class="text-warning mb-2">
                                                     <h6>En proceso</h6>
                                                 </div>
-                                                @endif
-                                                
-                                            
+                                            @endif
+
+
                                         </td>
                                     </tr>
                                 </tbody>
@@ -181,10 +181,10 @@
                         <div class="card-body">
                             @if ($documents != null)
                                 {!! $documents->count() !!}
-                                @else                                    
-                               0
+                            @else
+                                0
                             @endif
-                            
+
                         </div>
                     </div>
                 </div>
@@ -226,7 +226,8 @@
 
         </div>
 
-        <p class="section-lead">Estos son los empleados que se incluirán en la nómina del periodo seleccionado, emite sus nomina uno a uno.
+        <p class="section-lead">Estos son los empleados que se incluirán en la nómina del periodo seleccionado, emite sus
+            nomina uno a uno.
         </p>
         <div class="section-body">
             <div class="row">
@@ -464,6 +465,15 @@
                                                             $pension_type_law_deductions = $deducciones_json['deducciones']['pension_type_law_deductions'];
                                                             $other_deductions = $deducciones_json['deducciones']['other_deductions'];
                                                             
+                                                            $debt = $deducciones_json['deducciones']['debt'];
+                                                            $voluntary_pension = $deducciones_json['deducciones']['voluntary_pension'];
+                                                            $withholding_at_source = $deducciones_json['deducciones']['withholding_at_source'];
+                                                            $afc = $deducciones_json['deducciones']['afc'];
+                                                            $cooperative = $deducciones_json['deducciones']['cooperative'];
+                                                            $tax_liens = $deducciones_json['deducciones']['tax_liens'];
+                                                            $supplementary_plan = $deducciones_json['deducciones']['supplementary_plan'];
+                                                            $education = $deducciones_json['deducciones']['education'];
+                                                            $refund = $deducciones_json['deducciones']['refund'];
                                                         @endphp
 
                                                         {!! $eps_type_law_deduction['name'] . ':<strong> -' . number_format($eps_type_law_deduction['value'], 2) . '</strong>' !!}
@@ -483,6 +493,60 @@
                                                         @if (count($other_deductions))
                                                             <hr
                                                                 style="margin-top:0rem;margin-bottom:0rem;border-top:1px solid rgb(103 119 239)">
+                                                        @endif
+
+                                                        @if ($debt)
+                                                            <hr
+                                                                style="margin-top:0rem;margin-bottom:0rem;border-top:1px solid rgb(103 119 239)">
+                                                            {!! $debt['name'] . ':<strong> -' . number_format($debt['value'], 2) . '</strong>' !!}
+                                                        @endif
+
+                                                        @if ($voluntary_pension)
+                                                            <hr
+                                                                style="margin-top:0rem;margin-bottom:0rem;border-top:1px solid rgb(103 119 239)">
+                                                            {!! $voluntary_pension['name'] . ':<strong> -' . number_format($voluntary_pension['value'], 2) . '</strong>' !!}
+                                                        @endif
+
+                                                        @if ($withholding_at_source)
+                                                            <hr
+                                                                style="margin-top:0rem;margin-bottom:0rem;border-top:1px solid rgb(103 119 239)">
+                                                            {!! $withholding_at_source['name'] . ':<strong> -' . number_format($withholding_at_source['value'], 2) . '</strong>' !!}
+                                                        @endif
+
+                                                        @if ($afc)
+                                                            <hr
+                                                                style="margin-top:0rem;margin-bottom:0rem;border-top:1px solid rgb(103 119 239)">
+                                                            {!! $afc['name'] . ':<strong> -' . number_format($afc['value'], 2) . '</strong>' !!}
+                                                        @endif
+
+                                                        @if ($cooperative)
+                                                            <hr
+                                                                style="margin-top:0rem;margin-bottom:0rem;border-top:1px solid rgb(103 119 239)">
+                                                            {!! $cooperative['name'] . ':<strong> -' . number_format($cooperative['value'], 2) . '</strong>' !!}
+                                                        @endif
+
+                                                        @if ($tax_liens)
+                                                            <hr
+                                                                style="margin-top:0rem;margin-bottom:0rem;border-top:1px solid rgb(103 119 239)">
+                                                            {!! $tax_liens['name'] . ':<strong> -' . number_format($tax_liens['value'], 2) . '</strong>' !!}
+                                                        @endif
+
+                                                        @if ($supplementary_plan)
+                                                            <hr
+                                                                style="margin-top:0rem;margin-bottom:0rem;border-top:1px solid rgb(103 119 239)">
+                                                            {!! $supplementary_plan['name'] . ':<strong> -' . number_format($supplementary_plan['value'], 2) . '</strong>' !!}
+                                                        @endif
+
+                                                        @if ($education)
+                                                            <hr
+                                                                style="margin-top:0rem;margin-bottom:0rem;border-top:1px solid rgb(103 119 239)">
+                                                            {!! $education['name'] . ':<strong> -' . number_format($education['value'], 2) . '</strong>' !!}
+                                                        @endif
+
+                                                        @if ($refund)
+                                                            <hr
+                                                                style="margin-top:0rem;margin-bottom:0rem;border-top:1px solid rgb(103 119 239)">
+                                                            {!! $refund['name'] . ':<strong> -' . number_format($refund['value'], 2) . '</strong>' !!}
                                                         @endif
 
 

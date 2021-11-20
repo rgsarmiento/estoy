@@ -194,8 +194,8 @@
                         </div>
                     </div>
                 </div>
-                
-                {{--  solo para incapacidades  --}}
+
+                {{-- solo para incapacidades --}}
                 <div class="row" id="div_type_incapacidad_a">
                     <div class="col-md-4 col-12">
                         <div class="form-group">
@@ -204,7 +204,7 @@
                                 <option value=1>Común</option>
                                 <option value=2>Profesional</option>
                                 <option value=3>Laboral</option>
-                              </select>                            
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -269,7 +269,7 @@
                             $HRDDFs = $devengados_json['devengados']['HRDDFs'];
                             $HENDFs = $devengados_json['devengados']['HENDFs'];
                             $HRNDFs = $devengados_json['devengados']['HRNDFs'];
-
+                            
                             $work_disabilities = $devengados_json['devengados']['work_disabilities'];
                         @endphp
 
@@ -499,11 +499,20 @@
                             $eps_type_law_deduction = $deducciones_json['deducciones']['eps_type_law_deduction'];
                             $pension_type_law_deductions = $deducciones_json['deducciones']['pension_type_law_deductions'];
                             $other_deductions = $deducciones_json['deducciones']['other_deductions'];
+                            $debt = $deducciones_json['deducciones']['debt'];
+                            $voluntary_pension = $deducciones_json['deducciones']['voluntary_pension'];
+                            $withholding_at_source = $deducciones_json['deducciones']['withholding_at_source'];
+                            $afc = $deducciones_json['deducciones']['afc'];
+                            $cooperative = $deducciones_json['deducciones']['cooperative'];
+                            $tax_liens = $deducciones_json['deducciones']['tax_liens'];
+                            $supplementary_plan = $deducciones_json['deducciones']['supplementary_plan'];
+                            $education = $deducciones_json['deducciones']['education'];
+                            $refund = $deducciones_json['deducciones']['refund'];
                             
                         @endphp
 
                         <tr id="eps1">
-                            <td>{!! $eps_type_law_deduction['name'] !!}</td>
+                            <td>DEDUCCION DE {!! $eps_type_law_deduction['name'] !!}</td>
                             <td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i>
                                 ${!! number_format($eps_type_law_deduction['value'], 2) !!}</td>
                             <td><a href="" class="btn disabled btn-icon btn-sm btn-danger"><i
@@ -512,7 +521,7 @@
                         </tr>
 
                         <tr id="pension1">
-                            <td>{!! $pension_type_law_deductions['name'] !!}</td>
+                            <td>DEDUCCION DE {!! $pension_type_law_deductions['name'] !!}</td>
                             <td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i>
                                 ${!! number_format($pension_type_law_deductions['value'], 2) !!}</td>
                             <td><a href="" class="btn disabled btn-icon btn-sm btn-danger"><i
@@ -523,13 +532,113 @@
 
                         @foreach ($other_deductions as $value)
                             <tr id="other_deductions-{!! $value['id'] !!}">
-                                <td>{!! $value['name'] !!}</td>
+                                <td>DEDUCCION DE {!! $value['name'] !!}</td>
                                 <td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i>
                                     ${!! number_format($value['value'], 2) !!}</td>
                                 <td><a href="javascript:eliminar_deduccion({!! $value['id'] !!}, 'other_deductions', {!! $value['value'] !!})"
                                         class="btn btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a></td>
                             </tr>
                         @endforeach
+
+
+                        @if ($debt)
+                            <tr id="debt-3">
+                                <td>DEDUCCION DE {!! $debt['name'] !!}</td>
+                                <td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i>
+                                    ${!! number_format($debt['value'], 2) !!}</td>
+                                <td><a href="javascript:eliminar_deduccion({!! $debt['id'] !!}, 'debt', {!! $debt['value'] !!})"
+                                        class="btn btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a></td>
+
+                            </tr>
+                        @endif
+
+                        @if ($voluntary_pension)
+                            <tr id="voluntary_pension-4">
+                                <td>DEDUCCION DE {!! $voluntary_pension['name'] !!}</td>
+                                <td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i>
+                                    ${!! number_format($voluntary_pension['value'], 2) !!}</td>
+                                <td><a href="javascript:eliminar_deduccion({!! $voluntary_pension['id'] !!}, 'voluntary_pension', {!! $voluntary_pension['value'] !!})"
+                                        class="btn btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a></td>
+
+                            </tr>
+                        @endif
+
+                        @if ($withholding_at_source)
+                            <tr id="withholding_at_source-9">
+                                <td>DEDUCCION DE {!! $withholding_at_source['name'] !!}</td>
+                                <td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i>
+                                    ${!! number_format($withholding_at_source['value'], 2) !!}</td>
+                                <td><a href="javascript:eliminar_deduccion({!! $withholding_at_source['id'] !!}, 'withholding_at_source', {!! $withholding_at_source['value'] !!})"
+                                        class="btn btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a></td>
+
+                            </tr>
+                        @endif
+
+                        @if ($afc)
+                            <tr id="afc-1">
+                                <td>DEDUCCION DE {!! $afc['name'] !!}</td>
+                                <td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i>
+                                    ${!! number_format($afc['value'], 2) !!}</td>
+                                <td><a href="javascript:eliminar_deduccion({!! $afc['id'] !!}, 'afc', {!! $afc['value'] !!})"
+                                        class="btn btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a></td>
+
+                            </tr>
+                        @endif
+
+                        @if ($cooperative)
+                            <tr id="cooperative-7">
+                                <td>DEDUCCION DE {!! $cooperative['name'] !!}</td>
+                                <td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i>
+                                    ${!! number_format($cooperative['value'], 2) !!}</td>
+                                <td><a href="javascript:eliminar_deduccion({!! $cooperative['id'] !!}, 'cooperative', {!! $cooperative['value'] !!})"
+                                        class="btn btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a></td>
+
+                            </tr>
+                        @endif
+
+                        @if ($tax_liens)
+                            <tr id="tax_liens-2">
+                                <td>DEDUCCION DE {!! $tax_liens['name'] !!}</td>
+                                <td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i>
+                                    ${!! number_format($tax_liens['value'], 2) !!}</td>
+                                <td><a href="javascript:eliminar_deduccion({!! $tax_liens['id'] !!}, 'tax_liens', {!! $tax_liens['value'] !!})"
+                                        class="btn btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a></td>
+
+                            </tr>
+                        @endif
+
+                        @if ($supplementary_plan)
+                            <tr id="supplementary_plan-5">
+                                <td>DEDUCCION DE {!! $supplementary_plan['name'] !!}</td>
+                                <td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i>
+                                    ${!! number_format($supplementary_plan['value'], 2) !!}</td>
+                                <td><a href="javascript:eliminar_deduccion({!! $supplementary_plan['id'] !!}, 'supplementary_plan', {!! $supplementary_plan['value'] !!})"
+                                        class="btn btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a></td>
+
+                            </tr>
+                        @endif
+
+                        @if ($education)
+                            <tr id="education-6">
+                                <td>DEDUCCION DE {!! $education['name'] !!}</td>
+                                <td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i>
+                                    ${!! number_format($education['value'], 2) !!}</td>
+                                <td><a href="javascript:eliminar_deduccion({!! $education['id'] !!}, 'education', {!! $education['value'] !!})"
+                                        class="btn btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a></td>
+
+                            </tr>
+                        @endif
+
+                        @if ($refund)
+                            <tr id="refund-8">
+                                <td>DEDUCCION DE {!! $refund['name'] !!}</td>
+                                <td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i>
+                                    ${!! number_format($refund['value'], 2) !!}</td>
+                                <td><a href="javascript:eliminar_deduccion({!! $refund['id'] !!}, 'refund', {!! $refund['value'] !!})"
+                                        class="btn btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a></td>
+
+                            </tr>
+                        @endif
 
                     </tbody>
                     <tfoot style="background-color: #f8cfcc;">
