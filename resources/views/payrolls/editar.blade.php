@@ -700,7 +700,7 @@
 
 
                         $("#tbl_deductions>tbody").append('<tr id="other_deductions-' + id +
-                            '"><td>DEDUCCION DE ' +
+                            '"><td>DESCUENTO POR ' +
                             tipo +
                             '</td><td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i> $' +
                             parseFloat(val_deduction, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
@@ -728,7 +728,7 @@
                             debt.parentNode.removeChild(debt);
                         }
 
-                        $("#tbl_deductions>tbody").append('<tr id="debt-' + id + '"><td>DEDUCCION DE ' +
+                        $("#tbl_deductions>tbody").append('<tr id="debt-' + id + '"><td>DESCUENTO POR ' +
                             tipo +
                             '</td><td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i> $' +
                             parseFloat(val_deduction, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
@@ -753,7 +753,7 @@
                             voluntary_pension.parentNode.removeChild(voluntary_pension);
                         }
 
-                        $("#tbl_deductions>tbody").append('<tr id="voluntary_pension-' + id + '"><td>DEDUCCION DE ' +
+                        $("#tbl_deductions>tbody").append('<tr id="voluntary_pension-' + id + '"><td>DESCUENTO POR ' +
                             tipo +
                             '</td><td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i> $' +
                             parseFloat(val_deduction, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
@@ -778,7 +778,7 @@
                             withholding_at_source.parentNode.removeChild(withholding_at_source);
                         }
 
-                        $("#tbl_deductions>tbody").append('<tr id="withholding_at_source-' + id + '"><td>DEDUCCION DE ' +
+                        $("#tbl_deductions>tbody").append('<tr id="withholding_at_source-' + id + '"><td>DESCUENTO POR ' +
                             tipo +
                             '</td><td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i> $' +
                             parseFloat(val_deduction, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
@@ -803,7 +803,7 @@
                             afc.parentNode.removeChild(afc);
                         }
 
-                        $("#tbl_deductions>tbody").append('<tr id="afc-' + id + '"><td>DEDUCCION DE ' +
+                        $("#tbl_deductions>tbody").append('<tr id="afc-' + id + '"><td>DESCUENTO POR ' +
                             tipo +
                             '</td><td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i> $' +
                             parseFloat(val_deduction, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
@@ -828,7 +828,7 @@
                             cooperative.parentNode.removeChild(cooperative);
                         }
 
-                        $("#tbl_deductions>tbody").append('<tr id="cooperative-' + id + '"><td>DEDUCCION DE ' +
+                        $("#tbl_deductions>tbody").append('<tr id="cooperative-' + id + '"><td>DESCUENTO POR ' +
                             tipo +
                             '</td><td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i> $' +
                             parseFloat(val_deduction, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
@@ -853,7 +853,7 @@
                             tax_liens.parentNode.removeChild(tax_liens);
                         }
 
-                        $("#tbl_deductions>tbody").append('<tr id="tax_liens-' + id + '"><td>DEDUCCION DE ' +
+                        $("#tbl_deductions>tbody").append('<tr id="tax_liens-' + id + '"><td>DESCUENTO POR ' +
                             tipo +
                             '</td><td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i> $' +
                             parseFloat(val_deduction, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
@@ -878,7 +878,7 @@
                             supplementary_plan.parentNode.removeChild(supplementary_plan);
                         }
 
-                        $("#tbl_deductions>tbody").append('<tr id="supplementary_plan-' + id + '"><td>DEDUCCION DE ' +
+                        $("#tbl_deductions>tbody").append('<tr id="supplementary_plan-' + id + '"><td>DESCUENTO POR ' +
                             tipo +
                             '</td><td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i> $' +
                             parseFloat(val_deduction, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
@@ -903,7 +903,7 @@
                             education.parentNode.removeChild(education);
                         }
 
-                        $("#tbl_deductions>tbody").append('<tr id="education-' + id + '"><td>DEDUCCION DE ' +
+                        $("#tbl_deductions>tbody").append('<tr id="education-' + id + '"><td>DESCUENTO POR ' +
                             tipo +
                             '</td><td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i> $' +
                             parseFloat(val_deduction, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
@@ -928,7 +928,7 @@
                             refund.parentNode.removeChild(refund);
                         }
 
-                        $("#tbl_deductions>tbody").append('<tr id="refund-' + id + '"><td>DEDUCCION DE ' +
+                        $("#tbl_deductions>tbody").append('<tr id="refund-' + id + '"><td>DESCUENTO POR ' +
                             tipo +
                             '</td><td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i> $' +
                             parseFloat(val_deduction, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
@@ -1684,7 +1684,7 @@
 
                 total_deducido = val_eps;
 
-                $("#tbl_deductions>tbody").append('<tr id="eps1"><td>DEDUCCION DE ' + deductions.deducciones
+                $("#tbl_deductions>tbody").append('<tr id="eps1"><td>DEDUCCION CORRESPONDIENTE A ' + deductions.deducciones
                     .eps_type_law_deduction
                     .name +
                     '</td><td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i> $' +
@@ -1706,7 +1706,7 @@
 
                 total_deducido += val_pension;
 
-                $("#tbl_deductions>tbody").append('<tr id="pension1"><td>DEDUCCION DE ' + deductions.deducciones
+                $("#tbl_deductions>tbody").append('<tr id="pension1"><td>DEDUCCION CORRESPONDIENTE A ' + deductions.deducciones
                     .pension_type_law_deductions.name +
                     '</td><td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i> $' +
                     parseFloat(val_eps, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,

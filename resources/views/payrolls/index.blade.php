@@ -310,7 +310,7 @@
                                                 <tr>
                                                     <td style="display: none;">{{ $row->id }}</td>
 
-                                                    <td>
+                                                    <td style="font-size:12px">
 
                                                         @php
                                                             $devengados_json = json_decode($row->accrued, true);
@@ -456,7 +456,9 @@
                                                     <td style="white-space:nowrap;"><i class="fa fa-sort-up"
                                                             style="font-size:18px;color:#00D0C4;"></i> $
                                                         {{ number_format($row->accrued_total, 2) }}</td>
-                                                    <td>
+                                                   
+                                                   
+                                                        <td style="font-size:12px">
 
                                                         @php
                                                             $deducciones_json = json_decode($row->deductions, true);
@@ -646,7 +648,7 @@
 
     @if (Session::has('error'))
         <script>
-            Swal.fire("Oops...!", "{{ session()->get('message') }}", "error");
+            Swal.fire("Oops...!", "{{ session()->get('error') }}", "error");
         </script>
     @endif
 

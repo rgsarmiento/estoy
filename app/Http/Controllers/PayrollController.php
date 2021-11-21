@@ -84,11 +84,11 @@ class PayrollController extends Controller
 
         $ultimoPeriodoEnviado = Payroll_period_progress::where('company_id', $company_id)->where('state_payroll_period_progress_id', 2)->orderBy('id', 'desc')->first();
         //dd($ultimoPeriodoEnviado);
-        if ($ultimoPeriodoEnviado){
-            $periodo_nomina = Period::where('year', date('Y'))->where('month', '>=', date('m') - 1)->where('id', '<>', $ultimoPeriodoEnviado->period_id)->take(2)->get();        
-        }else{
-            $periodo_nomina = Period::where('year', date('Y'))->where('month', '>=', date('m') - 1)->take(2)->get();        
-        }       
+        if ($ultimoPeriodoEnviado) {
+            $periodo_nomina = Period::where('year', date('Y'))->where('month', '>=', date('m') - 1)->where('id', '<>', $ultimoPeriodoEnviado->period_id)->take(2)->get();
+        } else {
+            $periodo_nomina = Period::where('year', date('Y'))->where('month', '>=', date('m') - 1)->take(2)->get();
+        }
 
         $documents = null;
         if ($payroll_period_progress) {
@@ -514,6 +514,16 @@ class PayrollController extends Controller
 
         $other_deductions = $deducciones_json['deducciones']['other_deductions'];
 
+        $debt = $deducciones_json['deducciones']['debt'];
+        $voluntary_pension = $deducciones_json['deducciones']['voluntary_pension'];
+        $withholding_at_source = $deducciones_json['deducciones']['withholding_at_source'];
+        $afc = $deducciones_json['deducciones']['afc'];
+        $cooperative = $deducciones_json['deducciones']['cooperative'];
+        $tax_liens = $deducciones_json['deducciones']['tax_liens'];
+        $supplementary_plan = $deducciones_json['deducciones']['supplementary_plan'];
+        $education = $deducciones_json['deducciones']['education'];
+        $refund = $deducciones_json['deducciones']['refund'];
+
         $deductions = array(
             'eps_type_law_deductions_id' => $deduction_eps_id,
             'eps_deduction' => str_replace(',', '', number_format($deduction_eps, 2)),
@@ -531,6 +541,53 @@ class PayrollController extends Controller
                 array_push($deductions['other_deductions'], $other_deduction);
             }
         }
+
+
+        if ($deducciones_json['deducciones']['voluntary_pension']) {
+            $voluntary_pension = $deducciones_json['deducciones']['voluntary_pension']['value'];
+            $deductions['voluntary_pension'] = str_replace(',', '', number_format($voluntary_pension, 2));
+        }
+
+        if ($deducciones_json['deducciones']['debt']) {
+            $debt = $deducciones_json['deducciones']['debt']['value'];
+            $deductions['debt'] = str_replace(',', '', number_format($debt, 2));
+        }
+
+        if ($deducciones_json['deducciones']['refund']) {
+            $refund = $deducciones_json['deducciones']['refund']['value'];
+            $deductions['refund'] = str_replace(',', '', number_format($refund, 2));
+        }
+
+        if ($deducciones_json['deducciones']['education']) {
+            $education = $deducciones_json['deducciones']['education']['value'];
+            $deductions['education'] = str_replace(',', '', number_format($education, 2));
+        }
+
+        if ($deducciones_json['deducciones']['supplementary_plan']) {
+            $supplementary_plan = $deducciones_json['deducciones']['supplementary_plan']['value'];
+            $deductions['supplementary_plan'] = str_replace(',', '', number_format($supplementary_plan, 2));
+        }
+
+        if ($deducciones_json['deducciones']['tax_liens']) {
+            $tax_liens = $deducciones_json['deducciones']['tax_liens']['value'];
+            $deductions['tax_liens'] = str_replace(',', '', number_format($tax_liens, 2));
+        }
+
+        if ($deducciones_json['deducciones']['cooperative']) {
+            $cooperative = $deducciones_json['deducciones']['cooperative']['value'];
+            $deductions['cooperative'] = str_replace(',', '', number_format($cooperative, 2));
+        }
+
+        if ($deducciones_json['deducciones']['afc']){
+            $afc = $deducciones_json['deducciones']['afc']['value'];
+            $deductions['afc'] = str_replace(',', '', number_format($afc, 2));
+        }
+
+        if ($deducciones_json['deducciones']['withholding_at_source']) {
+            $withholding_at_source = $deducciones_json['deducciones']['withholding_at_source']['value'];
+            $deductions['withholding_at_source'] = str_replace(',', '', number_format($withholding_at_source, 2));
+        }
+
 
         $objeto_nomina->deductions = $deductions;
 

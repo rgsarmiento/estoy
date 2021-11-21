@@ -512,7 +512,7 @@
                         @endphp
 
                         <tr id="eps1">
-                            <td>DEDUCCION DE {!! $eps_type_law_deduction['name'] !!}</td>
+                            <td>DEDUCCION CORRESPONDIENTE A {!! $eps_type_law_deduction['name'] !!}</td>
                             <td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i>
                                 ${!! number_format($eps_type_law_deduction['value'], 2) !!}</td>
                             <td><a href="" class="btn disabled btn-icon btn-sm btn-danger"><i
@@ -521,7 +521,7 @@
                         </tr>
 
                         <tr id="pension1">
-                            <td>DEDUCCION DE {!! $pension_type_law_deductions['name'] !!}</td>
+                            <td>DEDUCCION CORRESPONDIENTE A {!! $pension_type_law_deductions['name'] !!}</td>
                             <td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i>
                                 ${!! number_format($pension_type_law_deductions['value'], 2) !!}</td>
                             <td><a href="" class="btn disabled btn-icon btn-sm btn-danger"><i
@@ -532,7 +532,7 @@
 
                         @foreach ($other_deductions as $value)
                             <tr id="other_deductions-{!! $value['id'] !!}">
-                                <td>DEDUCCION DE {!! $value['name'] !!}</td>
+                                <td>DESCUENTO POR {!! $value['name'] !!}</td>
                                 <td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i>
                                     ${!! number_format($value['value'], 2) !!}</td>
                                 <td><a href="javascript:eliminar_deduccion({!! $value['id'] !!}, 'other_deductions', {!! $value['value'] !!})"
@@ -543,7 +543,7 @@
 
                         @if ($debt)
                             <tr id="debt-3">
-                                <td>DEDUCCION DE {!! $debt['name'] !!}</td>
+                                <td>DESCUENTO POR {!! $debt['name'] !!}</td>
                                 <td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i>
                                     ${!! number_format($debt['value'], 2) !!}</td>
                                 <td><a href="javascript:eliminar_deduccion({!! $debt['id'] !!}, 'debt', {!! $debt['value'] !!})"
@@ -554,7 +554,7 @@
 
                         @if ($voluntary_pension)
                             <tr id="voluntary_pension-4">
-                                <td>DEDUCCION DE {!! $voluntary_pension['name'] !!}</td>
+                                <td>DESCUENTO POR {!! $voluntary_pension['name'] !!}</td>
                                 <td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i>
                                     ${!! number_format($voluntary_pension['value'], 2) !!}</td>
                                 <td><a href="javascript:eliminar_deduccion({!! $voluntary_pension['id'] !!}, 'voluntary_pension', {!! $voluntary_pension['value'] !!})"
@@ -565,7 +565,7 @@
 
                         @if ($withholding_at_source)
                             <tr id="withholding_at_source-9">
-                                <td>DEDUCCION DE {!! $withholding_at_source['name'] !!}</td>
+                                <td>DESCUENTO POR {!! $withholding_at_source['name'] !!}</td>
                                 <td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i>
                                     ${!! number_format($withholding_at_source['value'], 2) !!}</td>
                                 <td><a href="javascript:eliminar_deduccion({!! $withholding_at_source['id'] !!}, 'withholding_at_source', {!! $withholding_at_source['value'] !!})"
@@ -576,7 +576,7 @@
 
                         @if ($afc)
                             <tr id="afc-1">
-                                <td>DEDUCCION DE {!! $afc['name'] !!}</td>
+                                <td>DESCUENTO POR {!! $afc['name'] !!}</td>
                                 <td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i>
                                     ${!! number_format($afc['value'], 2) !!}</td>
                                 <td><a href="javascript:eliminar_deduccion({!! $afc['id'] !!}, 'afc', {!! $afc['value'] !!})"
@@ -587,7 +587,7 @@
 
                         @if ($cooperative)
                             <tr id="cooperative-7">
-                                <td>DEDUCCION DE {!! $cooperative['name'] !!}</td>
+                                <td>DESCUENTO POR {!! $cooperative['name'] !!}</td>
                                 <td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i>
                                     ${!! number_format($cooperative['value'], 2) !!}</td>
                                 <td><a href="javascript:eliminar_deduccion({!! $cooperative['id'] !!}, 'cooperative', {!! $cooperative['value'] !!})"
@@ -598,7 +598,7 @@
 
                         @if ($tax_liens)
                             <tr id="tax_liens-2">
-                                <td>DEDUCCION DE {!! $tax_liens['name'] !!}</td>
+                                <td>DESCUENTO POR {!! $tax_liens['name'] !!}</td>
                                 <td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i>
                                     ${!! number_format($tax_liens['value'], 2) !!}</td>
                                 <td><a href="javascript:eliminar_deduccion({!! $tax_liens['id'] !!}, 'tax_liens', {!! $tax_liens['value'] !!})"
@@ -609,7 +609,7 @@
 
                         @if ($supplementary_plan)
                             <tr id="supplementary_plan-5">
-                                <td>DEDUCCION DE {!! $supplementary_plan['name'] !!}</td>
+                                <td>DESCUENTO POR {!! $supplementary_plan['name'] !!}</td>
                                 <td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i>
                                     ${!! number_format($supplementary_plan['value'], 2) !!}</td>
                                 <td><a href="javascript:eliminar_deduccion({!! $supplementary_plan['id'] !!}, 'supplementary_plan', {!! $supplementary_plan['value'] !!})"
@@ -620,7 +620,7 @@
 
                         @if ($education)
                             <tr id="education-6">
-                                <td>DEDUCCION DE {!! $education['name'] !!}</td>
+                                <td>DESCUENTO POR {!! $education['name'] !!}</td>
                                 <td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i>
                                     ${!! number_format($education['value'], 2) !!}</td>
                                 <td><a href="javascript:eliminar_deduccion({!! $education['id'] !!}, 'education', {!! $education['value'] !!})"
@@ -631,7 +631,7 @@
 
                         @if ($refund)
                             <tr id="refund-8">
-                                <td>DEDUCCION DE {!! $refund['name'] !!}</td>
+                                <td>DESCUENTO POR {!! $refund['name'] !!}</td>
                                 <td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i>
                                     ${!! number_format($refund['value'], 2) !!}</td>
                                 <td><a href="javascript:eliminar_deduccion({!! $refund['id'] !!}, 'refund', {!! $refund['value'] !!})"
