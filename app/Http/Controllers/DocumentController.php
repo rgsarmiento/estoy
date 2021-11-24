@@ -44,7 +44,7 @@ class DocumentController extends Controller
             }
         }
 
-        $documentosAgrupados = Document::where('company_id', $company_id)            
+        $documentosAgrupados = Document::where('company_id', $company_id)->where('state_document_id', 1)            
         ->select(DB::raw('count(id) as nworkers'), 'period_id', DB::raw('sum(accrued_total) as accrued_total'), DB::raw('sum(deductions_total) as deductions_total'), DB::raw('sum(payroll_total) as payroll_total'))
             ->groupBy('period_id')
             ->orderBy('period_id', 'desc');
