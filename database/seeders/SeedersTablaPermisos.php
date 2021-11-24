@@ -28,20 +28,28 @@ class SeedersTablaPermisos extends Seeder
             // 'workers.editar',
             // 'workers.eliminar',
             //tabla companies
-            'companies.index',
-            'companies.crear',
-            'companies.editar',
-            'companies.eliminar',
+            //'companies.index',
+            //'companies.crear',
+            //'companies.editar',
+            //'companies.eliminar',
              //tabla company_has_users
-            'company_has_users.index',
-            'company_has_users.crear',
-            'company_has_users.editar',
-            'company_has_users.eliminar',
+            //'company_has_users.index',
+            //'company_has_users.crear',
+            //'company_has_users.editar',
+            //'company_has_users.eliminar',
             //usuarios
-            'usuarios.index',
-            'usuarios.crear',
-            'usuarios.editar',
-            'usuarios.eliminar'
+            //'usuarios.index',
+            //'usuarios.crear',
+            //'usuarios.editar',
+            //'usuarios.eliminar',
+            //documentos emitidos
+            'documents.index',
+            'documents.editar',
+            'documents.eliminar',
+            'documents.download',
+            'payrolls.index',
+            'payrolls.editar',
+            'payrolls.send_payroll',
 
 
         ];

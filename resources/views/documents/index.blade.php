@@ -10,7 +10,7 @@
             <h3 class="page__heading">Documentos Emitidos</h3>
             <div class="section-header-breadcrumb">
                 <div class="breadcrumb-item active"><a href="/home">Dashboard</a></div>
-                <div class="breadcrumb-item">Emitidos</div>
+                <div class="breadcrumb-item">Documentos Emitidos</div>
             </div>
         </div>
 
@@ -36,110 +36,67 @@
         @endif
 
 
-
-        <div class="card card-primary">
-            <div class="card-body">
-                <div class="card-header">
-                    <h5>Filtros</h5>
-                </div>
-                <div class="card-block">
-
-                    <div class="row">
-                        <div class="col-sm-12 col-xl-6 m-b-30">
-                            <div class="form-group">
-                                {!! Html::decode(Form::label('payroll_period_id', 'Periodo de Nomina')) !!}
-                                {!! Form::select('payroll_period_id', $periodo_nomina->pluck('description', 'id'), null, ['class' => 'form-control', 'id' => 'select_payroll_period_id', 'placeholder' => '-- Seleccionar --']) !!}
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('payroll_period_id') }}
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-
-                </div>
-                <div class="card-footer text-right">
-                    <button class="btn btn-success">Aplicar filtro</button>
-                </div>
-            </div>
-        </div>
-
-
         <div class="section-body">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
 
-                            <form action="{{ route('documents.index') }}" method="get">
-                                <div class="form-row">
 
-                                    <div class="col-lg-4 col-md-4 col-sm-12">
-                                        <div class="card card-statistic-2">
+                            <div class="form-row">
 
-                                            <div class="card-icon shadow-primary bg-primary">
-                                                <i class="fas fa-archive"></i>
+                                <div class="col-lg-4 col-md-4 col-sm-12">
+                                    <div class="card card-statistic-2">
+
+                                        <div class="card-icon shadow-primary bg-primary">
+                                            <i class="fas fa-archive"></i>
+                                        </div>
+                                        <div class="card-wrap">
+                                            <div class="card-header">
+                                                <h4>Registros</h4>
                                             </div>
-                                            <div class="card-wrap">
-                                                <div class="card-header">
-                                                    <h4>Registros</h4>
-                                                </div>
-                                                <div class="card-body">
-                                                    {{ $nRegistros }}
-                                                </div>
+                                            <div class="card-body">
+                                                {{ $nRegistros }}
                                             </div>
                                         </div>
                                     </div>
-
-                                    <div class="col-lg-4 col-md-4 col-sm-12">
-                                        <div class="card card-statistic-2">
-
-                                            <div class="card-icon shadow-primary bg-primary">
-                                                <i class="fas fa-dollar-sign"></i>
-                                            </div>
-                                            <div class="card-wrap">
-                                                <div class="card-header">
-                                                    <h4>Total nomina</h4>
-                                                </div>
-                                                <div class="card-body">
-                                                    {{ number_format($totalNomina, 2) }}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-4 col-md-4 col-sm-12">
-                                        <div class="form-group">
-                                            <div class="input-group mb-3">
-                                                <input type="search" name="busqueda" id="txt_busqueda"
-                                                    class="form-control" placeholder="Buscar" aria-label="">
-                                                <div class="input-group-append">
-                                                    <input type="submit" class="btn btn-primary" value="Buscar">
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-
-
                                 </div>
-                            </form>
+
+                                <div class="col-lg-4 col-md-4 col-sm-12">
+                                    <div class="card card-statistic-2">
+
+                                        <div class="card-icon shadow-primary bg-primary">
+                                            <i class="fas fa-dollar-sign"></i>
+                                        </div>
+                                        <div class="card-wrap">
+                                            <div class="card-header">
+                                                <h4>Total nominas</h4>
+                                            </div>
+                                            <div class="card-body">
+                                                {{ number_format($totalNominas, 2) }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
 
                             <div class="table-responsive">
                                 <table class="table table-bordered table-hover border-primary table-striped mt-2">
                                     <thead style="background-color: #6777ef;">
                                         <th style="color: #fff;">Periodo</th>
-                                        <th style="color: #fff;">Serie</th>
-                                        <th style="color: #fff;">Folio</th>
+                                        <th style="color: #fff;">Empleados</th>
                                         <th style="color: #fff;">Total Devengados</th>
                                         <th style="color: #fff;">Total Deducciones</th>
                                         <th style="color: #fff;">Total Pago</th>
                                         <th class="text-right" style="color: #fff;">Acciones</th>
                                     </thead>
                                     <tbody>
-                                        @if (count($documents) <= 0)
+                                        @if (count($documentosAgrupados) <= 0)
                                             <tr>
-                                                <td colspan="7">
+                                                <td colspan="5">
                                                     <div class="card-body">
                                                         <div class="empty-state" data-height="400"
                                                             style="height: 400px;">
@@ -156,33 +113,17 @@
                                                 </td>
                                             </tr>
                                         @else
-                                            @foreach ($documents as $row)
+                                            @foreach ($documentosAgrupados as $row)
 
-                                                <tr>
-                                                    <td colspan="3">
-                                                        {{ $row->worker->payroll_type_document_identification->name }} :
-                                                        {{ $row->worker->identification_number }}<br>
-                                                        <a href="{{ route('workers.show', $row->worker) }}"><img
-                                                                src="{{ asset('img/avatar/avatar-1.png') }}" alt="avatar"
-                                                                width="25" class="rounded-circle mr-1">
-                                                            {{ $row->worker->first_name . ' ' . $row->worker->surname }}</a>
-                                                    </td>
-
-                                                    <td colspan="4" style="font-size:10px;"><i class="fas fa-terminal"
-                                                            style="font-size:12px;color:#4de767;"> Cune:</i><br>
-                                                        {{ $row->cune }}</td>
-
-                                                </tr>
                                                 <tr>
                                                     <td>
                                                         {{ $row->period->description . ' ' . $row->period->year }}
                                                     </td>
+
                                                     <td>
-                                                        {{ $row->prefix }}
+                                                        {{ $row->nworkers }}
                                                     </td>
-                                                    <td>
-                                                        {{ $row->consecutive }}
-                                                    </td>
+
                                                     <td style="white-space:nowrap;"><i class="fa fa-sort-up"
                                                             style="font-size:18px;color:#00D0C4;"></i> $
                                                         {{ number_format($row->accrued_total, 2) }}</td>
@@ -194,39 +135,25 @@
                                                             style="font-size:15px;color:#00D0C4;"></i> $
                                                         {{ number_format($row->payroll_total, 2) }}</td>
 
-                                                    <td>
-                                                        <div class="btn-group dropleft" style="float:right;width:50px;">
-                                                            <button
-                                                                class="btn btn-sm btn-light  waves-light"
-                                                                type="button" id="dropdown3" data-toggle="dropdown"
-                                                                aria-haspopup="true" aria-expanded="false"><i
-                                                                    class="fas fa-ellipsis-h"></i></button>
-                                                            <div class="dropdown-menu dropleft">
 
-                                                                <a class="dropdown-item has-icon"
-                                                                    href="{{ route('documents.download_apidian_payroll', array($row, 'pdf')) }}"><i
-                                                                        class="far fa-file-pdf"></i> PDF</a>
-
-                                                                        <a class="dropdown-item has-icon"
-                                                                    href="{{ route('documents.download_apidian_payroll', array($row, 'xml')) }}"><i
-                                                                        class="far fa-file"></i> XML</a>
-
-                                                                <a class="dropdown-item has-icon"
-                                                                    href="{{ $row->qrstr }}" target="_blank"><i
-                                                                        class="fa fa-link"></i> Dian</a>
-
-                                                            </div>
-                                                            <!-- end of dropdown menu -->
-                                                        </div>
-                                                    </td>
-
+                                                        <td class="text-right">
+                                                            {!! Form::open(['method' => 'GET', 'route' => 'documents.show', 'style' => 'display:inline']) !!}
+    
+                                                            {!! Form::hidden('period_id', $row->period_id) !!}
+    
+                                                            {!! Form::button('<i class="fas fa-eye"></i>', ['type' => 'submit', 'class' => 'btn btn-light btn-sm btn-icon']) !!}
+                                                            
+                                                            {!! Form::close() !!}
+                                                            
+    
+                                                        </td>
                                                 </tr>
                                             @endforeach
                                         @endif
                                     </tbody>
                                 </table>
                                 <div class="pagination justify-content-end">
-                                    {!! $documents->links() !!}
+                                    {!! $documentosAgrupados->links() !!}
                                 </div>
                             </div>
 
@@ -240,32 +167,6 @@
 @endsection
 
 @section('scripts')
-    <script>
-        $(document).ready(function() {
-            //Código que se ejecutará al cargar la página
-            var queryString = window.location.search;
-            var urlParams = new URLSearchParams(queryString);
-
-            if (urlParams.has('busqueda')) {
-                document.getElementById("txt_busqueda").value = urlParams.get('busqueda');
-            }
-
-
-            if (localStorage.fecha_pago_ni === undefined) {} else {
-                document.getElementById("payment_date").value = localStorage.getItem('fecha_pago_ni');
-                localStorage.removeItem('fecha_pago_ni');
-            }
-
-            if (localStorage.periodo_ni === undefined) {} else {
-                document.getElementById("select_payroll_period_id").value = localStorage.getItem('periodo_ni');
-                localStorage.removeItem('periodo_ni');
-            }
-
-
-
-
-        });
-    </script>
 
     <script>
         window.setTimeout(function() {

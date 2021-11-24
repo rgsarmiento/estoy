@@ -53,7 +53,8 @@ Route::group(['middleware' => ['auth']], function() {
 
     Route::resource('documents', DocumentController::class);
     Route::get('/documents/download_apidian_payroll/{document}/{type}', [App\Http\Controllers\DocumentController::class, 'download_apidian_payroll'])->name('documents.download_apidian_payroll');
-
+    Route::get('/documents/show', [App\Http\Controllers\DocumentController::class, 'show'])->name('documents.show');
+    
 
 });
 

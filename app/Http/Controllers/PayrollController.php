@@ -26,6 +26,13 @@ use stdClass;
 
 class PayrollController extends Controller
 {
+    function __construct()
+    {
+        $this->middleware('permission:payrolls.index', ['only' => ['index', 'show']]);
+        $this->middleware('permission:payrolls.editar', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:payrolls.send_payroll', ['only' => ['send_payroll']]);        
+        
+    }
     /**
      * Display a listing of the resource.
      *
