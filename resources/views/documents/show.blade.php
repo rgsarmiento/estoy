@@ -177,7 +177,8 @@
                                     </tbody>
                                 </table>
                                 <div class="pagination justify-content-end">
-                                    {!! $documents->links() !!}
+                                   
+                                    {{ $documents->appends(['period_id' => $period_id])->links() }}
                                 </div>
                             </div>
 
