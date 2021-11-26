@@ -35,7 +35,7 @@ class HomeController extends Controller
      
         $cantidad_usuarios = User::count();
         $cantidad_empresas = Company::count();
-        $cantidad_empleados = Worker::count();
+        
 
         $configuraciones = Configuration::first();
 
@@ -45,13 +45,13 @@ class HomeController extends Controller
         if ($role_user <> 1){
             $user_id = $user->id;
             $company_has_user = Company_has_user::where('user_id', $user_id)->first();
-            //dd($company_id);
+            $cantidad_empleados = Worker::where('company_id', $company_has_user->company_id)->count();
             if ($company_has_user == null){
                 Auth::logout();
                 return redirect('/');
             }
         }else{
-            //$company_id->company_id;
+            $cantidad_empleados = Worker::count();
         }       
         
         //$response = $this->send_apidian();
