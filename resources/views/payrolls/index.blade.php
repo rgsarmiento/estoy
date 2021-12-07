@@ -322,6 +322,7 @@
                                                             $paid_vacation = $devengados_json['devengados']['paid_vacation'];
                                                             $maternity_leave = $devengados_json['devengados']['maternity_leave'];
                                                             $paid_leave = $devengados_json['devengados']['paid_leave'];
+                                                            $non_paid_leave = $devengados_json['devengados']['non_paid_leave'];
                                                             $legal_strike = $devengados_json['devengados']['legal_strike'];
                                                             
                                                             $HEDs = $devengados_json['devengados']['HEDs'];
@@ -375,6 +376,14 @@
                                                                 style="margin-top:0rem;margin-bottom:0rem;border-top:1px solid rgb(103 119 239)">
                                                         @endif
                                                         @foreach ($paid_leave as $value)
+                                                            {!! $value['name'] . ':<br><strong> +' . number_format($value['payment'], 2) . '</strong>' !!} <br>
+                                                        @endforeach
+
+                                                        @if (count($non_paid_leave))
+                                                            <hr
+                                                                style="margin-top:0rem;margin-bottom:0rem;border-top:1px solid rgb(103 119 239)">
+                                                        @endif
+                                                        @foreach ($non_paid_leave as $value)
                                                             {!! $value['name'] . ':<br><strong> +' . number_format($value['payment'], 2) . '</strong>' !!} <br>
                                                         @endforeach
 
@@ -478,10 +487,15 @@
                                                             $refund = $deducciones_json['deducciones']['refund'];
                                                         @endphp
 
+                                                        @if ($eps_type_law_deduction)
                                                         {!! $eps_type_law_deduction['name'] . ':<strong> -' . number_format($eps_type_law_deduction['value'], 2) . '</strong>' !!}
+                                                        @endif
+                                                       
+                                                        @if ($pension_type_law_deductions)
                                                         <hr
                                                             style="margin-top:0rem;margin-bottom:0rem;border-top:1px solid rgb(103 119 239)">
                                                         {!! $pension_type_law_deductions['name'] . ':<strong> -' . number_format($pension_type_law_deductions['value'], 2) . '</strong>' !!}
+                                                        @endif
 
                                                         @if (count($other_deductions))
                                                             <hr

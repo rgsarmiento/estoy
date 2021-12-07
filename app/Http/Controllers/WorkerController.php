@@ -174,7 +174,7 @@ class WorkerController extends Controller
             'name' => 'Salario',
             'value' => ($worker->salary * 1)
         );
-        
+
         $accrued_total = $worker->salary;
 
         //if ($worker->integral_salarary == 0 || $worker->salary < $configuraciones->minimum_salary * 2){
@@ -184,7 +184,7 @@ class WorkerController extends Controller
                 'value' => ($configuraciones->transport_allowance * 1)
             );
             $accrued_total += $configuraciones->transport_allowance;
-        }else{
+        } else {
             $transportation_allowance = new StdClass();
         }
 
@@ -269,7 +269,7 @@ class WorkerController extends Controller
         $payroll->deductions_total = $deductions_total;
         $payroll->payroll_total = $accrued_total - $deductions_total;
         $payroll->notes = 'NOMINA ELECTRONICA';
-        
+
         $payroll->save();
 
         return redirect()->route('workers.index')->with('message', 'El empleado ' . $data['first_name'] . ' ' . $data['surname'] . ' se creo con éxito');;
@@ -307,10 +307,11 @@ class WorkerController extends Controller
         $tipo_empleado = Type_worker::orderBy('code', 'asc')->get();
         $sub_tipo_empleado = Sub_type_worker::orderBy('code', 'asc')->get();
         $periodo_nomina = Payroll_period::all();
-        $eps_deduccion = Type_salud_law_deduction::all();
-        $pension_deduccion = Type_pension_law_deduction::all();
+        $eps_deduccion = Type_salud_law_deduction::select('id', DB::raw('CONCAT(name, " - (% Aplicado ", percentage, ")") AS name'))->get();
+        $pension_deduccion = Type_pension_law_deduction::select('id', DB::raw('CONCAT(name, " - (% Aplicado ", percentage, ")") AS name'))->get();
 
         $metodo_pago = Payment_method::orderBy('name', 'asc')->get();
+
 
         $configuraciones = Configuration::first();
 
@@ -375,7 +376,7 @@ class WorkerController extends Controller
             'name' => 'Salario',
             'value' => ($worker->salary * 1)
         );
-        
+
         $accrued_total = $worker->salary;
 
         //if ($worker->integral_salarary == 0 || $worker->salary < $configuraciones->minimum_salary * 2){
@@ -385,7 +386,7 @@ class WorkerController extends Controller
                 'value' => ($configuraciones->transport_allowance * 1)
             );
             $accrued_total += $configuraciones->transport_allowance;
-        }else{
+        } else {
             $transportation_allowance = new StdClass();
         }
 

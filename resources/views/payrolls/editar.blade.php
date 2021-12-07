@@ -126,6 +126,11 @@
                         document.getElementById("div_quantity_a").style.display = "block";
                         document.getElementById("div_rango_fecha_a").style.display = "block";
                         break;
+                    case 'non_paid_leave':
+                        document.getElementById("div_add_accrueds").style.display = "block";
+                        document.getElementById("div_quantity_a").style.display = "block";
+                        document.getElementById("div_rango_fecha_a").style.display = "block";
+                        break;
                     case 'legal_strike':
                         document.getElementById("div_accrued_value").style.display = "block";
                         document.getElementById("div_add_accrueds").style.display = "block";
@@ -352,6 +357,38 @@
                         );
 
                         accrued.devengados.paid_leave.push(array);
+                        val_accrueds = (val_accrueds + val_accrued);
+                        break;
+                    case 'non_paid_leave':
+                        var n_non_paid_leave = accrued.devengados.non_paid_leave.length;
+
+                        var fechaInicio = document.getElementById("start_date_a").value;
+                        var fechaFin = document.getElementById("end_date_a").value;
+                        var cantidad = Number(document.getElementById("quantity_a").value);
+                        var val_accrued = Number(0);
+
+                        var id = (Math.floor(Math.random() * (999 - 100 + 1) + 100) + n_non_paid_leave);
+                        array = {
+                            'id': id,
+                            'start_date': fechaInicio,
+                            'end_date': fechaFin,
+                            'quantity': cantidad,
+                            'payment': val_accrued,
+                            'name': tipo
+                        };
+
+                        $("#tbl_accrueds>tbody").append('<tr id="non_paid_leave-' + id + '"><td>' +
+                            'PAGO DE ' + cantidad + ' DIA(S) DE ' + tipo + ' DESDE ' + fechaInicio +
+                            ' HASTA ' + fechaFin +
+                            '</td><td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i> $' +
+                            parseFloat(val_accrued, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
+                                "$1,").toString() + '</td>' +
+                            '<td><a href="javascript:eliminar_accrued(' + id +
+                            ",'non_paid_leave'," + val_accrued +
+                            ')" class="btn btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a></td></tr>'
+                        );
+
+                        accrued.devengados.non_paid_leave.push(array);
                         val_accrueds = (val_accrueds + val_accrued);
                         break;
                     case 'legal_strike':
@@ -738,7 +775,7 @@
                             ')" class="btn btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a></td></tr>'
                         );
                         break;
-                        case 'voluntary_pension':
+                    case 'voluntary_pension':
                         var id = 4;
                         var array = {
                             'id': id,
@@ -753,7 +790,8 @@
                             voluntary_pension.parentNode.removeChild(voluntary_pension);
                         }
 
-                        $("#tbl_deductions>tbody").append('<tr id="voluntary_pension-' + id + '"><td>DESCUENTO POR ' +
+                        $("#tbl_deductions>tbody").append('<tr id="voluntary_pension-' + id +
+                            '"><td>DESCUENTO POR ' +
                             tipo +
                             '</td><td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i> $' +
                             parseFloat(val_deduction, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
@@ -763,7 +801,7 @@
                             ')" class="btn btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a></td></tr>'
                         );
                         break;
-                        case 'withholding_at_source':
+                    case 'withholding_at_source':
                         var id = 9;
                         var array = {
                             'id': id,
@@ -778,7 +816,8 @@
                             withholding_at_source.parentNode.removeChild(withholding_at_source);
                         }
 
-                        $("#tbl_deductions>tbody").append('<tr id="withholding_at_source-' + id + '"><td>DESCUENTO POR ' +
+                        $("#tbl_deductions>tbody").append('<tr id="withholding_at_source-' + id +
+                            '"><td>DESCUENTO POR ' +
                             tipo +
                             '</td><td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i> $' +
                             parseFloat(val_deduction, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
@@ -788,7 +827,7 @@
                             ')" class="btn btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a></td></tr>'
                         );
                         break;
-                        case 'afc':
+                    case 'afc':
                         var id = 1;
                         var array = {
                             'id': id,
@@ -813,7 +852,7 @@
                             ')" class="btn btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a></td></tr>'
                         );
                         break;
-                        case 'cooperative':
+                    case 'cooperative':
                         var id = 7;
                         var array = {
                             'id': id,
@@ -828,7 +867,8 @@
                             cooperative.parentNode.removeChild(cooperative);
                         }
 
-                        $("#tbl_deductions>tbody").append('<tr id="cooperative-' + id + '"><td>DESCUENTO POR ' +
+                        $("#tbl_deductions>tbody").append('<tr id="cooperative-' + id +
+                            '"><td>DESCUENTO POR ' +
                             tipo +
                             '</td><td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i> $' +
                             parseFloat(val_deduction, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
@@ -838,7 +878,7 @@
                             ')" class="btn btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a></td></tr>'
                         );
                         break;
-                        case 'tax_liens':
+                    case 'tax_liens':
                         var id = 2;
                         var array = {
                             'id': id,
@@ -853,7 +893,8 @@
                             tax_liens.parentNode.removeChild(tax_liens);
                         }
 
-                        $("#tbl_deductions>tbody").append('<tr id="tax_liens-' + id + '"><td>DESCUENTO POR ' +
+                        $("#tbl_deductions>tbody").append('<tr id="tax_liens-' + id +
+                            '"><td>DESCUENTO POR ' +
                             tipo +
                             '</td><td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i> $' +
                             parseFloat(val_deduction, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
@@ -863,7 +904,7 @@
                             ')" class="btn btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a></td></tr>'
                         );
                         break;
-                        case 'supplementary_plan':
+                    case 'supplementary_plan':
                         var id = 5;
                         var array = {
                             'id': id,
@@ -878,7 +919,8 @@
                             supplementary_plan.parentNode.removeChild(supplementary_plan);
                         }
 
-                        $("#tbl_deductions>tbody").append('<tr id="supplementary_plan-' + id + '"><td>DESCUENTO POR ' +
+                        $("#tbl_deductions>tbody").append('<tr id="supplementary_plan-' + id +
+                            '"><td>DESCUENTO POR ' +
                             tipo +
                             '</td><td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i> $' +
                             parseFloat(val_deduction, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
@@ -888,7 +930,7 @@
                             ')" class="btn btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a></td></tr>'
                         );
                         break;
-                        case 'education':
+                    case 'education':
                         var id = 6;
                         var array = {
                             'id': id,
@@ -903,7 +945,8 @@
                             education.parentNode.removeChild(education);
                         }
 
-                        $("#tbl_deductions>tbody").append('<tr id="education-' + id + '"><td>DESCUENTO POR ' +
+                        $("#tbl_deductions>tbody").append('<tr id="education-' + id +
+                            '"><td>DESCUENTO POR ' +
                             tipo +
                             '</td><td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i> $' +
                             parseFloat(val_deduction, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
@@ -913,7 +956,7 @@
                             ')" class="btn btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a></td></tr>'
                         );
                         break;
-                        case 'refund':
+                    case 'refund':
                         var id = 8;
                         var array = {
                             'id': id,
@@ -1099,6 +1142,14 @@
                         return false
                     }
                     break;
+                case 'non_paid_leave': //devengado
+                    var fechaInicio = document.getElementById("start_date_a").value;
+                    var fechaFin = document.getElementById("end_date_a").value;
+                    var cantidad = Number(document.getElementById("quantity_a").value);
+                    if (cantidad <= 0 || fechaInicio.length == 0 || fechaFin.length == 0) {
+                        return false
+                    }
+                    break;
                 case 'legal_strike': //devengado
                     var fechaInicio = document.getElementById("start_date_a").value;
                     var fechaFin = document.getElementById("end_date_a").value;
@@ -1276,6 +1327,21 @@
                     element.parentNode.removeChild(element);
 
                     break;
+                case 'non_paid_leave':
+                    accrued.devengados.non_paid_leave.forEach(function(currentValue, index, arr) {
+                        if (accrued.devengados.non_paid_leave[index].id == id) {
+                            accrued.devengados.non_paid_leave.splice(index, 1);
+                        }
+                    })
+
+                    val_accrueds = (val_accrueds - valor);
+                    document.getElementById("accrued_total").value = val_accrueds;
+                    document.getElementById("accrued").value = JSON.stringify(accrued);
+
+                    var element = document.getElementById("non_paid_leave-" + id);
+                    element.parentNode.removeChild(element);
+
+                    break;
                 case 'legal_strike':
                     accrued.devengados.legal_strike.forEach(function(currentValue, index, arr) {
                         if (accrued.devengados.legal_strike[index].id == id) {
@@ -1409,13 +1475,29 @@
 
 
 
-
-
         function eliminar_deduccion(id, tipo, valor) {
             var val_deductions = Number(document.getElementById("deductions_total").value);
             var deductions = JSON.parse(document.getElementById("deductions").value);
 
             switch (tipo) {
+                case 'eps_type_law_deduction':
+                    deductions.deducciones.eps_type_law_deduction = {};
+                    var element = document.getElementById("eps_type_law_deduction-" + id);
+                    element.parentNode.removeChild(element);
+
+                    val_deductions = (val_deductions - valor);
+                    document.getElementById("deductions_total").value = val_deductions;
+                    document.getElementById("deductions").value = JSON.stringify(deductions);
+                    break;
+                case 'pension_type_law_deductions':
+                    deductions.deducciones.pension_type_law_deductions = {};
+                    var element = document.getElementById("pension_type_law_deductions-" + id);
+                    element.parentNode.removeChild(element);
+
+                    val_deductions = (val_deductions - valor);
+                    document.getElementById("deductions_total").value = val_deductions;
+                    document.getElementById("deductions").value = JSON.stringify(deductions);
+                    break;
                 case 'other_deductions':
 
                     deductions.deducciones.other_deductions.forEach(function(currentValue, index, arr) {
@@ -1535,89 +1617,182 @@
             var aux_transporte_diario = (aux_transporte_mensual / 30);
             var salario_diario = (salario_mensual / 30)
 
-            var para_deduccion_paraFiscales = 0; //Este total es para calcular la deduccion de pension y salud
-
+            var base_eps_concepts_parafiscal = 0;
+            var base_pension_concepts_parafiscal = 0; //Este total es para calcular la deduccion de pension y salud
+            var concepts_parafiscal = JSON.parse(document.getElementById("concepts_parafiscal").value);
             //////////////////// DEVENGADOS/////////////////////////
             var accrued = JSON.parse(document.getElementById("accrued").value);
-
+            ///////////Salario/////////////
             accrued.devengados.salary.value = (salario_diario * dias)
             total_devengado = (salario_diario * dias);
 
-            para_deduccion_paraFiscales = (salario_diario * dias);
-
+            if (concepts_parafiscal.concepts.salary.eps == 1) {
+                base_eps_concepts_parafiscal = (salario_diario * dias);
+            }
+            if (concepts_parafiscal.concepts.salary.pension == 1) {
+                base_pension_concepts_parafiscal = (salario_diario * dias);
+            }
+            ////////////Vacaciones Comunes/////////////
             var json_common_vacation = accrued.devengados.common_vacation
             var total_common_vacation = json_common_vacation.reduce((sum, value) => (typeof value.payment == "number" ?
                 sum + value.payment : sum), 0);
             total_devengado += (total_common_vacation)
 
-            para_deduccion_paraFiscales += (total_common_vacation)
-
+            if (concepts_parafiscal.concepts.common_vacation.eps == 1) {
+                base_eps_concepts_parafiscal += (total_common_vacation)
+            }
+            if (concepts_parafiscal.concepts.common_vacation.pension == 1) {
+                base_pension_concepts_parafiscal += (total_common_vacation)
+            }
+            ////////////Vacaciones Compensadas/////////////
             var json_paid_vacation = accrued.devengados.paid_vacation
             var total_paid_vacation = json_paid_vacation.reduce((sum, value) => (typeof value.payment == "number" ? sum +
                 value.payment : sum), 0);
             total_devengado += (total_paid_vacation)
 
-            para_deduccion_paraFiscales += (total_paid_vacation)
-
+            if (concepts_parafiscal.concepts.paid_vacation.eps == 1) {
+                base_eps_concepts_parafiscal += (total_paid_vacation)
+            }
+            if (concepts_parafiscal.concepts.paid_vacation.pension == 1) {
+                base_pension_concepts_parafiscal += (total_paid_vacation)
+            }
+            ///////////Licencia de Materinidad//////////
             var json_maternity_leave = accrued.devengados.maternity_leave
             var total_maternity_leave = json_maternity_leave.reduce((sum, value) => (typeof value.payment == "number" ?
                 sum + value.payment : sum), 0);
             total_devengado += (total_maternity_leave)
 
+            if (concepts_parafiscal.concepts.maternity_leave.eps == 1) {
+                base_eps_concepts_parafiscal += (total_maternity_leave)
+            }
+            if (concepts_parafiscal.concepts.maternity_leave.pension == 1) {
+                base_pension_concepts_parafiscal += (total_maternity_leave)
+            }
+            //////////Licencia Remunerada///////////
             var json_paid_leave = accrued.devengados.paid_leave
             var total_paid_leave = json_paid_leave.reduce((sum, value) => (typeof value.payment == "number" ? sum + value
                 .payment : sum), 0);
             total_devengado += (total_paid_leave)
 
+            if (concepts_parafiscal.concepts.paid_leave.eps == 1) {
+                base_eps_concepts_parafiscal += (total_paid_leave)
+            }
+            if (concepts_parafiscal.concepts.paid_leave.pension == 1) {
+                base_pension_concepts_parafiscal += (total_paid_leave)
+            }
+            //////////Licencia no Remunerada///////////
+            //estas no tienen un valor para sumar o restar
+            
+            ///////////Huelgas Legales//////////
             var json_legal_strike = accrued.devengados.legal_strike
             var total_legal_strike = json_legal_strike.reduce((sum, value) => (typeof value.payment == "number" ? sum +
                 value.payment : sum), 0);
             total_devengado += (total_legal_strike)
 
+            if (concepts_parafiscal.concepts.legal_strike.eps == 1) {
+                base_eps_concepts_parafiscal += (total_legal_strike)
+            }
+            if (concepts_parafiscal.concepts.legal_strike.pension == 1) {
+                base_pension_concepts_parafiscal += (total_legal_strike)
+            }
+
             //Horas extras
+            //////////HEDs//////////////
             var json_HEDs = accrued.devengados.HEDs
             var total_HEDs = json_HEDs.reduce((sum, value) => (typeof value.payment == "number" ? sum +
                 value.payment : sum), 0);
             total_devengado += (total_HEDs)
+
+            if (concepts_parafiscal.concepts.HEDs.eps == 1) {
+                base_eps_concepts_parafiscal += (total_HEDs)
+            }
+            if (concepts_parafiscal.concepts.HEDs.pension == 1) {
+                base_pension_concepts_parafiscal += (total_HEDs)
+            }
 
             var json_HENs = accrued.devengados.HENs
             var total_HENs = json_HENs.reduce((sum, value) => (typeof value.payment == "number" ? sum +
                 value.payment : sum), 0);
             total_devengado += (total_HENs)
 
+            if (concepts_parafiscal.concepts.HENs.eps == 1) {
+                base_eps_concepts_parafiscal += (total_HENs)
+            }
+            if (concepts_parafiscal.concepts.HENs.pension == 1) {
+                base_pension_concepts_parafiscal += (total_HENs)
+            }
+
             var json_HRNs = accrued.devengados.HRNs
             var total_HRNs = json_HRNs.reduce((sum, value) => (typeof value.payment == "number" ? sum +
                 value.payment : sum), 0);
             total_devengado += (total_HRNs)
+
+            if (concepts_parafiscal.concepts.HRNs.eps == 1) {
+                base_eps_concepts_parafiscal += (total_HRNs)
+            }
+            if (concepts_parafiscal.concepts.HRNs.pension == 1) {
+                base_pension_concepts_parafiscal += (total_HRNs)
+            }
 
             var json_HEDDFs = accrued.devengados.HEDDFs
             var total_HEDDFs = json_HEDDFs.reduce((sum, value) => (typeof value.payment == "number" ? sum +
                 value.payment : sum), 0);
             total_devengado += (total_HEDDFs)
 
+            if (concepts_parafiscal.concepts.HEDDFs.eps == 1) {
+                base_eps_concepts_parafiscal += (total_HEDDFs)
+            }
+            if (concepts_parafiscal.concepts.HEDDFs.pension == 1) {
+                base_pension_concepts_parafiscal += (total_HEDDFs)
+            }
+
             var json_HRDDFs = accrued.devengados.HRDDFs
             var total_HRDDFs = json_HRDDFs.reduce((sum, value) => (typeof value.payment == "number" ? sum +
                 value.payment : sum), 0);
             total_devengado += (total_HRDDFs)
+
+            if (concepts_parafiscal.concepts.HRDDFs.eps == 1) {
+                base_eps_concepts_parafiscal += (total_HRDDFs)
+            }
+            if (concepts_parafiscal.concepts.HRDDFs.pension == 1) {
+                base_pension_concepts_parafiscal += (total_HRDDFs)
+            }
 
             var json_HENDFs = accrued.devengados.HENDFs
             var total_HENDFs = json_HENDFs.reduce((sum, value) => (typeof value.payment == "number" ? sum +
                 value.payment : sum), 0);
             total_devengado += (total_HENDFs)
 
+            if (concepts_parafiscal.concepts.HENDFs.eps == 1) {
+                base_eps_concepts_parafiscal += (total_HENDFs)
+            }
+            if (concepts_parafiscal.concepts.HENDFs.pension == 1) {
+                base_pension_concepts_parafiscal += (total_HENDFs)
+            }
+
             var json_HRNDFs = accrued.devengados.HRNDFs
             var total_HRNDFs = json_HRNDFs.reduce((sum, value) => (typeof value.payment == "number" ? sum +
                 value.payment : sum), 0);
             total_devengado += (total_HRNDFs)
 
-            //Incapacidad
+            if (concepts_parafiscal.concepts.HRNDFs.eps == 1) {
+                base_eps_concepts_parafiscal += (total_HRNDFs)
+            }
+            if (concepts_parafiscal.concepts.HRNDFs.pension == 1) {
+                base_pension_concepts_parafiscal += (total_HRNDFs)
+            }
+            //////Incapacidad////////
             var json_work_disabilities = accrued.devengados.work_disabilities
             var total_work_disabilities = json_work_disabilities.reduce((sum, value) => (typeof value.payment == "number" ?
                 sum + value.payment : sum), 0);
             total_devengado += (total_work_disabilities)
-            //var json_other_concepts = accrued.devengados.other_concepts
-            //var total_other_concepts = json_other_concepts.reduce((sum, value) => (typeof value.payment == "number" ? sum + value.payment : sum), 0);
-            //total_devengado += (total_other_concepts)
+
+            if (concepts_parafiscal.concepts.work_disabilities.eps == 1) {
+                base_eps_concepts_parafiscal += (total_work_disabilities)
+            }
+            if (concepts_parafiscal.concepts.work_disabilities.pension == 1) {
+                base_pension_concepts_parafiscal += (total_work_disabilities)
+            }
 
             if (accrued.devengados.transportation_allowance.name == "Subsidio Transporte") {
                 accrued.devengados.transportation_allowance = {};
@@ -1642,6 +1817,14 @@
                     'name': "Subsidio Transporte"
                 };
                 total_devengado += (aux_transporte_diario * dias);
+
+                if (concepts_parafiscal.concepts.transportation_allowance.eps == 1) {
+                    base_eps_concepts_parafiscal += (aux_transporte_diario * dias)
+                }
+                if (concepts_parafiscal.concepts.transportation_allowance.pension == 1) {
+                    base_pension_concepts_parafiscal += (aux_transporte_diario * dias)
+                }
+
                 Object.assign(accrued.devengados.transportation_allowance, array);
 
                 $("#tbl_accrueds>tbody").append('<tr id="aux_transporte1"><td>Subsidio Transporte' +
@@ -1664,55 +1847,71 @@
             var deductions = JSON.parse(document.getElementById("deductions").value);
 
             var eps = deductions.deducciones.eps_type_law_deduction.name;
-            var pension = deductions.deducciones.pension_type_law_deductions.name;
             var eps_percentage = 0;
-            var pension_percentage = 0;
-            var index_eps = eps.indexOf('% ');
-            var index_pension = pension.indexOf('% ');
             var val_eps = 0;
-            var val_pension = 0;
 
-            if (index_eps !== -1) {
-                var largo = eps.length
-                eps_percentage = eps.substring((index_eps + 2), largo);
-                val_eps = (para_deduccion_paraFiscales * eps_percentage) / 100;
-                deductions.deducciones.eps_type_law_deduction.value = val_eps;
+            if (eps) {
+                var index_eps = eps.indexOf('% ');
 
-                //Eliminar y agregar fila de eps
-                var eps1 = document.getElementById("eps1");
-                eps1.parentNode.removeChild(eps1);
+                if (index_eps !== -1) {
+                    var largo = eps.length
+                    eps_percentage = eps.substring((index_eps + 2), largo);
+                    val_eps = (base_eps_concepts_parafiscal * eps_percentage) / 100;
+                    deductions.deducciones.eps_type_law_deduction.value = val_eps;
+                    id = deductions.deducciones.eps_type_law_deduction.id
 
-                total_deducido = val_eps;
+                    //Eliminar y agregar fila de eps
+                    var eps_type_law_deduction = document.getElementById('eps_type_law_deduction-' + id);
+                    eps_type_law_deduction.parentNode.removeChild(eps_type_law_deduction);
 
-                $("#tbl_deductions>tbody").append('<tr id="eps1"><td>DEDUCCION CORRESPONDIENTE A ' + deductions.deducciones
-                    .eps_type_law_deduction
-                    .name +
-                    '</td><td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i> $' +
-                    parseFloat(val_eps, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
-                        "$1,").toString() + '</td>' +
-                    '<td><a href="" class="btn disabled btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a></td></tr>'
-                );
+                    total_deducido = val_eps;
+                    var strnode = "'Na'";
+
+                    $("#tbl_deductions>tbody").append('<tr id="eps_type_law_deduction-' + id +
+                        '"><td>DEDUCCION CORRESPONDIENTE A ' + deductions.deducciones
+                        .eps_type_law_deduction
+                        .name +
+                        '</td><td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i> $' +
+                        parseFloat(val_eps, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
+                            "$1,").toString() + '</td>' +
+                        '<td><a href="javascript:eliminar_deduccion(' + id + ',' + strnode + ',' + val_eps +
+                        ')" class="btn btn-icon disabled btn-sm btn-danger"><i class="fas fa-times"></i></a></td></tr>'
+                    );
+                }
             }
 
-            if (index_pension !== -1) {
-                var largo = pension.length
-                pension_percentage = pension.substring((index_pension + 2), largo);
-                val_pension = (para_deduccion_paraFiscales * pension_percentage) / 100;
-                deductions.deducciones.pension_type_law_deductions.value = val_pension;
 
-                //Eliminar y agregar fila de pension
-                var pension1 = document.getElementById("pension1");
-                pension1.parentNode.removeChild(pension1);
+            var pension = deductions.deducciones.pension_type_law_deductions.name;
+            var pension_percentage = 0;
+            var val_pension = 0;
 
-                total_deducido += val_pension;
+            if (pension) {
+                var index_pension = pension.indexOf('% ');
 
-                $("#tbl_deductions>tbody").append('<tr id="pension1"><td>DEDUCCION CORRESPONDIENTE A ' + deductions.deducciones
-                    .pension_type_law_deductions.name +
-                    '</td><td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i> $' +
-                    parseFloat(val_eps, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
-                        "$1,").toString() + '</td>' +
-                    '<td><a href="" class="btn disabled btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a></td></tr>'
-                );
+                if (index_pension !== -1) {
+                    var largo = pension.length
+                    pension_percentage = pension.substring((index_pension + 2), largo);
+                    val_pension = (base_pension_concepts_parafiscal * pension_percentage) / 100;
+                    deductions.deducciones.pension_type_law_deductions.value = val_pension;
+                    id = deductions.deducciones.pension_type_law_deductions.id
+                    //Eliminar y agregar fila de pension
+                    var pension_type_law_deductions = document.getElementById('pension_type_law_deductions-' + id);
+                    pension_type_law_deductions.parentNode.removeChild(pension_type_law_deductions);
+
+                    total_deducido += val_pension;
+                    var strnode = "'Na'";
+
+                    $("#tbl_deductions>tbody").append('<tr id="pension_type_law_deductions-' + id +
+                        '"><td>DEDUCCION CORRESPONDIENTE A ' + deductions
+                        .deducciones
+                        .pension_type_law_deductions.name +
+                        '</td><td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i> $' +
+                        parseFloat(val_pension, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
+                            "$1,").toString() + '</td>' +
+                        '<td><a href="javascript:eliminar_deduccion(' + id + ',' + strnode + ',' + val_pension +
+                        ')" class="btn btn-icon disabled btn-sm btn-danger"><i class="fas fa-times"></i></a></td></tr>'
+                    );
+                }
             }
 
             var json_other_deductions = deductions.deducciones.other_deductions

@@ -306,6 +306,7 @@ class PayrollController extends Controller
         $paid_vacation = $devengados_json['devengados']['paid_vacation'];
         $maternity_leave = $devengados_json['devengados']['maternity_leave'];
         $paid_leave = $devengados_json['devengados']['paid_leave'];
+        $non_paid_leave = $devengados_json['devengados']['non_paid_leave'];
         $legal_strike = $devengados_json['devengados']['legal_strike'];
 
         $HEDs = $devengados_json['devengados']['HEDs'];
@@ -377,6 +378,18 @@ class PayrollController extends Controller
                     'payment' => str_replace(',', '', number_format($key['payment'], 2))
                 );
                 array_push($accrued['paid_leave'], $paid_leave);
+            }
+        }
+
+        if (count($non_paid_leave) > 0) {
+            $accrued['non_paid_leave'] = array();
+            foreach ($non_paid_leave as $key) {
+                $non_paid_leave = array(
+                    'start_date' => $key['start_date'],
+                    'end_date' => $key['end_date'],
+                    'quantity' => $key['quantity']
+                );
+                array_push($accrued['non_paid_leave'], $non_paid_leave);
             }
         }
 
@@ -514,10 +527,8 @@ class PayrollController extends Controller
 
         $deducciones_json = json_decode($payroll->deductions, true);
 
-        $deduction_eps_id = $deducciones_json['deducciones']['eps_type_law_deduction']['id'];
-        $deduction_eps = $deducciones_json['deducciones']['eps_type_law_deduction']['value'];
-        $deduction_pension_id = $deducciones_json['deducciones']['pension_type_law_deductions']['id'];
-        $deduction_pension = $deducciones_json['deducciones']['pension_type_law_deductions']['value'];
+        
+        
 
         $other_deductions = $deducciones_json['deducciones']['other_deductions'];
 
@@ -532,12 +543,23 @@ class PayrollController extends Controller
         $refund = $deducciones_json['deducciones']['refund'];
 
         $deductions = array(
-            'eps_type_law_deductions_id' => $deduction_eps_id,
-            'eps_deduction' => str_replace(',', '', number_format($deduction_eps, 2)),
-            'pension_type_law_deductions_id' => $deduction_pension_id,
-            'pension_deduction' =>  str_replace(',', '', number_format($deduction_pension, 2)),
             'deductions_total' => $payroll->deductions_total
         );
+
+
+        if ($deducciones_json['deducciones']['eps_type_law_deduction']) {
+            $deduction_eps_id = $deducciones_json['deducciones']['eps_type_law_deduction']['id'];
+            $deduction_eps = $deducciones_json['deducciones']['eps_type_law_deduction']['value'];
+            $deductions['eps_type_law_deductions_id'] = $deduction_eps_id;
+            $deductions['eps_deduction'] = str_replace(',', '', number_format($deduction_eps, 2));
+        }
+
+        if ($deducciones_json['deducciones']['pension_type_law_deductions']) {
+            $deduction_pension_id = $deducciones_json['deducciones']['pension_type_law_deductions']['id'];
+            $deduction_pension = $deducciones_json['deducciones']['pension_type_law_deductions']['value'];
+            $deductions['pension_type_law_deductions_id'] = $deduction_pension_id;
+            $deductions['pension_deduction'] = str_replace(',', '', number_format($deduction_pension, 2));
+        }
 
         if (count($other_deductions) > 0) {
             $deductions['other_deductions'] = array();

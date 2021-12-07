@@ -21,6 +21,7 @@ class Company extends Model
         'type_organization_id',
         'type_regime_id',
         'type_liability_id',
+        'concepts_parafiscal_contributions',
         'api_token',
         'software_id',
         'software_pin'

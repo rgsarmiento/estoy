@@ -30,10 +30,7 @@
                                             <tr>
                                                 <td style="display: none;">{{ $usuario->id }}</td>
                                                 <td>
-                                                    {{ $usuario->name }}
-                                                    <div class="table-links">
-                                                        <a href="">ver</a>
-                                                    </div>
+                                                    {{ $usuario->name }}                                                  
 
                                                 </td>
                                                 <td>{{ $usuario->email }}</td>
