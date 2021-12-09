@@ -51,7 +51,8 @@
             $('#select_tipo_deduccion').change(function() {
 
                 var nodo = $(this).val()
-
+                limpiar_controles();
+                ocultar_controles();
                 switch (nodo) {
                     case 'other_deductions':
                         document.getElementById("div_deduction_value").style.display = "block";
@@ -101,6 +102,7 @@
 
                 var nodo = $(this).val()
                 limpiar_controles();
+                ocultar_controles();
                 switch (nodo) {
                     case 'common_vacation':
                         document.getElementById("div_accrued_value").style.display = "block";
@@ -702,6 +704,8 @@
 
                 ocultar_controles();
                 recalcular_total();
+                $('#select_tipo_deduccion').val('');
+                $('#select_tipo_devengado').val('');
 
                 var tbl = document.getElementById("tbl_accrueds");
                 tbl.scrollIntoView();
@@ -996,6 +1000,8 @@
 
                 ocultar_controles();
                 recalcular_total();
+                $('#select_tipo_deduccion').val('');
+                $('#select_tipo_devengado').val('');
             });
 
             $('#btn_recalcular').click(function(e) {
@@ -1003,9 +1009,7 @@
             });
 
             function ocultar_controles() {
-
-                $('#select_tipo_deduccion').val('');
-                $('#select_tipo_devengado').val('');
+               
                 //devengados
                 document.getElementById("div_rango_fecha_a").style.display = "none";
                 document.getElementById("div_accrued_value").style.display = "none";
