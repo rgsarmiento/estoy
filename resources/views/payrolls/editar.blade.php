@@ -134,7 +134,6 @@
                         document.getElementById("div_rango_fecha_a").style.display = "block";
                         break;
                     case 'legal_strike':
-                        document.getElementById("div_accrued_value").style.display = "block";
                         document.getElementById("div_add_accrueds").style.display = "block";
                         document.getElementById("div_quantity_a").style.display = "block";
                         document.getElementById("div_rango_fecha_a").style.display = "block";
@@ -399,7 +398,7 @@
                         var fechaInicio = document.getElementById("start_date_a").value;
                         var fechaFin = document.getElementById("end_date_a").value;
                         var cantidad = Number(document.getElementById("quantity_a").value);
-                        var val_accrued = Number(document.getElementById("val_accrued").value);
+                        var val_accrued = Number(0);
 
                         var id = (Math.floor(Math.random() * (999 - 100 + 1) + 100) + n_legal_strike);
                         array = {
@@ -1631,10 +1630,33 @@
             total_devengado = (salario_diario * dias);
 
             if (concepts_parafiscal.concepts.salary.eps == 1) {
-                base_eps_concepts_parafiscal = (salario_diario * dias);
+                if (dias >=1 && dias <=7){
+                    base_eps_concepts_parafiscal = (salario_mensual / 4);
+                }
+                if (dias >=8 && dias <=14){
+                    base_eps_concepts_parafiscal = (salario_mensual / 2);
+                }
+                if (dias >=15 && dias <=21){
+                    base_eps_concepts_parafiscal = salario_mensual - (salario_mensual / 4);
+                }
+                if (dias >21){
+                    base_eps_concepts_parafiscal = salario_mensual;
+                }
             }
             if (concepts_parafiscal.concepts.salary.pension == 1) {
-                base_pension_concepts_parafiscal = (salario_diario * dias);
+                if (dias >=1 && dias <=7){
+                    base_pension_concepts_parafiscal = (salario_mensual / 4);
+                }
+                if (dias >=8 && dias <=14){
+                    base_pension_concepts_parafiscal = (salario_mensual / 2);
+                }
+                if (dias >=15 && dias <=21){
+                    base_pension_concepts_parafiscal = salario_mensual - (salario_mensual / 4);
+                }
+                if (dias >21){
+                    base_pension_concepts_parafiscal = salario_mensual;
+                }
+                
             }
             ////////////Vacaciones Comunes/////////////
             var json_common_vacation = accrued.devengados.common_vacation

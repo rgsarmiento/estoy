@@ -399,8 +399,7 @@ class PayrollController extends Controller
                 $legal_strike = array(
                     'start_date' => $key['start_date'],
                     'end_date' => $key['end_date'],
-                    'quantity' => $key['quantity'],
-                    'payment' => str_replace(',', '', number_format($key['payment'], 2))
+                    'quantity' => $key['quantity']
                 );
                 array_push($accrued['legal_strike'], $legal_strike);
             }
