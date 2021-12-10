@@ -25,7 +25,7 @@ class StoreRequest extends FormRequest
     {
         return [
                 'payroll_type_document_identification_id' => 'required|integer|exists:App\Models\Payroll_type_document_identification,id',
-                'identification_number' => 'required|unique:workers|min:8|max:11',
+                'identification_number' => 'required|unique:workers|min:7|max:11',
                 'surname' => 'required|min:3|max:50',
                 'second_surname' => 'max:50',
                 'first_name' => 'required|min:3|max:50',
@@ -59,7 +59,7 @@ class StoreRequest extends FormRequest
         return [
             'payroll_type_document_identification_id.required'=>'El Tipo Documento es requerido.',
             'identification_number.required' => 'El Numero Documento es requrido.',
-            'identification_number.min' => 'Minimo 8 caracteres en Numero Documento.',
+            'identification_number.min' => 'Minimo 7 caracteres en Numero Documento.',
             'identification_number.max' => 'Maximo 11 caracteres en Numero Documento.',
             'identification_number.unique' => 'El Numero Documento ya existe con otro Empleado.',
             'first_name.required' => 'El Primer Nombre es requerido.',

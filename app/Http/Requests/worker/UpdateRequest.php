@@ -59,7 +59,7 @@ class UpdateRequest extends FormRequest
         return [
             'payroll_type_document_identification_id.required'=>'El Tipo Documento es requerido.',
             'identification_number.required' => 'El Numero Documento es requrido.',
-            'identification_number.min' => 'Minimo 8 caracteres en Numero Documento.',
+            'identification_number.min' => 'Minimo 7 caracteres en Numero Documento.',
             'identification_number.max' => 'Maximo 11 caracteres en Numero Documento.',
             'identification_number.unique' => 'El Numero Documento ya existe con otro Empleado.',
             'first_name.required' => 'El Primer Nombre es requerido.',
