@@ -607,7 +607,7 @@ class DocumentController extends Controller
 
         if ($response->successful()) {
 
-            $isValid = ($response['ResponseDian']['Envelope']['Body']['SendNominaSyncResponse']['SendNominaSyncResult']['IsValid'] === 'true') ? true : false;
+            $isValid = ($response['ResponseDian']['Envelope']['Body']['SendTestSetAsyncResponse']['SendTestSetAsyncResult']['IsValid'] === 'true') ? true : false;
             if ($isValid) {
                 $this->store_documents($document, $data_na, $periodo_id, $objeto_nomina, $response, 1, $fechaHora);
                 //aumentar prefijo
@@ -628,7 +628,7 @@ class DocumentController extends Controller
         $response = Http::accept('application/json')
             ->withToken($company->api_token)
             ->post(
-                $configuraciones->url_server_api . 'payroll-adjust-note/55ed1dc8-1806-4325-9083-8bbb789f4454',
+                $configuraciones->url_server_api . 'payroll-adjust-note',
                 json_decode(json_encode($objeto_nomina), true)
             );
         return $response;
