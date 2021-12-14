@@ -607,7 +607,7 @@ class DocumentController extends Controller
 
         if ($response->successful()) {
 
-            $isValid = ($response['ResponseDian']['Envelope']['Body']['SendTestSetAsyncResponse']['SendTestSetAsyncResult']['IsValid'] === 'true') ? true : false;
+            $isValid = ($response['ResponseDian']['Envelope']['Body']['SendNominaSyncResponse']['SendNominaSyncResult']['IsValid'] === 'true') ? true : false;
             if ($isValid) {
                 $this->store_documents($document, $data_na, $periodo_id, $objeto_nomina, $response, 1, $fechaHora);
                 //aumentar prefijo
