@@ -233,7 +233,7 @@ class PayrollController extends Controller
         $company = Company::find($payroll->company_id);
 
         $configuraciones = Configuration::first();
-        $resolution = Resolution::where('company_id', $payroll->company_id)->first();
+        $resolution = Resolution::where('company_id', $payroll->company_id)->where('type_document_id', 9)->first();
 
         $objeto_nomina = new stdClass();
         $objeto_nomina->type_document_id = 9; //nomina individual

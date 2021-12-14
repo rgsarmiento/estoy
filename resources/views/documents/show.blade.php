@@ -166,6 +166,10 @@
                                                                     href="{{ $row->qrstr }}" target="_blank"><i
                                                                         class="fa fa-link"></i> Dian</a>
 
+                                                                <a class="dropdown-item has-icon"
+                                                                    href="{{ route('documents.edit', $row->id) }}"><i
+                                                                        class="far fa-edit"></i> Nomina Ajuste</a>
+
                                                             </div>
                                                             <!-- end of dropdown menu -->
                                                         </div>
@@ -177,7 +181,7 @@
                                     </tbody>
                                 </table>
                                 <div class="pagination justify-content-end">
-                                   
+
                                     {{ $documents->appends(['period_id' => $period_id])->links() }}
                                 </div>
                             </div>

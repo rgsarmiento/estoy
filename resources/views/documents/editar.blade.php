@@ -1,17 +1,17 @@
 @extends('layouts.app')
 
 @section('title')
-    Modificar Comprobante
+    Nomina de Ajuste
 @endsection
 
 @section('content')
     <section class="section">
         <div class="section-header">
-            <h3 class="page__heading">Modificar Comprobante</h3>
+            <h3 class="page__heading">Nomina de Ajuste</h3>
             <div class="section-header-breadcrumb">
                 <div class="breadcrumb-item active"><a href="/home">Dashboard</a></div>
-                <div class="breadcrumb-item active"><a href="{{ route('payrolls.index') }}">Comprobantes</a></div>
-                <div class="breadcrumb-item">Modificar Comprobante</div>
+                <div class="breadcrumb-item active"><a href="{{ route('documents.index') }}">Doc. Emitidos</a></div>
+                <div class="breadcrumb-item">Nomina de Ajuste</div>
             </div>
         </div>
         <div class="section-body">
@@ -34,8 +34,8 @@
                 </div>
             @endif
 
-            {!! Form::model($payroll, ['method' => 'PUT', 'route' => ['payrolls.update', $payroll->id]]) !!}
-            @include('payrolls._form')
+            {!! Form::model($document, ['method' => 'PUT', 'route' => ['documents.update', $document->id]]) !!}
+            @include('documents._form')
             {!! Form::close() !!}
         </div>
     </section>
