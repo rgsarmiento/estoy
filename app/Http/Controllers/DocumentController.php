@@ -498,7 +498,7 @@ class DocumentController extends Controller
         }
 
 
-        $accrued["accrued_total"] = $data_na['accrued_total'];
+        $accrued["accrued_total"] = str_replace(',', '', number_format($data_na['accrued_total'], 2));
 
         $objeto_nomina->accrued = $accrued;
 
@@ -522,7 +522,7 @@ class DocumentController extends Controller
         $refund = $deducciones_json['deducciones']['refund'];
 
         $deductions = array(
-            'deductions_total' => $data_na['deductions_total']
+            'deductions_total' => str_replace(',', '', number_format($data_na['deductions_total'], 2))
         );
 
 

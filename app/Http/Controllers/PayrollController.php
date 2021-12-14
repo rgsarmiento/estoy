@@ -518,7 +518,7 @@ class PayrollController extends Controller
         }
 
 
-        $accrued["accrued_total"] = $payroll->accrued_total;
+        $accrued["accrued_total"] = str_replace(',', '', number_format($payroll->accrued_total, 2));
 
         $objeto_nomina->accrued = $accrued;
 
@@ -542,7 +542,7 @@ class PayrollController extends Controller
         $refund = $deducciones_json['deducciones']['refund'];
 
         $deductions = array(
-            'deductions_total' => $payroll->deductions_total
+            'deductions_total' => str_replace(',', '', number_format($payroll->deductions_total, 2))
         );
 
 

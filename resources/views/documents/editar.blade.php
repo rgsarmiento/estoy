@@ -1008,7 +1008,7 @@
             });
 
             function ocultar_controles() {
-               
+
                 //devengados
                 document.getElementById("div_rango_fecha_a").style.display = "none";
                 document.getElementById("div_accrued_value").style.display = "none";
@@ -1611,6 +1611,7 @@
         function recalcular_total() {
             var total_devengado = 0;
             var total_deducido = 0;
+            var tipo_empleado = Number(document.getElementById("type_worker_id").value);
             var dias = Number(document.getElementById("worked_days").value);
             var salario_mensual = Number(document.getElementById("salary").value);
             var aux_transporte_mensual = Number(document.getElementById("transportation_allowance_value").value);
@@ -1628,34 +1629,38 @@
             accrued.devengados.salary.value = (salario_diario * dias)
             total_devengado = (salario_diario * dias);
 
-            if (concepts_parafiscal.concepts.salary.eps == 1) {
-                if (dias >=1 && dias <=7){
-                    base_eps_concepts_parafiscal = (salario_mensual / 4);
+            if (tipo_empleado == 27) {
+                if (concepts_parafiscal.concepts.salary.eps == 1) {
+                    if (dias >= 1 && dias <= 7) {
+                        base_eps_concepts_parafiscal = (salario_mensual / 4);
+                    }
+                    if (dias >= 8 && dias <= 14) {
+                        base_eps_concepts_parafiscal = (salario_mensual / 2);
+                    }
+                    if (dias >= 15 && dias <= 21) {
+                        base_eps_concepts_parafiscal = salario_mensual - (salario_mensual / 4);
+                    }
+                    if (dias > 21) {
+                        base_eps_concepts_parafiscal = salario_mensual;
+                    }
                 }
-                if (dias >=8 && dias <=14){
-                    base_eps_concepts_parafiscal = (salario_mensual / 2);
+                if (concepts_parafiscal.concepts.salary.pension == 1) {
+                    if (dias >= 1 && dias <= 7) {
+                        base_pension_concepts_parafiscal = (salario_mensual / 4);
+                    }
+                    if (dias >= 8 && dias <= 14) {
+                        base_pension_concepts_parafiscal = (salario_mensual / 2);
+                    }
+                    if (dias >= 15 && dias <= 21) {
+                        base_pension_concepts_parafiscal = salario_mensual - (salario_mensual / 4);
+                    }
+                    if (dias > 21) {
+                        base_pension_concepts_parafiscal = salario_mensual;
+                    }
                 }
-                if (dias >=15 && dias <=21){
-                    base_eps_concepts_parafiscal = salario_mensual - (salario_mensual / 4);
-                }
-                if (dias >21){
-                    base_eps_concepts_parafiscal = salario_mensual;
-                }
-            }
-            if (concepts_parafiscal.concepts.salary.pension == 1) {
-                if (dias >=1 && dias <=7){
-                    base_pension_concepts_parafiscal = (salario_mensual / 4);
-                }
-                if (dias >=8 && dias <=14){
-                    base_pension_concepts_parafiscal = (salario_mensual / 2);
-                }
-                if (dias >=15 && dias <=21){
-                    base_pension_concepts_parafiscal = salario_mensual - (salario_mensual / 4);
-                }
-                if (dias >21){
-                    base_pension_concepts_parafiscal = salario_mensual;
-                }
-                
+            }else{
+                base_eps_concepts_parafiscal = (salario_diario * dias);
+                base_pension_concepts_parafiscal =(salario_diario * dias);
             }
             ////////////Vacaciones Comunes/////////////
             var json_common_vacation = accrued.devengados.common_vacation
@@ -1707,7 +1712,7 @@
             }
             //////////Licencia no Remunerada///////////
             //estas no tienen un valor para sumar o restar
-            
+
             ///////////Huelgas Legales//////////
             var json_legal_strike = accrued.devengados.legal_strike
             var total_legal_strike = json_legal_strike.reduce((sum, value) => (typeof value.payment == "number" ? sum +

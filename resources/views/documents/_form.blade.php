@@ -57,8 +57,10 @@
                 </p>
                 <strong><i class="fas fa-bookmark mr-1"></i> Tipo y Sub Tipo Empleado</strong>
                 <p class="text-muted">
-                    {{ $document->worker->type_worker->name . ' - ' . $document->worker->sub_type_worker->name }}
+                    {{ $document->worker->type_worker->name . ' - ' . $document->worker->sub_type_worker->name }}  
                 </p>
+                    <input id="type_worker_id" type="hidden"
+                    value="{{ $document->worker->type_worker->id }}">
                 <strong><i class="fas fa-calendar-day mr-1"></i> Periodo Nomina</strong>
                 <p class="text-muted">
                     {{ $document->worker->payroll_period->name }}
