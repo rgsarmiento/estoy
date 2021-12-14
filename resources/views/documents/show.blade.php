@@ -166,9 +166,12 @@
                                                                     href="{{ $row->qrstr }}" target="_blank"><i
                                                                         class="fa fa-link"></i> Dian</a>
 
-                                                                <a class="dropdown-item has-icon"
-                                                                    href="{{ route('documents.edit', $row->id) }}"><i
-                                                                        class="far fa-edit"></i> Nomina Ajuste</a>
+                                                                @if (is_null($row->parent_id))
+                                                                    <a class="dropdown-item has-icon"
+                                                                        href="{{ route('documents.edit', $row->id) }}"><i
+                                                                            class="far fa-edit"></i> Nomina Ajuste</a>
+                                                                @endif
+
 
                                                             </div>
                                                             <!-- end of dropdown menu -->
