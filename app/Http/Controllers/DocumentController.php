@@ -615,7 +615,7 @@ class DocumentController extends Controller
                 return redirect()->route('documents.index')->with('message', 'La Nomina de Ajuste del empleado ' . ' ' . $document->worker->first_name . ' ' . $document->worker->surname . ' ' . 'se envio con éxito a la DIAN');
             } else {
                 $this->store_documents($document, $data_na, $periodo_id, $objeto_nomina, $response, 0, $fechaHora);
-                return redirect()->back()->with('error', 'La Nomina de Ajuste del empleado ' . ' ' . $document->worker->first_name . ' ' . $document->worker->surname . ' ' . 'No se pudo enviar');
+                return redirect()->route('documents.index')->with('error', 'La Nomina de Ajuste del empleado ' . ' ' . $document->worker->first_name . ' ' . $document->worker->surname . ' ' . 'No se pudo enviar');
             }
         }
 
@@ -676,8 +676,7 @@ class DocumentController extends Controller
         $document->xml = $respuesta['urlpayrollxml'];
         $document->pdf = $respuesta['urlpayrollpdf'];
         $document->cune = $respuesta['cune'];
-        $document->qrstr = $respuesta['QRStr'];
-
+        
         $document->save();
 
         $document_->update(['parent_id' => $document->id, 'state_document_id' => 2]);

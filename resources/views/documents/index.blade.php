@@ -45,7 +45,7 @@
 
                             <div class="form-row">
 
-                                <div class="col-lg-4 col-md-4 col-sm-12">
+                                <div class="col-lg-3 col-md-4 col-sm-12">
                                     <div class="card card-statistic-2">
 
                                         <div class="card-icon shadow-primary bg-primary">
@@ -62,7 +62,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-lg-4 col-md-4 col-sm-12">
+                                <div class="col-lg-5 col-md-4 col-sm-12">
                                     <div class="card card-statistic-2">
 
                                         <div class="card-icon shadow-primary bg-primary">
