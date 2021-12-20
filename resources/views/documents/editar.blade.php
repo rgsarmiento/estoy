@@ -187,9 +187,18 @@
                         document.getElementById("div_rango_fecha_a").style.display = "block";
                         document.getElementById("div_type_incapacidad_a").style.display = "block";
                         break;
+                    case 'service_bonus':
+                        document.getElementById("div_accrued_value").style.display = "block";
+                        document.getElementById("div_add_accrueds").style.display = "block";
+                        document.getElementById("div_quantity_a").style.display = "block";
+                        break;
+                    case 'severance':
+                        document.getElementById("div_accrued_value").style.display = "block";
+                        document.getElementById("div_add_accrueds").style.display = "block";
+                        document.getElementById("div_accrued_intereses").style.display = "block";
+                        break;
                 }
             });
-
 
 
 
@@ -690,6 +699,69 @@
                         accrued.devengados.work_disabilities.push(array);
                         val_accrueds = (val_accrueds + val_accrued);
                         break;
+                    case 'service_bonus':
+                        var n_element = accrued.devengados.service_bonus.length;
+
+                        var cantidad = Number(document.getElementById("quantity_a").value);
+                        var val_accrued = Number(document.getElementById("val_accrued").value);
+
+                        var id = (Math.floor(Math.random() * (999 - 100 + 1) + 100) + n_element);
+                        array = {
+                            'id': id,
+                            'quantity': cantidad,
+                            'payment': val_accrued,
+                            'name': tipo
+                        };
+
+                        $("#tbl_accrueds>tbody").append('<tr id="service_bonus-' + id + '"><td>' +
+                            'PAGO DE ' + cantidad + ' DIA(S) DE ' + tipo +
+                            '</td><td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i> $' +
+                            parseFloat(val_accrued, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
+                                "$1,").toString() + '</td>' +
+                            '<td><a href="javascript:eliminar_accrued(' + id +
+                            ",'service_bonus'," + val_accrued +
+                            ')" class="btn btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a></td></tr>'
+                        );
+
+                        accrued.devengados.service_bonus.push(array);
+                        val_accrueds = (val_accrueds + val_accrued);
+                        break;
+                    case 'severance':
+
+                        var n_element = accrued.devengados.severance.length;
+
+                        var intereses = Number(document.getElementById("val_accrued_value_intereses")
+                        .value);
+                        var porcentaje = Number(document.getElementById("val_accrued_pocentaje_intereses")
+                            .value);
+                        var val_accrued = Number(document.getElementById("val_accrued").value);
+                        var total_accrued = (val_accrued + intereses);
+
+                        var id = (Math.floor(Math.random() * (999 - 100 + 1) + 100) + n_element);
+                        array = {
+                            'id': id,
+                            'percentage': porcentaje,
+                            'interest_payment': intereses,
+                            'payment': val_accrued,
+                            'name': tipo
+                        };
+
+                        $("#tbl_accrueds>tbody").append('<tr id="severance-' + id + '"><td>' +
+                            'PAGO DE ' + tipo + ' ' + parseFloat(val_accrued, 10).toFixed(2).replace(
+                                /(\d)(?=(\d{3})+\.)/g,
+                                "$1,").toString() + ' Y PAGO DE INTERESES A UNA TASA DE ' + porcentaje +
+                            '% ' + parseFloat(intereses, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
+                                "$1,").toString() +
+                            '</td><td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i> $' +
+                            parseFloat(total_accrued, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
+                                "$1,").toString() + '</td>' +
+                            '<td><a href="javascript:eliminar_accrued(' + id +
+                            ",'severance'," + total_accrued +
+                            ')" class="btn btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a></td></tr>'
+                        );
+                        accrued.devengados.severance.push(array);
+                        val_accrueds = (val_accrueds + total_accrued);
+                        break;
                 }
 
 
@@ -1020,6 +1092,8 @@
 
                 document.getElementById("div_type_incapacidad_a").style.display = "none";
 
+                document.getElementById("div_accrued_intereses").style.display = "none";
+
 
 
                 //deducciones
@@ -1039,6 +1113,9 @@
                 document.getElementById("start_date_h_a").value = "";
                 document.getElementById("end_date_h_a").value = "";
                 document.getElementById("quantity_h_a").value = "";
+
+                document.getElementById("val_accrued_pocentaje_intereses").value = "";
+                document.getElementById("val_accrued_value_intereses").value = "";
 
                 //deducciones
                 document.getElementById("val_deduction").value = "";
@@ -1241,6 +1318,21 @@
                     var valor = Number(document.getElementById("val_accrued").value);
                     if (val_tipo_incapacidad <= 0 || valor <= 0 || cantidad <= 0 || fechaInicio.length == 0 || fechaFin
                         .length == 0) {
+                        return false
+                    }
+                    break;
+                case 'service_bonus':
+                    var cantidad = Number(document.getElementById("quantity_a").value);
+                    var valor = Number(document.getElementById("val_accrued").value);
+                    if (valor <= 0 || cantidad <= 0) {
+                        return false
+                    }
+                    break;
+                case 'severance':
+                    var porcentaje = Number(document.getElementById("val_accrued_pocentaje_intereses").value);
+                    var intereses = Number(document.getElementById("val_accrued_value_intereses").value);
+                    var valor = Number(document.getElementById("val_accrued").value);
+                    if (valor <= 0 || intereses <= 0 || porcentaje <= 0) {
                         return false
                     }
                     break;
@@ -1463,6 +1555,34 @@
                     var element = document.getElementById("work_disabilities-" + id);
                     element.parentNode.removeChild(element);
                     break;
+                case 'service_bonus':
+                    accrued.devengados.service_bonus.forEach(function(currentValue, index, arr) {
+                        if (accrued.devengados.service_bonus[index].id == id) {
+                            accrued.devengados.service_bonus.splice(index, 1);
+                        }
+                    })
+
+                    val_accrueds = (val_accrueds - valor);
+                    document.getElementById("accrued_total").value = val_accrueds;
+                    document.getElementById("accrued").value = JSON.stringify(accrued);
+
+                    var element = document.getElementById("service_bonus-" + id);
+                    element.parentNode.removeChild(element);
+                    break;
+                case 'severance':
+                    accrued.devengados.severance.forEach(function(currentValue, index, arr) {
+                        if (accrued.devengados.severance[index].id == id) {
+                            accrued.devengados.severance.splice(index, 1);
+                        }
+                    })
+
+                    val_accrueds = (val_accrueds - valor);
+                    document.getElementById("accrued_total").value = val_accrueds;
+                    document.getElementById("accrued").value = JSON.stringify(accrued);
+
+                    var element = document.getElementById("severance-" + id);
+                    element.parentNode.removeChild(element);
+                    break;
             }
 
             document.getElementById("tbl_accrueds").tFoot.innerHTML =
@@ -1658,9 +1778,9 @@
                         base_pension_concepts_parafiscal = salario_mensual;
                     }
                 }
-            }else{
+            } else {
                 base_eps_concepts_parafiscal = (salario_diario * dias);
-                base_pension_concepts_parafiscal =(salario_diario * dias);
+                base_pension_concepts_parafiscal = (salario_diario * dias);
             }
             ////////////Vacaciones Comunes/////////////
             var json_common_vacation = accrued.devengados.common_vacation
@@ -1823,6 +1943,35 @@
             if (concepts_parafiscal.concepts.work_disabilities.pension == 1) {
                 base_pension_concepts_parafiscal += (total_work_disabilities)
             }
+            //////Primas////////
+            var json_service_bonus = accrued.devengados.service_bonus
+            var total_service_bonus = json_service_bonus.reduce((sum, value) => (typeof value.payment == "number" ?
+                sum + value.payment : sum), 0);
+            total_devengado += (total_service_bonus)
+
+            if (concepts_parafiscal.concepts.service_bonus.eps == 1) {
+                base_eps_concepts_parafiscal += (total_service_bonus)
+            }
+            if (concepts_parafiscal.concepts.service_bonus.pension == 1) {
+                base_pension_concepts_parafiscal += (total_service_bonus)
+            }
+            //////Cesantias////////
+            var json_severance = accrued.devengados.severance
+            var cesantias_value = json_severance.reduce((sum, value) => (typeof value.payment == "number" ?
+                sum + value.payment : sum), 0);
+            var intereses_cesantias_value = json_severance.reduce((sum, value) => (typeof value.interest_payment == "number" ?
+                sum + value.interest_payment : sum), 0);
+            
+            var total_severance = (cesantias_value + intereses_cesantias_value)
+            total_devengado += (total_severance)
+
+            if (concepts_parafiscal.concepts.severance.eps == 1) {
+                base_eps_concepts_parafiscal += (total_severance)
+            }
+            if (concepts_parafiscal.concepts.severance.pension == 1) {
+                base_pension_concepts_parafiscal += (total_severance)
+            }
+
 
             if (accrued.devengados.transportation_allowance.name == "Subsidio Transporte") {
                 accrued.devengados.transportation_allowance = {};

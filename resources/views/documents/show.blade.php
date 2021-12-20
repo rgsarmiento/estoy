@@ -123,7 +123,6 @@
                                                     <td colspan="4" style="font-size:10px;"><i class="fas fa-terminal"
                                                             style="font-size:12px;color:#4de767;"> Cune:</i><br>
                                                         {{ $row->cune }}</td>
-
                                                 </tr>
                                                 <tr>
                                                     <td>
@@ -171,8 +170,7 @@
                                                                         href="{{ route('documents.edit', $row->id) }}"><i
                                                                             class="far fa-edit"></i> Nomina Ajuste</a>
                                                                 @endif
-
-
+                                                                
                                                             </div>
                                                             <!-- end of dropdown menu -->
                                                         </div>

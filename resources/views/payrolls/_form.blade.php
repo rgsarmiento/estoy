@@ -238,6 +238,19 @@
                     </div>
                 </div>
 
+                <div class="row" id="div_accrued_intereses">
+                    <div class="col-md-4 col-12">
+                        <div class="form-group">
+                            <label>% Intereses</label>
+                            <input type="number" class="form-control" id="val_accrued_pocentaje_intereses">
+                        </div>
+                        <div class="form-group">
+                            <label>Valor Intereses</label>
+                            <input type="number" class="form-control" id="val_accrued_value_intereses">
+                        </div>
+                    </div>
+                </div>
+
                 <div class="col-md-6 col-12" id="div_add_accrueds">
                     <button type="button" class="btn btn-success" id="add_accrued">Agregar</button>
                 </div>
@@ -273,6 +286,7 @@
                                 $HRNDFs = $devengados_json['devengados']['HRNDFs'];
                                 
                                 $work_disabilities = $devengados_json['devengados']['work_disabilities'];
+                                $service_bonus = $devengados_json['devengados']['service_bonus'];
                             @endphp
 
                             <tr id="salario1">
@@ -462,6 +476,19 @@
                                     </td>
                                 </tr>
                             @endforeach
+
+                            @foreach ($service_bonus as $value)
+                                <tr id="service_bonus-{!! $value['id'] !!}">
+                                    <td>PAGO DE {!! $value['quantity'] !!} DIA(S) DE {!! $value['name'] !!}</td>
+                                    <td align="right"><i class="fa fa-sort-up"
+                                            style="font-size:18px;color:#00D0C4;"></i>
+                                        ${!! number_format($value['payment'], 2) !!}</td>
+                                    <td><a href="javascript:eliminar_accrued({!! $value['id'] !!},'service_bonus', {!! $value['payment'] !!})"
+                                            class="btn btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                            
 
 
                         </tbody>

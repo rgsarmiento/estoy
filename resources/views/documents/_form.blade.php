@@ -261,6 +261,19 @@
                     </div>
                 </div>
 
+                <div class="row" id="div_accrued_intereses">
+                    <div class="col-md-4 col-12">
+                        <div class="form-group">
+                            <label>% Intereses</label>
+                            <input type="number" class="form-control" id="val_accrued_pocentaje_intereses">
+                        </div>
+                        <div class="form-group">
+                            <label>Valor Intereses</label>
+                            <input type="number" class="form-control" id="val_accrued_value_intereses">
+                        </div>
+                    </div>
+                </div>
+
                 <div class="col-md-6 col-12" id="div_add_accrueds">
                     <button type="button" class="btn btn-success" id="add_accrued">Agregar</button>
                 </div>

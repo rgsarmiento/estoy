@@ -318,6 +318,9 @@ class PayrollController extends Controller
         $HRNDFs = $devengados_json['devengados']['HRNDFs'];
 
         $work_disabilities = $devengados_json['devengados']['work_disabilities'];
+        $service_bonus = $devengados_json['devengados']['service_bonus'];
+        $severance = $devengados_json['devengados']['severance'];
+        
 
         $accrued = array(
             'worked_days' => $payroll->worked_days,
@@ -517,12 +520,35 @@ class PayrollController extends Controller
             }
         }
 
+        if (count($service_bonus) > 0) {
+            $accrued['service_bonus'] = array();
+            foreach ($service_bonus as $key) {
+                $service_bonus = array(
+                    'quantity' => $key['quantity'],
+                    'payment' => str_replace(',', '', number_format($key['payment'], 2))
+                );
+                array_push($accrued['service_bonus'], $service_bonus);
+            }
+        }
+
+        if (count($severance) > 0) {
+            $accrued['severance'] = array();
+            foreach ($severance as $key) {
+                $severance = array(
+                    'percentage' => $key['percentage'],
+                    'interest_payment' => str_replace(',', '', number_format($key['interest_payment'], 2)),
+                    'payment' => str_replace(',', '', number_format($key['payment'], 2))
+                );
+                array_push($accrued['severance'], $severance);
+            }
+        }
+
 
         $accrued["accrued_total"] = str_replace(',', '', number_format($payroll->accrued_total, 2));
 
         $objeto_nomina->accrued = $accrued;
 
-        //Deducciones
+        /////////////Deducciones////////////////
 
         $deducciones_json = json_decode($payroll->deductions, true);
 

@@ -334,6 +334,8 @@
                                                             $HRNDFs = $devengados_json['devengados']['HRNDFs'];
                                                             
                                                             $work_disabilities = $devengados_json['devengados']['work_disabilities'];
+                                                            $service_bonus = $devengados_json['devengados']['service_bonus'];
+                                                            $severance = $devengados_json['devengados']['severance'];
                                                         @endphp
 
                                                         {!! $salary['name'] . ':<br><strong> +' . number_format($salary['value'], 2) . '</strong>' !!}
@@ -458,6 +460,22 @@
                                                         @endif
                                                         @foreach ($work_disabilities as $value)
                                                             {!! $value['name'] . ':<br><strong> +' . number_format($value['payment'], 2) . '</strong>' !!} <br>
+                                                        @endforeach
+
+                                                        @if (count($service_bonus))
+                                                            <hr
+                                                                style="margin-top:0rem;margin-bottom:0rem;border-top:1px solid rgb(103 119 239)">
+                                                        @endif
+                                                        @foreach ($service_bonus as $value)
+                                                            {!! $value['name'] . ':<br><strong> +' . number_format($value['payment'], 2) . '</strong>' !!} <br>
+                                                        @endforeach
+
+                                                        @if (count($severance))
+                                                            <hr
+                                                                style="margin-top:0rem;margin-bottom:0rem;border-top:1px solid rgb(103 119 239)">
+                                                        @endif
+                                                        @foreach ($severance as $value)
+                                                            {!! $value['name'] . ':<br><strong> +' . number_format($value['payment'] + $value['interest_payment'], 2) . '</strong>' !!} <br>
                                                         @endforeach
 
 
