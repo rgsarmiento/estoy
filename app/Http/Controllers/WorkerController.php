@@ -57,7 +57,7 @@ class WorkerController extends Controller
             }
         }
 
-        if ($company_id == 1) {
+        if ($company_id == 0) {
             $workers = Worker::orderBy('updated_at', 'desc')->paginate(10);
         } else {
             $workers = Worker::where('company_id', $company_id)->orderBy('updated_at', 'desc')->paginate(10);

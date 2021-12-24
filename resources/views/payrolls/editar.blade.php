@@ -2209,6 +2209,29 @@
             }
             document.getElementById("val_accrued").value = parseFloat(hora, 10).toFixed(2);
         }
+
+
+        $("#quantity_a").keyup(function() {
+            calcular_vacaciones();
+        });
+
+        function calcular_vacaciones(){     
+            
+            var nodo = document.getElementById("select_tipo_devengado").value;
+            
+            var salario_mensual = Number(document.getElementById("salary").value);
+            var cantidad = Number(document.getElementById("quantity_a").value);
+            var valor = (salario_mensual*cantidad) / 720;            
+
+            switch (nodo) {
+                case 'paid_vacation':
+                document.getElementById("val_accrued").value = parseFloat(valor, 10).toFixed(2);
+                break;
+                case 'common_vacation':
+                document.getElementById("val_accrued").value = parseFloat(valor, 10).toFixed(2);
+                break;
+            }
+        }
     </script>
 
 @endsection
