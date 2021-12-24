@@ -299,6 +299,7 @@
                                 $paid_vacation = $devengados_json['devengados']['paid_vacation'];
                                 $maternity_leave = $devengados_json['devengados']['maternity_leave'];
                                 $paid_leave = $devengados_json['devengados']['paid_leave'];
+                                $non_paid_leave = $devengados_json['devengados']['non_paid_leave'];
                                 $legal_strike = $devengados_json['devengados']['legal_strike'];
                                 
                                 $HEDs = $devengados_json['devengados']['HEDs'];
@@ -378,6 +379,19 @@
                                             style="font-size:18px;color:#00D0C4;"></i>
                                         ${!! number_format($value['payment'], 2) !!}</td>
                                     <td><a href="javascript:eliminar_accrued({!! $value['id'] !!},'paid_leave', {!! $value['payment'] !!})"
+                                            class="btn btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a>
+                                    </td>
+                                </tr>
+                            @endforeach
+
+                            @foreach ($non_paid_leave as $value)
+                                <tr id="non_paid_leave-{!! $value['id'] !!}">
+                                    <td>PAGO DE {!! $value['quantity'] !!} DIA(S) DE {!! $value['name'] !!} DESDE
+                                        {!! $value['start_date'] !!} HASTA {!! $value['end_date'] !!}</td>
+                                    <td align="right"><i class="fa fa-sort-up"
+                                            style="font-size:18px;color:#00D0C4;"></i>
+                                        ${!! number_format($value['payment'], 2) !!}</td>
+                                    <td><a href="javascript:eliminar_accrued({!! $value['id'] !!},'non_paid_leave', {!! $value['payment'] !!})"
                                             class="btn btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a>
                                     </td>
                                 </tr>
