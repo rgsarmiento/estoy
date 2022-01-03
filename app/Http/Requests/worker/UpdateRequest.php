@@ -25,7 +25,7 @@ class UpdateRequest extends FormRequest
     {
         return [
                 'payroll_type_document_identification_id' => 'required',
-                'identification_number' => 'required|unique:workers,identification_number,'. $this->route('worker')->id.'|min:8|max:11',
+                'identification_number' => 'required|unique:workers,identification_number,'. $this->route('worker')->id.'|min:7|max:11',
                 'surname' => 'required|min:3|max:50',
                 'second_surname' => 'max:50',
                 'first_name' => 'required|min:3|max:50',

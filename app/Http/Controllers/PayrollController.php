@@ -92,9 +92,9 @@ class PayrollController extends Controller
         $ultimoPeriodoEnviado = Payroll_period_progress::where('company_id', $company_id)->where('state_payroll_period_progress_id', 2)->orderBy('id', 'desc')->first();
         //dd($ultimoPeriodoEnviado);
         if ($ultimoPeriodoEnviado) {
-            $periodo_nomina = Period::where('year', date('Y'))->where('month', '>=', date('m') - 1)->where('id', '<>', $ultimoPeriodoEnviado->period_id)->take(2)->get();
+            $periodo_nomina = Period::where('month', '>=', date('m') - 1)->orderBy('id', 'desc')->where('id', '>', $ultimoPeriodoEnviado->period_id)->take(2)->get();
         } else {
-            $periodo_nomina = Period::where('year', date('Y'))->where('month', '>=', date('m') - 1)->take(2)->get();
+            $periodo_nomina = Period::where('month', '>=', date('m') - 1)->orderBy('id', 'desc')->take(2)->get();
         }
 
         $documents = null;
