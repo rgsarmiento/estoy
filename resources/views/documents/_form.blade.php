@@ -311,6 +311,7 @@
                                 $HRNDFs = $devengados_json['devengados']['HRNDFs'];
                                 
                                 $work_disabilities = $devengados_json['devengados']['work_disabilities'];
+                                $service_bonus = $devengados_json['devengados']['service_bonus'];
                             @endphp
 
                             <tr id="salario1">
@@ -509,6 +510,18 @@
                                             style="font-size:18px;color:#00D0C4;"></i>
                                         ${!! number_format($value['payment'], 2) !!}</td>
                                     <td><a href="javascript:eliminar_accrued({!! $value['id'] !!},'work_disabilities', {!! $value['payment'] !!})"
+                                            class="btn btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a>
+                                    </td>
+                                </tr>
+                            @endforeach
+
+                            @foreach ($service_bonus as $value)
+                                <tr id="service_bonus-{!! $value['id'] !!}">
+                                    <td>PAGO DE {!! $value['quantity'] !!} DIA(S) DE {!! $value['name'] !!}</td>
+                                    <td align="right"><i class="fa fa-sort-up"
+                                            style="font-size:18px;color:#00D0C4;"></i>
+                                        ${!! number_format($value['payment'], 2) !!}</td>
+                                    <td><a href="javascript:eliminar_accrued({!! $value['id'] !!},'service_bonus', {!! $value['payment'] !!})"
                                             class="btn btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a>
                                     </td>
                                 </tr>

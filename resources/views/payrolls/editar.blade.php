@@ -2210,7 +2210,6 @@
             document.getElementById("val_accrued").value = parseFloat(hora, 10).toFixed(2);
         }
 
-
         $("#quantity_a").keyup(function() {
             calcular_vacaciones();
         });
