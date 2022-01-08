@@ -514,7 +514,7 @@ class DocumentController extends Controller
             $accrued['severance'] = array();
             foreach ($severance as $key) {
                 $severance = array(
-                    'percentage' => $key['percentage'],
+                    'percentage' => strval($key['percentage']),
                     'interest_payment' => str_replace(',', '', number_format($key['interest_payment'], 2)),
                     'payment' => str_replace(',', '', number_format($key['payment'], 2))
                 );
