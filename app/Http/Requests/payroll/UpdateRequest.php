@@ -18,13 +18,15 @@ class UpdateRequest extends FormRequest
 
     /**
      * Get the validation rules that apply to the request.
+     * 'worked_days' => 'required|integer|gt:0|lt:31'
+     * 'worked_days.gt' => 'El numero de días trabajados debe ser mayor o igual a 1',
      *
      * @return array
      */
     public function rules()
     {
         return [
-            'worked_days' => 'required|integer|gt:0|lt:31',
+            'worked_days' => 'required|integer|lt:31',
             'accrued' => 'required',
             'accrued_total' => 'required',
             'deductions' => 'required',
@@ -39,7 +41,6 @@ class UpdateRequest extends FormRequest
         return [
 
             'worked_days.required' => 'Se requiere un numero de días trabajados',
-            'worked_days.gt' => 'El numero de días trabajados debe ser mayor o igual a 1',
             'worked_days.lt' => 'El numero de días trabajados debe ser menor o igual a 30',
             'accrued.required' => 'Se requiere una lista de Devengados',
             'accrued_total.required' => 'Se requiere un total en Devengados',
