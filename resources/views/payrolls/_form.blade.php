@@ -540,7 +540,7 @@
                 </div>
 
                 <div class="row" id="div_orders_value">
-                    <div class="col-md-4 col-12">
+                    <div class="col-md-12 col-12">
                         <div class="form-group">
                             <label>Descripción</label>
                             <input type="text" class="form-control" id="val_orders">
