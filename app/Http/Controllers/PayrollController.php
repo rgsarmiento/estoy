@@ -552,9 +552,6 @@ class PayrollController extends Controller
 
         $deducciones_json = json_decode($payroll->deductions, true);
 
-        
-        
-
         $other_deductions = $deducciones_json['deducciones']['other_deductions'];
 
         $debt = $deducciones_json['deducciones']['debt'];
@@ -566,6 +563,7 @@ class PayrollController extends Controller
         $supplementary_plan = $deducciones_json['deducciones']['supplementary_plan'];
         $education = $deducciones_json['deducciones']['education'];
         $refund = $deducciones_json['deducciones']['refund'];
+        $orders = $deducciones_json['deducciones']['orders'];
 
         $deductions = array(
             'deductions_total' => str_replace(',', '', number_format($payroll->deductions_total, 2))
@@ -596,6 +594,16 @@ class PayrollController extends Controller
             }
         }
 
+        if (count($orders) > 0) {
+            $deductions['orders'] = array();
+            foreach ($orders as $key) {
+                $order = array(
+                    'description' => $key['description'],
+                    'deduction' => str_replace(',', '', number_format($key['value'], 2))
+                );
+                array_push($deductions['orders'], $order);
+            }
+        }       
 
         if ($deducciones_json['deducciones']['voluntary_pension']) {
             $voluntary_pension = $deducciones_json['deducciones']['voluntary_pension']['value'];

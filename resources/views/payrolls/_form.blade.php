@@ -539,6 +539,14 @@
 
                 </div>
 
+                <div class="row" id="div_orders_value">
+                    <div class="col-md-4 col-12">
+                        <div class="form-group">
+                            <label>Descripción</label>
+                            <input type="text" class="form-control" id="val_orders">
+                        </div>
+                    </div>
+                </div>
 
                 <div class="row" id="div_deduction_value">
                     <div class="col-md-4 col-12">
@@ -581,7 +589,8 @@
                                 $supplementary_plan = $deducciones_json['deducciones']['supplementary_plan'];
                                 $education = $deducciones_json['deducciones']['education'];
                                 $refund = $deducciones_json['deducciones']['refund'];
-                                
+                                $orders = $deducciones_json['deducciones']['orders'];
+
                             @endphp
 
                             @if ($eps_type_law_deduction)
@@ -608,6 +617,17 @@
                                 </tr>
                             @endif
 
+                            @foreach ($orders as $value)
+                                <tr id="orders-{!! $value['id'] !!}">
+                                    <td>DESCUENTO POR {!! $value['name'] !!} {!! $value['description'] !!}</td>
+                                    <td align="right"><i class="fa fa-sort-down"
+                                            style="font-size:18px;color:#FF267B;"></i>
+                                        ${!! number_format($value['value'], 2) !!}</td>
+                                    <td><a href="javascript:eliminar_deduccion({!! $value['id'] !!}, 'orders', {!! $value['value'] !!})"
+                                            class="btn btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a>
+                                    </td>
+                                </tr>
+                            @endforeach
 
                             @foreach ($other_deductions as $value)
                                 <tr id="other_deductions-{!! $value['id'] !!}">

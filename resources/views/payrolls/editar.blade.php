@@ -54,6 +54,11 @@
                 limpiar_controles();
                 ocultar_controles();
                 switch (nodo) {
+                    case 'orders':
+                        document.getElementById("div_orders_value").style.display = "block";
+                        document.getElementById("div_deduction_value").style.display = "block";
+                        document.getElementById("div_add_deductions").style.display = "block";
+                        break;
                     case 'other_deductions':
                         document.getElementById("div_deduction_value").style.display = "block";
                         document.getElementById("div_add_deductions").style.display = "block";
@@ -800,6 +805,32 @@
                 var val_deductions = Number(document.getElementById("deductions_total").value);
 
                 switch (nodo) {
+                    case 'orders':
+                    var n_orders = deductions.deducciones.orders.length;
+                    var orders = deductions.deducciones.orders;
+                    var description = document.getElementById("val_orders").value;
+                    var id = (Math.floor(Math.random() * (999 - 100 + 1) + 100) + n_orders);
+                    array = {
+                        'id': id,
+                        'description': description,
+                        'value': val_deduction,
+                        'name': tipo
+                    };
+
+                    $("#tbl_deductions>tbody").append('<tr id="orders-' + id +
+                        '"><td>DESCUENTO POR ' +
+                        tipo + ' ' + description +
+                        '</td><td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i> $' +
+                        parseFloat(val_deduction, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
+                            "$1,").toString() + '</td>' +
+                        '<td><a href="javascript:eliminar_deduccion(' + id +
+                        ",'orders'," + val_deduction +
+                        ')" class="btn btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a></td></tr>'
+                    );
+
+                    deductions.deducciones.orders.push(array);
+
+                    break;
                     case 'other_deductions':
                         var n_other_deductions = deductions.deducciones.other_deductions.length;
                         var other_deductions = deductions.deducciones.other_deductions;
@@ -1099,7 +1130,8 @@
                 //deducciones
                 document.getElementById("div_deduction_value").style.display = "none";
                 document.getElementById("div_add_deductions").style.display = "none";
-
+                document.getElementById("div_orders_value").style.display = "none";
+                
                 limpiar_controles();
             }
 
@@ -1119,6 +1151,7 @@
 
                 //deducciones
                 document.getElementById("val_deduction").value = "";
+                document.getElementById("val_orders").value = "";
 
             }
 
@@ -1126,6 +1159,13 @@
 
         function validar_campos(nodo) {
             switch (nodo) {
+                case 'orders': //deducido
+                    var description = document.getElementById("val_orders").value;                    
+                    var valor = Number(document.getElementById("val_deduction").value);
+                    if (valor <= 0 || description.length == 0) {
+                        return false
+                    }
+                    break;
                 case 'other_deductions': //deducido
                     var val_deduction = Number(document.getElementById("val_deduction").value);
                     if (val_deduction <= 0) {
@@ -1338,8 +1378,6 @@
                     break;
             }
         }
-
-
 
 
         function eliminar_accrued(id, tipo, valor) {
@@ -1620,8 +1658,26 @@
                     document.getElementById("deductions_total").value = val_deductions;
                     document.getElementById("deductions").value = JSON.stringify(deductions);
                     break;
-                case 'other_deductions':
+                case 'orders':
+                    deductions.deducciones.orders.forEach(function(currentValue, index, arr) {
+                        if (deductions.deducciones.orders[index].id == id) {
+                            deductions.deducciones.orders.splice(index, 1);
+                        }
+                    })
 
+                    val_deductions = (val_deductions - valor);
+                    document.getElementById("deductions_total").value = val_deductions;
+                    document.getElementById("deductions").value = JSON.stringify(deductions);
+
+                    var element = document.getElementById("orders-" + id);
+                    element.parentNode.removeChild(element);
+
+                    {{-- document.getElementById("tbl_deductions").tFoot.innerHTML =
+                        '<tr align="center"><th>TOTAL</th><th colspan="2"><i class="fa fa-sort-down" style="font-size:20px;color:#FF267B;"></i> $' +
+                        parseFloat(val_deductions, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,")
+                        .toString() + '</th></tr>'; --}}
+                    break;
+                case 'other_deductions':
                     deductions.deducciones.other_deductions.forEach(function(currentValue, index, arr) {
                         if (deductions.deducciones.other_deductions[index].id == id) {
                             deductions.deducciones.other_deductions.splice(index, 1);
@@ -2092,6 +2148,11 @@
                     );
                 }
             }
+
+            var json_orders = deductions.deducciones.orders
+            var total_orders = json_orders.reduce((sum, value) => (typeof value.value == "number" ?
+                sum + value.value : sum), 0);
+            total_deducido += (total_orders)
 
             var json_other_deductions = deductions.deducciones.other_deductions
             var total_other_deductions = json_other_deductions.reduce((sum, value) => (typeof value.value == "number" ?

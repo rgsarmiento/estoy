@@ -503,6 +503,7 @@
                                                             $supplementary_plan = $deducciones_json['deducciones']['supplementary_plan'];
                                                             $education = $deducciones_json['deducciones']['education'];
                                                             $refund = $deducciones_json['deducciones']['refund'];
+                                                            $orders = $deducciones_json['deducciones']['orders'];
                                                         @endphp
 
                                                         @if ($eps_type_law_deduction)
@@ -524,11 +525,15 @@
                                                             {!! $value['name'] . ':<br><strong> -' . number_format($value['value'], 2) . '</strong>' !!} <br>
                                                         @endforeach
 
-                                                        @if (count($other_deductions))
+                                                        @if (count($orders))
                                                             <hr
                                                                 style="margin-top:0rem;margin-bottom:0rem;border-top:1px solid rgb(103 119 239)">
                                                         @endif
 
+                                                        @foreach ($orders as $value)
+                                                            {!! $value['name'] . ':<br><strong> -' . number_format($value['value'], 2) . '</strong>' !!} <br>
+                                                        @endforeach
+                                                     
                                                         @if ($debt)
                                                             <hr
                                                                 style="margin-top:0rem;margin-bottom:0rem;border-top:1px solid rgb(103 119 239)">
