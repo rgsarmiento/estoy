@@ -56,6 +56,7 @@
                         <label class="custom-control-label" for="remember">Remember Me</label>
                         Already have an account ? <a
                 href="{{ route('register') }}">SignIn</a>
+                
                     </div>
                 </div>
 
