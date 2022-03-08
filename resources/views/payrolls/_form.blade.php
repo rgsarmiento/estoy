@@ -506,7 +506,7 @@
 
                             @foreach ($severance as $value)
                                 <tr id="severance-{!! $value['id'] !!}">
-                                    <td>PAGO DE {!! $value['name'] !!} {!! number_format($value['payment'], 2) !!} Y PAGO DE INTERESES A UNA TASA DE {!! $value['percentage'] !!}  {!! number_format($value['interest_payment'], 2) !!}</td>
+                                    <td>PAGO DE {!! $value['name'] !!} {!! number_format($value['payment'], 2) !!} Y PAGO DE INTERESES A UNA TASA DEL {!! $value['percentage'] !!}%  {!! number_format($value['interest_payment'], 2) !!}</td>
                                     <td align="right"><i class="fa fa-sort-up"
                                             style="font-size:18px;color:#00D0C4;"></i>
                                         ${!! number_format($value['payment'] + $value['interest_payment'], 2) !!}</td>
