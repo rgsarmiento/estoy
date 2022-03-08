@@ -312,6 +312,7 @@
                                 
                                 $work_disabilities = $devengados_json['devengados']['work_disabilities'];
                                 $service_bonus = $devengados_json['devengados']['service_bonus'];
+                                $severance = $devengados_json['devengados']['severance'];
                             @endphp
 
                             <tr id="salario1">
@@ -527,6 +528,17 @@
                                 </tr>
                             @endforeach
 
+                            @foreach ($severance as $value)
+                                <tr id="severance-{!! $value['id'] !!}">
+                                    <td>PAGO DE {!! $value['name'] !!} {!! number_format($value['payment'], 2) !!} Y PAGO DE INTERESES A UNA TASA DEL {!! $value['percentage'] !!}%  {!! number_format($value['interest_payment'], 2) !!}</td>
+                                    <td align="right"><i class="fa fa-sort-up"
+                                            style="font-size:18px;color:#00D0C4;"></i>
+                                        ${!! number_format($value['payment'] + $value['interest_payment'], 2) !!}</td>
+                                    <td><a href="javascript:eliminar_accrued({!! $value['id'] !!},'severance', {!! $value['payment'] + $value['interest_payment'] !!})"
+                                            class="btn btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a>
+                                    </td>
+                                </tr>
+                            @endforeach
 
                         </tbody>
                         <tfoot style="background-color: #b5eee0;">

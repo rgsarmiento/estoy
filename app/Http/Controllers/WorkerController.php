@@ -228,19 +228,18 @@ class WorkerController extends Controller
 
         //Deducciones   
         $deductions = new stdClass();
+        
         $eps_type_law_deduction_ = array(
             'id' => $worker->type_salud_law_deduction->id,
             'name' => $worker->type_salud_law_deduction->name . ' % ' . $worker->type_salud_law_deduction->percentage,
             'value' => $worker->salary * $worker->type_salud_law_deduction->percentage / 100
         );
 
-
         $pension_type_law_deduction_ = array(
             'id' => $worker->type_pension_law_deduction->id,
             'name' => $worker->type_pension_law_deduction->name . ' % ' . $worker->type_pension_law_deduction->percentage,
             'value' => $worker->salary * $worker->type_pension_law_deduction->percentage / 100
         );
-
 
         $deductions->deducciones = array(
             'eps_type_law_deduction' => $eps_type_law_deduction_,
