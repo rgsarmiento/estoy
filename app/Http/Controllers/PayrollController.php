@@ -670,10 +670,12 @@ class PayrollController extends Controller
                 $resolution->increment('nex');
                 //cambiar estado a enviado ala dian
                 $payroll->update(['payroll_status' => 2]);
-                return redirect()->back()->with('message', 'La Nomina del empleado ' . ' ' . $payroll->worker->first_name . ' ' . $payroll->worker->surname . ' ' . 'se envio con éxito a la DIAN');
+                return redirect()->back()->with('message', 'La Nomina del empleado ' . ' ' . $payroll->worker->first_name . ' ' . $payroll->worker->surname . ' ' . 'se envio con éxito a la DIAN con codigo de estado: ' . $StatusCode);
             } else {
                 $this->store_documents($payroll->id, $periodo_id, $objeto_nomina, $response, 0, $fechaHora);
-                return redirect()->back()->with('error', 'La Nomina del empleado ' . ' ' . $payroll->worker->first_name . ' ' . $payroll->worker->surname . ' ' . 'No se pudo enviar');
+                $ErrorMessage = $response['ResponseDian']['Envelope']['Body']['SendNominaSyncResponse']['SendNominaSyncResult']['ErrorMessage']['string'];
+
+                return redirect()->back()->with('error', 'La Nomina del empleado ' . ' ' . $payroll->worker->first_name . ' ' . $payroll->worker->surname . ' ' . 'No se pudo enviar. Errores: ' . $ErrorMessage);
             }
         }
 
