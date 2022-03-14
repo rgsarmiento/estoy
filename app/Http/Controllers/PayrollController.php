@@ -673,9 +673,9 @@ class PayrollController extends Controller
                 return redirect()->back()->with('message', 'La Nomina del empleado ' . ' ' . $payroll->worker->first_name . ' ' . $payroll->worker->surname . ' ' . 'se envio con éxito a la DIAN con codigo de estado: ' . $StatusCode);
             } else {
                 $this->store_documents($payroll->id, $periodo_id, $objeto_nomina, $response, 0, $fechaHora);
-                $ErrorMessage = $response['ResponseDian']['Envelope']['Body']['SendNominaSyncResponse']['SendNominaSyncResult']['ErrorMessage']['string'];
+                //$ErrorMessage = $response['ResponseDian']['Envelope']['Body']['SendNominaSyncResponse']['SendNominaSyncResult']['ErrorMessage']['string'];
 
-                return redirect()->back()->with('error', 'La Nomina del empleado ' . ' ' . $payroll->worker->first_name . ' ' . $payroll->worker->surname . ' ' . 'No se pudo enviar. Errores: ' . $ErrorMessage);
+                return redirect()->back()->with('error', 'La Nomina del empleado ' . ' ' . $payroll->worker->first_name . ' ' . $payroll->worker->surname . ' ' . 'No se pudo enviar.');
             }
         }
 
