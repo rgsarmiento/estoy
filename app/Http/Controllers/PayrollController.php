@@ -650,6 +650,15 @@ class PayrollController extends Controller
             $deductions['withholding_at_source'] = str_replace(',', '', number_format($withholding_at_source, 2));
         }
 
+        if ($deducciones_json['deducciones']['fondosp']) {
+            $fondosp_deduction_SP = $deducciones_json['deducciones']['fondosp']['fondosp_deduction_SP'];
+            $fondosp_deduction_sub = $deducciones_json['deducciones']['fondosp']['fondosp_deduction_sub'];
+            $deductions['fondossp_type_law_deductions_id'] = 9;
+            $deductions['fondosp_deduction_SP'] = str_replace(',', '', number_format($fondosp_deduction_SP, 2));
+            $deductions['fondossp_sub_type_law_deductions_id'] = 9;
+            $deductions['fondosp_deduction_sub'] = str_replace(',', '', number_format($fondosp_deduction_sub, 2));            
+        }
+
 
         $objeto_nomina->deductions = $deductions;
 

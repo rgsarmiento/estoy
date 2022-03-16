@@ -602,6 +602,7 @@
                                 $education = $deducciones_json['deducciones']['education'];
                                 $refund = $deducciones_json['deducciones']['refund'];
                                 $orders = $deducciones_json['deducciones']['orders'];
+                                $fondosp = $deducciones_json['deducciones']['fondosp'];
 
                             @endphp
 
@@ -768,6 +769,19 @@
                                             class="btn btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a>
                                     </td>
 
+                                </tr>
+                            @endif
+
+                            @if ($fondosp)
+                                <tr id="fondosp-11">
+                                    <td>FONDO DE SOLIDARIDAD PENSIONAL ${!! number_format($fondosp['fondosp_deduction_SP'], 2) !!} <br>
+                                        FONDO DE SUBSISTENCIA ${!! number_format($fondosp['fondosp_deduction_sub'], 2) !!}</td>
+                                    <td align="right"><i class="fa fa-sort-down"
+                                            style="font-size:18px;color:#FF267B;"></i>
+                                        ${!! number_format($fondosp['fondosp_deduction_SP'] + $fondosp['fondosp_deduction_sub'], 2) !!}</td>
+                                    <td><a href="javascript:eliminar_deduccion({!! $fondosp['id'] !!}, 'fondosp', {!! $fondosp['fondosp_deduction_SP'] + $fondosp['fondosp_deduction_sub'] !!})"
+                                            class="btn btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a>
+                                    </td>
                                 </tr>
                             @endif
 

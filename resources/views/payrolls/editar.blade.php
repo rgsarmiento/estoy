@@ -42,7 +42,6 @@
 @endsection
 
 @section('scripts')
-
     <script>
         $(document).ready(function() {
 
@@ -234,7 +233,7 @@
 
                         $("#tbl_accrueds>tbody").append('<tr id="other_concepts-' + id + '"><td>' +
                             'PAGO DE ' + tipo +
-                            '</td><td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i> $' +
+                            '</td><td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i> +
                             parseFloat(val_accrued, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
                                 "$1,").toString() + '</td>' +
                             '<td><a href="javascript:eliminar_accrued(' + id +
@@ -266,7 +265,7 @@
                         $("#tbl_accrueds>tbody").append('<tr id="common_vacation-' + id + '"><td>' +
                             'PAGO DE ' + cantidad + ' DIA(S) DE ' + tipo + ' DESDE ' + fechaInicio +
                             ' HASTA ' + fechaFin +
-                            '</td><td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i> $' +
+                            '</td><td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i> +
                             parseFloat(val_accrued, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
                                 "$1,").toString() + '</td>' +
                             '<td><a href="javascript:eliminar_accrued(' + id +
@@ -299,7 +298,7 @@
                         $("#tbl_accrueds>tbody").append('<tr id="common_vacation-' + id + '"><td>' +
                             'PAGO DE ' + cantidad + ' DIA(S) DE ' + tipo + ' DESDE ' + fechaInicio +
                             ' HASTA ' + fechaFin +
-                            '</td><td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i> $' +
+                            '</td><td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i> +
                             parseFloat(val_accrued, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
                                 "$1,").toString() + '</td>' +
                             '<td><a href="javascript:eliminar_accrued(' + id +
@@ -331,7 +330,7 @@
                         $("#tbl_accrueds>tbody").append('<tr id="maternity_leave-' + id + '"><td>' +
                             'PAGO DE ' + cantidad + ' DIA(S) DE ' + tipo + ' DESDE ' + fechaInicio +
                             ' HASTA ' + fechaFin +
-                            '</td><td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i> $' +
+                            '</td><td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i> +
                             parseFloat(val_accrued, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
                                 "$1,").toString() + '</td>' +
                             '<td><a href="javascript:eliminar_accrued(' + id +
@@ -363,7 +362,7 @@
                         $("#tbl_accrueds>tbody").append('<tr id="paid_leave-' + id + '"><td>' +
                             'PAGO DE ' + cantidad + ' DIA(S) DE ' + tipo + ' DESDE ' + fechaInicio +
                             ' HASTA ' + fechaFin +
-                            '</td><td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i> $' +
+                            '</td><td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i> +
                             parseFloat(val_accrued, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
                                 "$1,").toString() + '</td>' +
                             '<td><a href="javascript:eliminar_accrued(' + id +
@@ -395,7 +394,7 @@
                         $("#tbl_accrueds>tbody").append('<tr id="non_paid_leave-' + id + '"><td>' +
                             'PAGO DE ' + cantidad + ' DIA(S) DE ' + tipo + ' DESDE ' + fechaInicio +
                             ' HASTA ' + fechaFin +
-                            '</td><td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i> $' +
+                            '</td><td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i> +
                             parseFloat(val_accrued, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
                                 "$1,").toString() + '</td>' +
                             '<td><a href="javascript:eliminar_accrued(' + id +
@@ -427,7 +426,7 @@
                         $("#tbl_accrueds>tbody").append('<tr id="legal_strike-' + id + '"><td>' +
                             'PAGO DE ' + cantidad + ' DIA(S) DE ' + tipo + ' DESDE ' + fechaInicio +
                             ' HASTA ' + fechaFin +
-                            '</td><td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i> $' +
+                            '</td><td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i> +
                             parseFloat(val_accrued, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
                                 "$1,").toString() + '</td>' +
                             '<td><a href="javascript:eliminar_accrued(' + id +
@@ -460,7 +459,7 @@
                         $("#tbl_accrueds>tbody").append('<tr id="HEDs-' + id + '"><td>' +
                             'PAGO DE ' + cantidad + ' ' + tipo + ' DESDE ' + fechaInicio + ' HASTA ' +
                             fechaFin +
-                            '</td><td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i> $' +
+                            '</td><td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i> +
                             parseFloat(val_accrued, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
                                 "$1,").toString() + '</td>' +
                             '<td><a href="javascript:eliminar_accrued(' + id +
@@ -493,7 +492,7 @@
                         $("#tbl_accrueds>tbody").append('<tr id="HENs-' + id + '"><td>' +
                             'PAGO DE ' + cantidad + ' ' + tipo + ' DESDE ' + fechaInicio + ' HASTA ' +
                             fechaFin +
-                            '</td><td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i> $' +
+                            '</td><td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i> +
                             parseFloat(val_accrued, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
                                 "$1,").toString() + '</td>' +
                             '<td><a href="javascript:eliminar_accrued(' + id +
@@ -526,7 +525,7 @@
                         $("#tbl_accrueds>tbody").append('<tr id="HRNs-' + id + '"><td>' +
                             'PAGO DE ' + cantidad + ' ' + tipo + ' DESDE ' + fechaInicio + ' HASTA ' +
                             fechaFin +
-                            '</td><td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i> $' +
+                            '</td><td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i> +
                             parseFloat(val_accrued, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
                                 "$1,").toString() + '</td>' +
                             '<td><a href="javascript:eliminar_accrued(' + id +
@@ -559,7 +558,7 @@
                         $("#tbl_accrueds>tbody").append('<tr id="HEDDFs-' + id + '"><td>' +
                             'PAGO DE ' + cantidad + ' ' + tipo + ' DESDE ' + fechaInicio + ' HASTA ' +
                             fechaFin +
-                            '</td><td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i> $' +
+                            '</td><td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i> +
                             parseFloat(val_accrued, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
                                 "$1,").toString() + '</td>' +
                             '<td><a href="javascript:eliminar_accrued(' + id +
@@ -592,7 +591,7 @@
                         $("#tbl_accrueds>tbody").append('<tr id="HRDDFs-' + id + '"><td>' +
                             'PAGO DE ' + cantidad + ' ' + tipo + ' DESDE ' + fechaInicio + ' HASTA ' +
                             fechaFin +
-                            '</td><td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i> $' +
+                            '</td><td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i> +
                             parseFloat(val_accrued, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
                                 "$1,").toString() + '</td>' +
                             '<td><a href="javascript:eliminar_accrued(' + id +
@@ -625,7 +624,7 @@
                         $("#tbl_accrueds>tbody").append('<tr id="HENDFs-' + id + '"><td>' +
                             'PAGO DE ' + cantidad + ' ' + tipo + ' DESDE ' + fechaInicio + ' HASTA ' +
                             fechaFin +
-                            '</td><td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i> $' +
+                            '</td><td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i> +
                             parseFloat(val_accrued, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
                                 "$1,").toString() + '</td>' +
                             '<td><a href="javascript:eliminar_accrued(' + id +
@@ -658,7 +657,7 @@
                         $("#tbl_accrueds>tbody").append('<tr id="HRNDFs-' + id + '"><td>' +
                             'PAGO DE ' + cantidad + ' ' + tipo + ' DESDE ' + fechaInicio + ' HASTA ' +
                             fechaFin +
-                            '</td><td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i> $' +
+                            '</td><td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i> +
                             parseFloat(val_accrued, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
                                 "$1,").toString() + '</td>' +
                             '<td><a href="javascript:eliminar_accrued(' + id +
@@ -693,7 +692,7 @@
                         $("#tbl_accrueds>tbody").append('<tr id="work_disabilities-' + id + '"><td>' +
                             'PAGO DE ' + cantidad + ' DIA(S) DE ' + tipo + ' ' + tipo_incapacidad +
                             ' DESDE ' + fechaInicio + ' HASTA ' + fechaFin +
-                            '</td><td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i> $' +
+                            '</td><td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i> +
                             parseFloat(val_accrued, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
                                 "$1,").toString() + '</td>' +
                             '<td><a href="javascript:eliminar_accrued(' + id +
@@ -720,7 +719,7 @@
 
                         $("#tbl_accrueds>tbody").append('<tr id="service_bonus-' + id + '"><td>' +
                             'PAGO DE ' + cantidad + ' DIA(S) DE ' + tipo +
-                            '</td><td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i> $' +
+                            '</td><td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i> +
                             parseFloat(val_accrued, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
                                 "$1,").toString() + '</td>' +
                             '<td><a href="javascript:eliminar_accrued(' + id +
@@ -736,7 +735,7 @@
                         var n_element = accrued.devengados.severance.length;
 
                         var intereses = Number(document.getElementById("val_accrued_value_intereses")
-                        .value);
+                            .value);
                         var porcentaje = Number(document.getElementById("val_accrued_pocentaje_intereses")
                             .value);
                         var val_accrued = Number(document.getElementById("val_accrued").value);
@@ -757,7 +756,7 @@
                                 "$1,").toString() + ' Y PAGO DE INTERESES A UNA TASA DE ' + porcentaje +
                             '% ' + parseFloat(intereses, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
                                 "$1,").toString() +
-                            '</td><td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i> $' +
+                            '</td><td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i> +
                             parseFloat(total_accrued, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
                                 "$1,").toString() + '</td>' +
                             '<td><a href="javascript:eliminar_accrued(' + id +
@@ -774,7 +773,7 @@
                 document.getElementById("accrued").value = JSON.stringify(accrued);
 
                 document.getElementById("tbl_accrueds").tFoot.innerHTML =
-                    '<tr align="center"><th>TOTAL</th><th colspan="2"><i class="fa fa-sort-up" style="font-size:20px;color:#00D0C4;"></i> $' +
+                    '<tr align="center"><th>TOTAL</th><th colspan="2"><i class="fa fa-sort-up" style="font-size:20px;color:#00D0C4;"></i> +
                     parseFloat(val_accrueds, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,")
                     .toString() + '</th></tr>';
 
@@ -806,31 +805,31 @@
 
                 switch (nodo) {
                     case 'orders':
-                    var n_orders = deductions.deducciones.orders.length;
-                    var orders = deductions.deducciones.orders;
-                    var description = document.getElementById("val_orders").value;
-                    var id = (Math.floor(Math.random() * (999 - 100 + 1) + 100) + n_orders);
-                    array = {
-                        'id': id,
-                        'description': description,
-                        'value': val_deduction,
-                        'name': tipo
-                    };
+                        var n_orders = deductions.deducciones.orders.length;
+                        var orders = deductions.deducciones.orders;
+                        var description = document.getElementById("val_orders").value;
+                        var id = (Math.floor(Math.random() * (999 - 100 + 1) + 100) + n_orders);
+                        array = {
+                            'id': id,
+                            'description': description,
+                            'value': val_deduction,
+                            'name': tipo
+                        };
 
-                    $("#tbl_deductions>tbody").append('<tr id="orders-' + id +
-                        '"><td>DESCUENTO POR ' +
-                        tipo + ' ' + description +
-                        '</td><td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i> $' +
-                        parseFloat(val_deduction, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
-                            "$1,").toString() + '</td>' +
-                        '<td><a href="javascript:eliminar_deduccion(' + id +
-                        ",'orders'," + val_deduction +
-                        ')" class="btn btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a></td></tr>'
-                    );
+                        $("#tbl_deductions>tbody").append('<tr id="orders-' + id +
+                            '"><td>DESCUENTO POR ' +
+                            tipo + ' ' + description +
+                            '</td><td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i> +
+                            parseFloat(val_deduction, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
+                                "$1,").toString() + '</td>' +
+                            '<td><a href="javascript:eliminar_deduccion(' + id +
+                            ",'orders'," + val_deduction +
+                            ')" class="btn btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a></td></tr>'
+                        );
 
-                    deductions.deducciones.orders.push(array);
+                        deductions.deducciones.orders.push(array);
 
-                    break;
+                        break;
                     case 'other_deductions':
                         var n_other_deductions = deductions.deducciones.other_deductions.length;
                         var other_deductions = deductions.deducciones.other_deductions;
@@ -845,7 +844,7 @@
                         $("#tbl_deductions>tbody").append('<tr id="other_deductions-' + id +
                             '"><td>DESCUENTO POR ' +
                             tipo +
-                            '</td><td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i> $' +
+                            '</td><td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i> +
                             parseFloat(val_deduction, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
                                 "$1,").toString() + '</td>' +
                             '<td><a href="javascript:eliminar_deduccion(' + id +
@@ -873,7 +872,7 @@
 
                         $("#tbl_deductions>tbody").append('<tr id="debt-' + id + '"><td>DESCUENTO POR ' +
                             tipo +
-                            '</td><td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i> $' +
+                            '</td><td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i> +
                             parseFloat(val_deduction, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
                                 "$1,").toString() + '</td>' +
                             '<td><a href="javascript:eliminar_deduccion(' + id +
@@ -899,7 +898,7 @@
                         $("#tbl_deductions>tbody").append('<tr id="voluntary_pension-' + id +
                             '"><td>DESCUENTO POR ' +
                             tipo +
-                            '</td><td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i> $' +
+                            '</td><td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i> +
                             parseFloat(val_deduction, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
                                 "$1,").toString() + '</td>' +
                             '<td><a href="javascript:eliminar_deduccion(' + id +
@@ -925,7 +924,7 @@
                         $("#tbl_deductions>tbody").append('<tr id="withholding_at_source-' + id +
                             '"><td>DESCUENTO POR ' +
                             tipo +
-                            '</td><td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i> $' +
+                            '</td><td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i> +
                             parseFloat(val_deduction, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
                                 "$1,").toString() + '</td>' +
                             '<td><a href="javascript:eliminar_deduccion(' + id +
@@ -950,7 +949,7 @@
 
                         $("#tbl_deductions>tbody").append('<tr id="afc-' + id + '"><td>DESCUENTO POR ' +
                             tipo +
-                            '</td><td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i> $' +
+                            '</td><td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i> +
                             parseFloat(val_deduction, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
                                 "$1,").toString() + '</td>' +
                             '<td><a href="javascript:eliminar_deduccion(' + id +
@@ -976,7 +975,7 @@
                         $("#tbl_deductions>tbody").append('<tr id="cooperative-' + id +
                             '"><td>DESCUENTO POR ' +
                             tipo +
-                            '</td><td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i> $' +
+                            '</td><td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i> +
                             parseFloat(val_deduction, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
                                 "$1,").toString() + '</td>' +
                             '<td><a href="javascript:eliminar_deduccion(' + id +
@@ -1002,7 +1001,7 @@
                         $("#tbl_deductions>tbody").append('<tr id="tax_liens-' + id +
                             '"><td>DESCUENTO POR ' +
                             tipo +
-                            '</td><td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i> $' +
+                            '</td><td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i> +
                             parseFloat(val_deduction, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
                                 "$1,").toString() + '</td>' +
                             '<td><a href="javascript:eliminar_deduccion(' + id +
@@ -1028,7 +1027,7 @@
                         $("#tbl_deductions>tbody").append('<tr id="supplementary_plan-' + id +
                             '"><td>DESCUENTO POR ' +
                             tipo +
-                            '</td><td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i> $' +
+                            '</td><td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i> +
                             parseFloat(val_deduction, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
                                 "$1,").toString() + '</td>' +
                             '<td><a href="javascript:eliminar_deduccion(' + id +
@@ -1054,7 +1053,7 @@
                         $("#tbl_deductions>tbody").append('<tr id="education-' + id +
                             '"><td>DESCUENTO POR ' +
                             tipo +
-                            '</td><td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i> $' +
+                            '</td><td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i> +
                             parseFloat(val_deduction, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
                                 "$1,").toString() + '</td>' +
                             '<td><a href="javascript:eliminar_deduccion(' + id +
@@ -1079,7 +1078,7 @@
 
                         $("#tbl_deductions>tbody").append('<tr id="refund-' + id + '"><td>DESCUENTO POR ' +
                             tipo +
-                            '</td><td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i> $' +
+                            '</td><td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i> +
                             parseFloat(val_deduction, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
                                 "$1,").toString() + '</td>' +
                             '<td><a href="javascript:eliminar_deduccion(' + id +
@@ -1087,7 +1086,35 @@
                             ')" class="btn btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a></td></tr>'
                         );
                         break;
+                    case 'fondosp':
+                        var id = 11;
+                        var salario_mensual = Number(document.getElementById("salary").value);
+                        var fondosp_val = salario_mensual / 100;
+                        var total_fondosp = fondosp_val * 2;
+                        val_deduction = total_fondosp;
+                        var array = {
+                            'id': id,
+                            'fondosp_deduction_SP': fondosp_val,
+                            'fondosp_deduction_sub': fondosp_val
+                        };
 
+                        Object.assign(deductions.deducciones.fondosp, array);
+
+                        var fondosp = document.getElementById("fondosp-11");
+                        if (fondosp) {
+                            fondosp.parentNode.removeChild(fondosp);
+                        }
+
+                        $("#tbl_deductions>tbody").append('<tr id="fondosp-' + id + '"><td>FONDO DE SOLIDARIDAD PENSIONAL $' + parseFloat(fondosp_val, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,"$1,").toString() + '<br>' +
+                            'FONDO DE SUBSISTENCIA $' + parseFloat(fondosp_val, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,"$1,").toString() +
+                            '</td><td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i> +
+                            parseFloat(total_fondosp, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
+                                "$1,").toString() + '</td>' +
+                            '<td><a href="javascript:eliminar_deduccion(' + id +
+                            ",'fondosp'," + total_fondosp +
+                            ')" class="btn btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a></td></tr>'
+                        );
+                        break;
                 }
 
                 {{-- calculos totales --}}
@@ -1096,7 +1123,7 @@
                 document.getElementById("deductions").value = JSON.stringify(deductions);
 
                 document.getElementById("tbl_deductions").tFoot.innerHTML =
-                    '<tr align="center"><th>TOTAL</th><th colspan="2"><i class="fa fa-sort-down" style="font-size:20px;color:#FF267B;"></i> $' +
+                    '<tr align="center"><th>TOTAL</th><th colspan="2"><i class="fa fa-sort-down" style="font-size:20px;color:#FF267B;"></i> +
                     parseFloat(val_deductions, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,")
                     .toString() + '</th></tr>';
 
@@ -1131,7 +1158,7 @@
                 document.getElementById("div_deduction_value").style.display = "none";
                 document.getElementById("div_add_deductions").style.display = "none";
                 document.getElementById("div_orders_value").style.display = "none";
-                
+
                 limpiar_controles();
             }
 
@@ -1160,7 +1187,7 @@
         function validar_campos(nodo) {
             switch (nodo) {
                 case 'orders': //deducido
-                    var description = document.getElementById("val_orders").value;                    
+                    var description = document.getElementById("val_orders").value;
                     var valor = Number(document.getElementById("val_deduction").value);
                     if (valor <= 0 || description.length == 0) {
                         return false
@@ -1624,7 +1651,7 @@
             }
 
             document.getElementById("tbl_accrueds").tFoot.innerHTML =
-                '<tr align="center"><th>TOTAL</th><th colspan="2"><i class="fa fa-sort-up" style="font-size:20px;color:#00D0C4;"></i> $' +
+                '<tr align="center"><th>TOTAL</th><th colspan="2"><i class="fa fa-sort-up" style="font-size:20px;color:#00D0C4;"></i> +
                 parseFloat(val_accrueds, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,")
                 .toString() + '</th></tr>';
 
@@ -1771,6 +1798,15 @@
                 case 'refund':
                     deductions.deducciones.refund = {};
                     var element = document.getElementById("refund-8");
+                    element.parentNode.removeChild(element);
+
+                    val_deductions = (val_deductions - valor);
+                    document.getElementById("deductions_total").value = val_deductions;
+                    document.getElementById("deductions").value = JSON.stringify(deductions);
+                    break;
+                case 'fondosp':
+                    deductions.deducciones.fondosp = {};
+                    var element = document.getElementById("fondosp-11");
                     element.parentNode.removeChild(element);
 
                     val_deductions = (val_deductions - valor);
@@ -2015,9 +2051,10 @@
             var json_severance = accrued.devengados.severance
             var cesantias_value = json_severance.reduce((sum, value) => (typeof value.payment == "number" ?
                 sum + value.payment : sum), 0);
-            var intereses_cesantias_value = json_severance.reduce((sum, value) => (typeof value.interest_payment == "number" ?
+            var intereses_cesantias_value = json_severance.reduce((sum, value) => (typeof value.interest_payment ==
+                "number" ?
                 sum + value.interest_payment : sum), 0);
-            
+
             var total_severance = (cesantias_value + intereses_cesantias_value)
             total_devengado += (total_severance)
 
@@ -2040,7 +2077,7 @@
             salario1.parentNode.removeChild(salario1);
 
             $("#tbl_accrueds>tbody").append('<tr id="salario1"><td>Salario' +
-                '</td><td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i> $' +
+                '</td><td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i> +
                 parseFloat((salario_diario * dias), 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
                     "$1,").toString() + '</td>' +
                 '<td><a href="" class="btn disabled btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a></td></tr>'
@@ -2063,7 +2100,7 @@
                 Object.assign(accrued.devengados.transportation_allowance, array);
 
                 $("#tbl_accrueds>tbody").append('<tr id="aux_transporte1"><td>Subsidio Transporte' +
-                    '</td><td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i> $' +
+                    '</td><td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i> +
                     parseFloat((aux_transporte_diario * dias), 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
                         "$1,").toString() + '</td>' +
                     '<td><a href="" class="btn disabled btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a></td></tr>'
@@ -2074,7 +2111,7 @@
             document.getElementById("accrued").value = JSON.stringify(accrued);
 
             document.getElementById("tbl_accrueds").tFoot.innerHTML =
-                '<tr align="center"><th>TOTAL</th><th colspan="2"><i class="fa fa-sort-up" style="font-size:20px;color:#00D0C4;"></i> $' +
+                '<tr align="center"><th>TOTAL</th><th colspan="2"><i class="fa fa-sort-up" style="font-size:20px;color:#00D0C4;"></i> +
                 parseFloat(total_devengado, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,")
                 .toString() + '</th></tr>';
 
@@ -2106,7 +2143,7 @@
                         '"><td>DEDUCCION CORRESPONDIENTE A ' + deductions.deducciones
                         .eps_type_law_deduction
                         .name +
-                        '</td><td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i> $' +
+                        '</td><td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i> +
                         parseFloat(val_eps, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
                             "$1,").toString() + '</td>' +
                         '<td><a href="javascript:eliminar_deduccion(' + id + ',' + strnode + ',' + val_eps +
@@ -2140,7 +2177,7 @@
                         '"><td>DEDUCCION CORRESPONDIENTE A ' + deductions
                         .deducciones
                         .pension_type_law_deductions.name +
-                        '</td><td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i> $' +
+                        '</td><td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i> +
                         parseFloat(val_pension, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
                             "$1,").toString() + '</td>' +
                         '<td><a href="javascript:eliminar_deduccion(' + id + ',' + strnode + ',' + val_pension +
@@ -2209,7 +2246,7 @@
             document.getElementById("deductions").value = JSON.stringify(deductions);
 
             document.getElementById("tbl_deductions").tFoot.innerHTML =
-                '<tr align="center"><th>TOTAL</th><th colspan="2"><i class="fa fa-sort-down" style="font-size:20px;color:#FF267B;"></i> $' +
+                '<tr align="center"><th>TOTAL</th><th colspan="2"><i class="fa fa-sort-down" style="font-size:20px;color:#FF267B;"></i> +
                 parseFloat(total_deducido, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,")
                 .toString() + '</th></tr>';
 
@@ -2275,23 +2312,22 @@
             calcular_vacaciones();
         });
 
-        function calcular_vacaciones(){     
-            
+        function calcular_vacaciones() {
+
             var nodo = document.getElementById("select_tipo_devengado").value;
-            
+
             var salario_mensual = Number(document.getElementById("salary").value);
             var cantidad = Number(document.getElementById("quantity_a").value);
-            var valor = (salario_mensual*cantidad) / 720;            
+            var valor = (salario_mensual * cantidad) / 720;
 
             switch (nodo) {
                 case 'paid_vacation':
-                document.getElementById("val_accrued").value = parseFloat(valor, 10).toFixed(2);
-                break;
+                    document.getElementById("val_accrued").value = parseFloat(valor, 10).toFixed(2);
+                    break;
                 case 'common_vacation':
-                document.getElementById("val_accrued").value = parseFloat(valor, 10).toFixed(2);
-                break;
+                    document.getElementById("val_accrued").value = parseFloat(valor, 10).toFixed(2);
+                    break;
             }
         }
     </script>
-
 @endsection

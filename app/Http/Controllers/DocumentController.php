@@ -531,9 +531,6 @@ class DocumentController extends Controller
 
         $deducciones_json = json_decode($data_na['deductions'], true);
 
-
-
-
         $other_deductions = $deducciones_json['deducciones']['other_deductions'];
 
         $debt = $deducciones_json['deducciones']['debt'];
@@ -619,6 +616,15 @@ class DocumentController extends Controller
         if ($deducciones_json['deducciones']['withholding_at_source']) {
             $withholding_at_source = $deducciones_json['deducciones']['withholding_at_source']['value'];
             $deductions['withholding_at_source'] = str_replace(',', '', number_format($withholding_at_source, 2));
+        }
+
+        if ($deducciones_json['deducciones']['fondosp']) {
+            $fondosp_deduction_SP = $deducciones_json['deducciones']['fondosp']['fondosp_deduction_SP'];
+            $fondosp_deduction_sub = $deducciones_json['deducciones']['fondosp']['fondosp_deduction_sub'];
+            $deductions['fondossp_type_law_deductions_id'] = 9;
+            $deductions['fondosp_deduction_SP'] = str_replace(',', '', number_format($fondosp_deduction_SP, 2));
+            $deductions['fondossp_sub_type_law_deductions_id'] = 9;
+            $deductions['fondosp_deduction_sub'] = str_replace(',', '', number_format($fondosp_deduction_sub, 2));            
         }
 
 
