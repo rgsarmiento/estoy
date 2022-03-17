@@ -257,6 +257,7 @@ class WorkerController extends Controller
             'tax_liens' => new StdClass(),
             'supplementary_plan' => new StdClass(),
             'education' => new StdClass(),
+            'fondosp' => new StdClass(),
             'refund' => new StdClass(),
             'debt' => new StdClass()
         );
@@ -458,6 +459,7 @@ class WorkerController extends Controller
             'tax_liens' => new StdClass(),
             'supplementary_plan' => new StdClass(),
             'education' => new StdClass(),
+            'fondosp' => new StdClass(),
             'refund' => new StdClass(),
             'debt' => new StdClass()
         );

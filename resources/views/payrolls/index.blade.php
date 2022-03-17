@@ -503,6 +503,7 @@
                                                             $supplementary_plan = $deducciones_json['deducciones']['supplementary_plan'];
                                                             $education = $deducciones_json['deducciones']['education'];
                                                             $refund = $deducciones_json['deducciones']['refund'];
+                                                            $fondosp = $deducciones_json['deducciones']['fondosp'];
                                                             $orders = $deducciones_json['deducciones']['orders'];
                                                         @endphp
 
@@ -587,6 +588,12 @@
                                                                 style="margin-top:0rem;margin-bottom:0rem;border-top:1px solid rgb(103 119 239)">
                                                             {!! $refund['name'] . ':<strong> -' . number_format($refund['value'], 2) . '</strong>' !!}
                                                         @endif
+
+                                                        @if ($fondosp)
+                                                        <hr
+                                                            style="margin-top:0rem;margin-bottom:0rem;border-top:1px solid rgb(103 119 239)">
+                                                            fondosp: {!!'<strong> -' . number_format($fondosp['fondosp_deduction_SP'] + $fondosp['fondosp_deduction_sub'], 2) . '</strong>' !!}
+                                                    @endif
 
 
                                                     </td>
