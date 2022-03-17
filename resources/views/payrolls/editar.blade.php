@@ -1155,8 +1155,6 @@
 
                 document.getElementById("div_accrued_intereses").style.display = "none";
 
-
-
                 //deducciones
                 document.getElementById("div_deduction_value").style.display = "none";
                 document.getElementById("div_add_deductions").style.display = "none";
@@ -2245,7 +2243,6 @@
             }
 
             //Para fodos sp
-
             if (deductions.deducciones.fondosp.fondosp_deduction_SP > 0) {
                 var total_fondosp_deduction_SP = deductions.deducciones.fondosp.fondosp_deduction_SP;
                 var total_fondosp_deduction_sub = deductions.deducciones.fondosp.fondosp_deduction_sub;

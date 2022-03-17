@@ -94,6 +94,9 @@
                         document.getElementById("div_deduction_value").style.display = "block";
                         document.getElementById("div_add_deductions").style.display = "block";
                         break;
+                    case 'fondosp':                        
+                        document.getElementById("div_add_deductions").style.display = "block";
+                        break;
                 }
             });
 
@@ -1056,6 +1059,35 @@
                             ')" class="btn btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a></td></tr>'
                         );
                         break;
+                    case 'fondosp':
+                        var id = 11;
+                        var salario_mensual = Number(document.getElementById("salary").value);
+                        var fondosp_val = salario_mensual / 100;
+                        var total_fondosp = fondosp_val * 2;
+                        val_deduction = total_fondosp;
+                        var array = {
+                            'id': id,
+                            'fondosp_deduction_SP': fondosp_val,
+                            'fondosp_deduction_sub': fondosp_val
+                        };
+
+                        Object.assign(deductions.deducciones.fondosp, array);
+
+                        var fondosp = document.getElementById("fondosp-11");
+                        if (fondosp) {
+                            fondosp.parentNode.removeChild(fondosp);
+                        }
+
+                        $("#tbl_deductions>tbody").append('<tr id="fondosp-' + id + '"><td>FONDO DE SOLIDARIDAD PENSIONAL $' + parseFloat(fondosp_val, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,"$1,").toString() + '<br>' +
+                            'FONDO DE SUBSISTENCIA $' + parseFloat(fondosp_val, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,"$1,").toString() +
+                            '</td><td align="right"><i class="fa fa-sort-down" style="font-size:18px;color:#FF267B;"></i>' +
+                            parseFloat(total_fondosp, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
+                                "$1,").toString() + '</td>' +
+                            '<td><a href="javascript:eliminar_deduccion(' + id +
+                            ",'fondosp'," + total_fondosp +
+                            ')" class="btn btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a></td></tr>'
+                        );
+                        break;
 
                 }
 
@@ -1081,44 +1113,45 @@
 
             function ocultar_controles() {
 
-                //devengados
-                document.getElementById("div_rango_fecha_a").style.display = "none";
-                document.getElementById("div_accrued_value").style.display = "none";
-                document.getElementById("div_add_accrueds").style.display = "none";
-                document.getElementById("div_quantity_a").style.display = "none";
-
-                document.getElementById("div_quantity_h_a").style.display = "none";
-                document.getElementById("div_rango_fecha_h_a").style.display = "none";
-
-                document.getElementById("div_type_incapacidad_a").style.display = "none";
-
-                document.getElementById("div_accrued_intereses").style.display = "none";
-
-
-
-                //deducciones
-                document.getElementById("div_deduction_value").style.display = "none";
-                document.getElementById("div_add_deductions").style.display = "none";
+                 //devengados
+                 document.getElementById("div_rango_fecha_a").style.display = "none";
+                 document.getElementById("div_accrued_value").style.display = "none";
+                 document.getElementById("div_add_accrueds").style.display = "none";
+                 document.getElementById("div_quantity_a").style.display = "none";
+ 
+                 document.getElementById("div_quantity_h_a").style.display = "none";
+                 document.getElementById("div_rango_fecha_h_a").style.display = "none";
+ 
+                 document.getElementById("div_type_incapacidad_a").style.display = "none";
+ 
+                 document.getElementById("div_accrued_intereses").style.display = "none";
+ 
+                 //deducciones
+                 document.getElementById("div_deduction_value").style.display = "none";
+                 document.getElementById("div_add_deductions").style.display = "none";
+                 document.getElementById("div_orders_value").style.display = "none";
+ 
 
                 limpiar_controles();
             }
 
             function limpiar_controles() {
-                //devengados
-                document.getElementById("start_date_a").value = "";
-                document.getElementById("end_date_a").value = "";
-                document.getElementById("quantity_a").value = "";
-                document.getElementById("val_accrued").value = "";
+               //devengados
+               document.getElementById("start_date_a").value = "";
+               document.getElementById("end_date_a").value = "";
+               document.getElementById("quantity_a").value = "";
+               document.getElementById("val_accrued").value = "";
 
-                document.getElementById("start_date_h_a").value = "";
-                document.getElementById("end_date_h_a").value = "";
-                document.getElementById("quantity_h_a").value = "";
+               document.getElementById("start_date_h_a").value = "";
+               document.getElementById("end_date_h_a").value = "";
+               document.getElementById("quantity_h_a").value = "";
 
-                document.getElementById("val_accrued_pocentaje_intereses").value = "";
-                document.getElementById("val_accrued_value_intereses").value = "";
+               document.getElementById("val_accrued_pocentaje_intereses").value = "";
+               document.getElementById("val_accrued_value_intereses").value = "";
 
-                //deducciones
-                document.getElementById("val_deduction").value = "";
+               //deducciones
+               document.getElementById("val_deduction").value = "";
+               document.getElementById("val_orders").value = "";
 
             }
 
@@ -1721,6 +1754,15 @@
                     document.getElementById("deductions_total").value = val_deductions;
                     document.getElementById("deductions").value = JSON.stringify(deductions);
                     break;
+                case 'fondosp':
+                    deductions.deducciones.fondosp = {};
+                    var element = document.getElementById("fondosp-11");
+                    element.parentNode.removeChild(element);
+
+                    val_deductions = (val_deductions - valor);
+                    document.getElementById("deductions_total").value = val_deductions;
+                    document.getElementById("deductions").value = JSON.stringify(deductions);
+                    break;
 
             }
             recalcular_total();
@@ -2141,6 +2183,14 @@
             if (deductions.deducciones.refund.value > 0) {
                 var total_refund = deductions.deducciones.refund.value;
                 total_deducido += total_refund;
+            }
+
+             //Para fodos sp
+             if (deductions.deducciones.fondosp.fondosp_deduction_SP > 0) {
+                var total_fondosp_deduction_SP = deductions.deducciones.fondosp.fondosp_deduction_SP;
+                var total_fondosp_deduction_sub = deductions.deducciones.fondosp.fondosp_deduction_sub;
+                total_deducido += (total_fondosp_deduction_SP);
+                total_deducido += (total_fondosp_deduction_sub);
             }
 
 
