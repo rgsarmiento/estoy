@@ -200,6 +200,10 @@
                         document.getElementById("div_add_accrueds").style.display = "block";
                         document.getElementById("div_accrued_intereses").style.display = "block";
                         break;
+                    case 'compensations':
+                        document.getElementById("div_accrued_compensations").style.display = "block";
+                        document.getElementById("div_add_accrueds").style.display = "block";                        
+                        break;
                 }
             });
 
@@ -765,6 +769,38 @@
                         accrued.devengados.severance.push(array);
                         val_accrueds = (val_accrueds + total_accrued);
                         break;
+                    case 'compensations':
+                        var n_compensations = accrued.devengados.paid_vacation.length;
+
+                        var ordinary_compensation = Number(document.getElementById("val_accrued_ordinary_compensation").value);
+                        var extraordinary_compensation = Number(document.getElementById("val_extraordinary_compensation").value);
+                        var total_compensations = (ordinary_compensation + extraordinary_compensation);
+
+                        var id = (Math.floor(Math.random() * (999 - 100 + 1) + 100) + n_compensations);
+                        array = {
+                            'id': id,
+                            'ordinary_compensation': ordinary_compensation,
+                            'extraordinary_compensation': extraordinary_compensation,
+                            'name': tipo
+                        };
+
+                        $("#tbl_accrueds>tbody").append('<tr id="compensations-' + id + '"><td>' +
+                            'PAGO DE COMPENSACION ORDINARIA: ' + parseFloat(ordinary_compensation, 10).toFixed(2).replace(
+                                /(\d)(?=(\d{3})+\.)/g,
+                                "$1,").toString() + ' Y EXTRAORDINARIA: ' + parseFloat(extraordinary_compensation, 10).toFixed(2).replace(
+                                    /(\d)(?=(\d{3})+\.)/g,
+                                    "$1,").toString() +
+                            '</td><td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i>' +
+                            parseFloat(total_compensations, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
+                                "$1,").toString() + '</td>' +
+                            '<td><a href="javascript:eliminar_accrued(' + id +
+                            ",'compensations'," + total_compensations +
+                            ')" class="btn btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a></td></tr>'
+                        );
+
+                        accrued.devengados.compensations.push(array);
+                        val_accrueds = total_compensations;
+                        break;
                 }
 
 
@@ -1125,6 +1161,7 @@
                  document.getElementById("div_type_incapacidad_a").style.display = "none";
  
                  document.getElementById("div_accrued_intereses").style.display = "none";
+                 document.getElementById("div_accrued_compensations").style.display = "none";
  
                  //deducciones
                  document.getElementById("div_deduction_value").style.display = "none";
@@ -1148,6 +1185,9 @@
 
                document.getElementById("val_accrued_pocentaje_intereses").value = "";
                document.getElementById("val_accrued_value_intereses").value = "";
+
+               document.getElementById("val_accrued_ordinary_compensation").value = "";
+               document.getElementById("val_extraordinary_compensation").value = "";
 
                //deducciones
                document.getElementById("val_deduction").value = "";
@@ -1366,6 +1406,14 @@
                     var intereses = Number(document.getElementById("val_accrued_value_intereses").value);
                     var valor = Number(document.getElementById("val_accrued").value);
                     if (valor <= 0 || intereses <= 0 || porcentaje <= 0) {
+                        return false
+                    }
+                    break;
+                case 'compensations': //devengado
+                    var ordinary_compensation = Number(document.getElementById("val_accrued_ordinary_compensation").value);
+                    var extraordinary_compensation = Number(document.getElementById("val_extraordinary_compensation").value);
+                    var total_compensations = (ordinary_compensation + extraordinary_compensation);
+                    if (total_compensations <= 0) {
                         return false
                     }
                     break;
@@ -1614,6 +1662,20 @@
                     document.getElementById("accrued").value = JSON.stringify(accrued);
 
                     var element = document.getElementById("severance-" + id);
+                    element.parentNode.removeChild(element);
+                    break;
+                case 'compensations':
+                    accrued.devengados.compensations.forEach(function(currentValue, index, arr) {
+                        if (accrued.devengados.compensations[index].id == id) {
+                            accrued.devengados.compensations.splice(index, 1);
+                        }
+                    })
+
+                    val_accrueds = (val_accrueds - valor);
+                    document.getElementById("accrued_total").value = val_accrueds;
+                    document.getElementById("accrued").value = JSON.stringify(accrued);
+
+                    var element = document.getElementById("compensations-" + id);
                     element.parentNode.removeChild(element);
                     break;
             }
@@ -2013,6 +2075,27 @@
             if (concepts_parafiscal.concepts.severance.pension == 1) {
                 base_pension_concepts_parafiscal += (total_severance)
             }
+            
+            ////////////indemnización/////////////
+            var json_compensations = accrued.devengados.compensations
+            var ordinary_compensation = json_compensations.reduce((sum, value) => (typeof value.ordinary_compensation == "number" ? sum +
+                value.ordinary_compensation : sum), 0);
+            var extraordinary_compensation = json_compensations.reduce((sum, value) => (typeof value.extraordinary_compensation == "number" ? sum +
+                value.extraordinary_compensation : sum), 0);
+
+            var total_compensations = (ordinary_compensation + extraordinary_compensation)
+
+            total_devengado += (total_compensations)
+
+            if (concepts_parafiscal.concepts.compensations.eps == 1) {
+                base_eps_concepts_parafiscal += (total_compensations)
+            }
+            if (concepts_parafiscal.concepts.compensations.pension == 1) {
+                base_pension_concepts_parafiscal += (total_compensations)
+            }
+
+
+
 
 
             if (accrued.devengados.transportation_allowance.name == "Subsidio Transporte") {
@@ -2033,27 +2116,31 @@
             );
 
             if (tiene_aux_transporte_mensual == "SI") {
-                var array = {
-                    'value': (aux_transporte_diario * dias),
-                    'name': "Subsidio Transporte"
-                };
-                total_devengado += (aux_transporte_diario * dias);
+                var val_aux_transporte = aux_transporte_diario * dias;
+                    if (val_aux_transporte > 0){
+                        var array = {
+                                            'value': (aux_transporte_diario * dias),
+                                            'name': "Subsidio Transporte"
+                                        };
+                                        total_devengado += (aux_transporte_diario * dias);
 
-                if (concepts_parafiscal.concepts.transportation_allowance.eps == 1) {
-                    base_eps_concepts_parafiscal += (aux_transporte_diario * dias)
-                }
-                if (concepts_parafiscal.concepts.transportation_allowance.pension == 1) {
-                    base_pension_concepts_parafiscal += (aux_transporte_diario * dias)
-                }
+                                        if (concepts_parafiscal.concepts.transportation_allowance.eps == 1) {
+                                            base_eps_concepts_parafiscal += (aux_transporte_diario * dias)
+                                        }
+                                        if (concepts_parafiscal.concepts.transportation_allowance.pension == 1) {
+                                            base_pension_concepts_parafiscal += (aux_transporte_diario * dias)
+                                        }
 
-                Object.assign(accrued.devengados.transportation_allowance, array);
+                                        Object.assign(accrued.devengados.transportation_allowance, array);
 
-                $("#tbl_accrueds>tbody").append('<tr id="aux_transporte1"><td>Subsidio Transporte' +
-                    '</td><td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i> $' +
-                    parseFloat((aux_transporte_diario * dias), 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
-                        "$1,").toString() + '</td>' +
-                    '<td><a href="" class="btn disabled btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a></td></tr>'
-                );
+                                        $("#tbl_accrueds>tbody").append('<tr id="aux_transporte1"><td>Subsidio Transporte' +
+                                            '</td><td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i>' +
+                                            parseFloat((aux_transporte_diario * dias), 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
+                                                "$1,").toString() + '</td>' +
+                                            '<td><a href="" class="btn disabled btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a></td></tr>'
+                                        );
+                    }
+                
             }
 
             document.getElementById("accrued_total").value = total_devengado;

@@ -274,6 +274,20 @@
                     </div>
                 </div>
 
+                {{-- indemnización--}}
+                <div class="row" id="div_accrued_compensations">
+                    <div class="col-md-4 col-12">
+                        <div class="form-group">
+                            <label>Compensación Ordinaria</label>
+                            <input type="number" class="form-control" id="val_accrued_ordinary_compensation">
+                        </div>
+                        <div class="form-group">
+                            <label>Compensación Extraordinaria</label>
+                            <input type="number" class="form-control" id="val_extraordinary_compensation">
+                        </div>
+                    </div>
+                </div>
+
                 <div class="col-md-6 col-12" id="div_add_accrueds">
                     <button type="button" class="btn btn-success" id="add_accrued">Agregar</button>
                 </div>
@@ -313,6 +327,8 @@
                                 $work_disabilities = $devengados_json['devengados']['work_disabilities'];
                                 $service_bonus = $devengados_json['devengados']['service_bonus'];
                                 $severance = $devengados_json['devengados']['severance'];
+
+                                $compensations = $devengados_json['devengados']['compensations'];
                             @endphp
 
                             <tr id="salario1">
@@ -539,6 +555,18 @@
                                     </td>
                                 </tr>
                             @endforeach
+
+                            @foreach ($compensations as $value)
+                            <tr id="compensations-{!! $value['id'] !!}">
+                                <td>PAGO DE COMPENSACION ORDINARIA: {!! number_format($value['ordinary_compensation'], 2) !!} Y EXTRAORDINARIA: {!! number_format($value['extraordinary_compensation'], 2) !!}</td>
+                                <td align="right"><i class="fa fa-sort-up"
+                                        style="font-size:18px;color:#00D0C4;"></i>
+                                    ${!! number_format($value['ordinary_compensation'] + $value['extraordinary_compensation'], 2) !!}</td>
+                                <td><a href="javascript:eliminar_accrued({!! $value['id'] !!},'compensations', {!! $value['ordinary_compensation'] + $value['extraordinary_compensation'] !!})"
+                                        class="btn btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a>
+                                </td>
+                            </tr>
+                        @endforeach
 
                         </tbody>
                         <tfoot style="background-color: #b5eee0;">

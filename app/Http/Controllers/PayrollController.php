@@ -320,6 +320,7 @@ class PayrollController extends Controller
         $work_disabilities = $devengados_json['devengados']['work_disabilities'];
         $service_bonus = $devengados_json['devengados']['service_bonus'];
         $severance = $devengados_json['devengados']['severance'];
+        $compensations = $devengados_json['devengados']['compensations'];
         
 
         $accrued = array(
@@ -543,6 +544,16 @@ class PayrollController extends Controller
             }
         }
 
+        if (count($compensations) > 0) {
+            $accrued['compensations'] = array();
+            foreach ($compensations as $key) {
+                $compensations = array(
+                    'ordinary_compensation' => str_replace(',', '', number_format($key['ordinary_compensation'], 2)),
+                    'extraordinary_compensation' => str_replace(',', '', number_format($key['extraordinary_compensation'], 2))                    
+                );
+                array_push($accrued['compensations'], $compensations);
+            }
+        }
 
         $accrued["accrued_total"] = str_replace(',', '', number_format($payroll->accrued_total, 2));
 
