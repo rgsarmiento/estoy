@@ -602,6 +602,14 @@
 
                 </div>
 
+                <div class="row" id="div_orders_value">
+                    <div class="col-md-12 col-12">
+                        <div class="form-group">
+                            <label>Descripción</label>
+                            <input type="text" class="form-control" id="val_orders">
+                        </div>
+                    </div>
+                </div>
 
                 <div class="row" id="div_deduction_value">
                     <div class="col-md-4 col-12">
@@ -644,9 +652,10 @@
                                 $supplementary_plan = $deducciones_json['deducciones']['supplementary_plan'];
                                 $education = $deducciones_json['deducciones']['education'];
                                 $refund = $deducciones_json['deducciones']['refund'];
+                                //dd($deducciones_json);
                                 $fondosp = $deducciones_json['deducciones']['fondosp'];
                                 $orders = $deducciones_json['deducciones']['orders'];
-
+                                
                             @endphp
 
                             @if ($eps_type_law_deduction)
