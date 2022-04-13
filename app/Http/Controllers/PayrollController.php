@@ -350,8 +350,8 @@ class PayrollController extends Controller
             $accrued['paid_vacation'] = array();
             foreach ($paid_vacation as $key) {
                 $paid_vacation = array(
-                    'start_date' => $key['start_date'],
-                    'end_date' => $key['end_date'],
+                    //'start_date' => $key['start_date'],
+                    //'end_date' => $key['end_date'],
                     'quantity' => $key['quantity'],
                     'payment' => str_replace(',', '', number_format($key['payment'], 2))
                 );
