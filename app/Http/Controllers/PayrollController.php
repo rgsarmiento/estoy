@@ -547,21 +547,12 @@ class PayrollController extends Controller
         if (count($compensations) > 0) {
             $accrued['compensations'] = array();
             foreach ($compensations as $key) {
-
-                $extraordinary_compensation = (int)$key['extraordinary_compensation'];
-
-                if ($extraordinary_compensation > 0){
+                
                     $compensations = array(
                         'ordinary_compensation' => str_replace(',', '', number_format($key['ordinary_compensation'], 2)),
                         'extraordinary_compensation' => str_replace(',', '', number_format($key['extraordinary_compensation'], 2))                    
                     );
-                }else{
-                    $compensations = array(
-                        'ordinary_compensation' => str_replace(',', '', number_format($key['ordinary_compensation'], 2))                                            
-                    );
-                }
-
-                
+                                
                 array_push($accrued['compensations'], $compensations);
             }
         }
