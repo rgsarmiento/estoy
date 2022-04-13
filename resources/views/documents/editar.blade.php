@@ -204,6 +204,10 @@
                         document.getElementById("div_accrued_compensations").style.display = "block";
                         document.getElementById("div_add_accrueds").style.display = "block";                        
                         break;
+                    case 'other_concepts':
+                        document.getElementById("div_accrued_other_concepts").style.display = "block";
+                        document.getElementById("div_add_accrueds").style.display = "block";                        
+                        break;
                 }
             });
 
@@ -223,30 +227,6 @@
                 var val_accrueds = Number(document.getElementById("accrued_total").value);
 
                 switch (nodo) {
-                    case 'other_concepts':
-                        var n_other_concepts = accrued.devengados.other_concepts.length;
-
-                        var val_accrued = Number(document.getElementById("val_accrued").value);
-                        var id = (Math.floor(Math.random() * (999 - 100 + 1) + 100) + n_other_concepts);
-                        array = {
-                            'id': id,
-                            'value': val_accrued,
-                            'name': tipo
-                        };
-
-                        $("#tbl_accrueds>tbody").append('<tr id="other_concepts-' + id + '"><td>' +
-                            'PAGO DE ' + tipo +
-                            '</td><td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i> $' +
-                            parseFloat(val_accrued, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
-                                "$1,").toString() + '</td>' +
-                            '<td><a href="javascript:eliminar_accrued(' + id +
-                            ",'other_accrueds'," + val_accrued +
-                            ')" class="btn btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a></td></tr>'
-                        );
-
-                        accrued.devengados.other_concepts.push(array);
-                        val_accrueds = (val_accrueds + val_accrued);
-                        break;
                     case 'common_vacation':
                         var n_common_vacation = accrued.devengados.common_vacation.length;
 
@@ -770,7 +750,7 @@
                         val_accrueds = (val_accrueds + total_accrued);
                         break;
                     case 'compensations':
-                        var n_compensations = accrued.devengados.paid_vacation.length;
+                        var n_compensations = accrued.devengados.compensations.length;
 
                         var ordinary_compensation = Number(document.getElementById("val_accrued_ordinary_compensation").value);
                         var extraordinary_compensation = Number(document.getElementById("val_extraordinary_compensation").value);
@@ -800,6 +780,33 @@
 
                         accrued.devengados.compensations.push(array);
                         val_accrueds = total_compensations;
+                        break;
+                    case 'other_concepts':
+                        var n_other_concepts = accrued.devengados.other_concepts.length;
+
+                        var salary_concept = Number(document.getElementById("val_accrued_other_concepts_salary").value);
+                        var description_concept = document.getElementById("description_other_concepts").value;
+                        
+                        var id = (Math.floor(Math.random() * (999 - 100 + 1) + 100) + n_other_concepts);
+                        array = {
+                            'id': id,
+                            'salary_concept': salary_concept,
+                            'description_concept': description_concept,
+                            'name': tipo
+                        };
+
+                        $("#tbl_accrueds>tbody").append('<tr id="other_concepts-' + id + '"><td>' +
+                            description_concept + 
+                            '</td><td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i>' +
+                            parseFloat(salary_concept, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
+                                "$1,").toString() + '</td>' +
+                            '<td><a href="javascript:eliminar_accrued(' + id +
+                            ",'other_concepts'," + salary_concept +
+                            ')" class="btn btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a></td></tr>'
+                        );
+
+                        accrued.devengados.other_concepts.push(array);
+                        val_accrueds = salary_concept;
                         break;
                 }
 
@@ -1162,6 +1169,8 @@
  
                  document.getElementById("div_accrued_intereses").style.display = "none";
                  document.getElementById("div_accrued_compensations").style.display = "none";
+                 document.getElementById("div_accrued_other_concepts").style.display = "none";
+
  
                  //deducciones
                  document.getElementById("div_deduction_value").style.display = "none";
@@ -1188,6 +1197,9 @@
 
                document.getElementById("val_accrued_ordinary_compensation").value = "";
                document.getElementById("val_extraordinary_compensation").value = "";
+
+               document.getElementById("val_accrued_other_concepts_salary").value = "";
+               document.getElementById("description_other_concepts").value = "";
 
                //deducciones
                document.getElementById("val_deduction").value = "";
@@ -1312,11 +1324,9 @@
                     }
                     break;
                 case 'other_concepts': //devengado
-                    var fechaInicio = document.getElementById("start_date_a").value;
-                    var fechaFin = document.getElementById("end_date_a").value;
-                    var cantidad = Number(document.getElementById("quantity_a").value);
-                    var valor = Number(document.getElementById("val_accrued").value);
-                    if (valor <= 0 || cantidad <= 0 || fechaInicio.length == 0 || fechaFin.length == 0) {
+                    var description_concept = document.getElementById("description_other_concepts").value;
+                    var valor = Number(document.getElementById("val_accrued_other_concepts_salary").value);
+                    if (valor <= 0 || description_concept.length == 0 ) {
                         return false
                     }
                     break;
@@ -2093,6 +2103,24 @@
             if (concepts_parafiscal.concepts.compensations.pension == 1) {
                 base_pension_concepts_parafiscal += (total_compensations)
             }
+
+            ////////////Otros Devengados/////////////
+            var json_other_concepts = accrued.devengados.other_concepts
+            var salary_concept = json_other_concepts.reduce((sum, value) => (typeof value.salary_concept == "number" ? sum +
+                value.salary_concept : sum), 0);
+            
+            total_devengado += (salary_concept)
+
+            if (concepts_parafiscal.concepts.other_concepts.eps == 1) {
+                base_eps_concepts_parafiscal += (salary_concept)
+            }
+            if (concepts_parafiscal.concepts.other_concepts.pension == 1) {
+                base_pension_concepts_parafiscal += (salary_concept)
+            }
+
+
+
+
 
 
 

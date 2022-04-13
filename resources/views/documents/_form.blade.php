@@ -288,6 +288,23 @@
                     </div>
                 </div>
 
+                {{-- Otros Devengados--}}
+                <div class="row" id="div_accrued_other_concepts">
+                    <div class="col-md-4 col-12">
+                        <div class="form-group">
+                            <label>Valor Pagado</label>
+                            <input type="number" class="form-control" id="val_accrued_other_concepts_salary">
+                        </div>                       
+                    </div>
+                    <div class="col-md-6 col-12">                        
+                        <div class="form-group">
+                            <label>Descripción</label>
+                            <input type="textarea" class="form-control" id="description_other_concepts">
+                        </div>
+                    </div>
+                </div>
+                
+
                 <div class="col-md-6 col-12" id="div_add_accrueds">
                     <button type="button" class="btn btn-success" id="add_accrued">Agregar</button>
                 </div>
@@ -327,7 +344,7 @@
                                 $work_disabilities = $devengados_json['devengados']['work_disabilities'];
                                 $service_bonus = $devengados_json['devengados']['service_bonus'];
                                 $severance = $devengados_json['devengados']['severance'];
-
+                                $other_concepts = $devengados_json['devengados']['other_concepts'];
                                 $compensations = $devengados_json['devengados']['compensations'];
                             @endphp
 
@@ -567,6 +584,18 @@
                                 </td>
                             </tr>
                         @endforeach
+
+                        @foreach ($other_concepts as $value)
+                        <tr id="other_concepts-{!! $value['id'] !!}">
+                            <td>{!! $value['description_concept'] !!}</td>
+                            <td align="right"><i class="fa fa-sort-up"
+                                    style="font-size:18px;color:#00D0C4;"></i>
+                                ${!! number_format($value['salary_concept'], 2) !!}</td>
+                            <td><a href="javascript:eliminar_accrued({!! $value['id'] !!},'other_concepts', {!! $value['salary_concept'] !!})"
+                                    class="btn btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a>
+                            </td>
+                        </tr>
+                    @endforeach
 
                         </tbody>
                         <tfoot style="background-color: #b5eee0;">

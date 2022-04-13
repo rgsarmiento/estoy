@@ -300,8 +300,8 @@ class DocumentController extends Controller
         $work_disabilities = $devengados_json['devengados']['work_disabilities'];
         $service_bonus = $devengados_json['devengados']['service_bonus'];
         $severance = $devengados_json['devengados']['severance'];
+        $other_concepts = $devengados_json['devengados']['other_concepts'];
         $compensations = $devengados_json['devengados']['compensations'];
-
 
         $accrued = array(
             'worked_days' => $data_na['worked_days'],
@@ -532,6 +532,19 @@ class DocumentController extends Controller
                     'extraordinary_compensation' => str_replace(',', '', number_format($key['extraordinary_compensation'], 2))                    
                 );
                 array_push($accrued['compensations'], $compensations);
+            }
+        }
+
+        if (count($other_concepts) > 0) {
+            $accrued['other_concepts'] = array();
+            foreach ($other_concepts as $key) {
+               
+                    $other_concepts = array(
+                        'salary_concept' => str_replace(',', '', number_format($key['salary_concept'], 2)),
+                        'description_concept' => $key['description_concept']                    
+                    );
+                               
+                array_push($accrued['other_concepts'], $other_concepts);
             }
         }
 

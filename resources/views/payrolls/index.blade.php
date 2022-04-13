@@ -336,6 +336,7 @@
                                                             $work_disabilities = $devengados_json['devengados']['work_disabilities'];
                                                             $service_bonus = $devengados_json['devengados']['service_bonus'];
                                                             $severance = $devengados_json['devengados']['severance'];
+                                                            $other_concepts = $devengados_json['devengados']['other_concepts'];
                                                             $compensations = $devengados_json['devengados']['compensations'];
                                                         @endphp
 
@@ -485,6 +486,14 @@
                                                         @endif
                                                         @foreach ($compensations as $value)
                                                             {!! $value['name'] . ':<br><strong> +' . number_format($value['ordinary_compensation'] + $value['extraordinary_compensation'], 2) . '</strong>' !!} <br>
+                                                        @endforeach
+
+                                                        @if (count($other_concepts))
+                                                        <hr
+                                                            style="margin-top:0rem;margin-bottom:0rem;border-top:1px solid rgb(103 119 239)">
+                                                        @endif
+                                                        @foreach ($other_concepts as $value)
+                                                            {!! $value['name'] . ':<br><strong> +' . number_format($value['salary_concept'], 2) . '</strong>' !!} <br>
                                                         @endforeach
 
 
