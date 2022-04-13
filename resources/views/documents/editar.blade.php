@@ -117,7 +117,7 @@
                         document.getElementById("div_accrued_value").style.display = "block";
                         document.getElementById("div_add_accrueds").style.display = "block";
                         document.getElementById("div_quantity_a").style.display = "block";
-                        document.getElementById("div_rango_fecha_a").style.display = "block";
+                        //document.getElementById("div_rango_fecha_a").style.display = "block";
                         break;
                     case 'maternity_leave':
                         document.getElementById("div_accrued_value").style.display = "block";
@@ -263,24 +263,21 @@
                     case 'paid_vacation':
                         var n_paid_vacation = accrued.devengados.paid_vacation.length;
 
-                        var fechaInicio = document.getElementById("start_date_a").value;
-                        var fechaFin = document.getElementById("end_date_a").value;
+                        //var fechaInicio = document.getElementById("start_date_a").value;
+                        //var fechaFin = document.getElementById("end_date_a").value;
                         var cantidad = Number(document.getElementById("quantity_a").value);
                         var val_accrued = Number(document.getElementById("val_accrued").value);
 
                         var id = (Math.floor(Math.random() * (999 - 100 + 1) + 100) + n_paid_vacation);
                         array = {
                             'id': id,
-                            'start_date': fechaInicio,
-                            'end_date': fechaFin,
                             'quantity': cantidad,
                             'payment': val_accrued,
                             'name': tipo
                         };
 
                         $("#tbl_accrueds>tbody").append('<tr id="common_vacation-' + id + '"><td>' +
-                            'PAGO DE ' + cantidad + ' DIA(S) DE ' + tipo + ' DESDE ' + fechaInicio +
-                            ' HASTA ' + fechaFin +
+                            'PAGO DE ' + cantidad + ' DIA(S) DE ' + tipo +
                             '</td><td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i> $' +
                             parseFloat(val_accrued, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
                                 "$1,").toString() + '</td>' +
@@ -1281,11 +1278,12 @@
                     }
                     break;
                 case 'paid_vacation': //devengado
-                    var fechaInicio = document.getElementById("start_date_a").value;
-                    var fechaFin = document.getElementById("end_date_a").value;
+                    //var fechaInicio = document.getElementById("start_date_a").value;
+                    //var fechaFin = document.getElementById("end_date_a").value;
                     var cantidad = Number(document.getElementById("quantity_a").value);
                     var valor = Number(document.getElementById("val_accrued").value);
-                    if (valor <= 0 || cantidad <= 0 || fechaInicio.length == 0 || fechaFin.length == 0) {
+                    //if (valor <= 0 || cantidad <= 0 || fechaInicio.length == 0 || fechaFin.length == 0) {
+                    if (valor <= 0 || cantidad <= 0) {
                         return false
                     }
                     break;

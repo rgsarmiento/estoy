@@ -382,8 +382,7 @@
 
                             @foreach ($paid_vacation as $value)
                                 <tr id="paid_vacation-{!! $value['id'] !!}">
-                                    <td>PAGO DE {!! $value['quantity'] !!} DIA(S) DE {!! $value['name'] !!} DESDE
-                                        {!! $value['start_date'] !!} HASTA {!! $value['end_date'] !!}</td>
+                                    <td>PAGO DE {!! $value['quantity'] !!} DIA(S) DE {!! $value['name'] !!}</td>
                                     <td align="right"><i class="fa fa-sort-up"
                                             style="font-size:18px;color:#00D0C4;"></i>
                                         ${!! number_format($value['payment'], 2) !!}</td>
