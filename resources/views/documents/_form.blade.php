@@ -296,7 +296,7 @@
                             <input type="number" class="form-control" id="val_accrued_other_concepts_salary">
                         </div>                       
                     </div>
-                    <div class="col-md-6 col-12">                        
+                    <div class="col-md-12 col-12">                        
                         <div class="form-group">
                             <label>Descripción</label>
                             <input type="textarea" class="form-control" id="description_other_concepts">
