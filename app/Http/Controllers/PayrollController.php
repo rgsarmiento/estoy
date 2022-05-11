@@ -698,8 +698,9 @@ class PayrollController extends Controller
 
             $isValid = ($response['ResponseDian']['Envelope']['Body']['SendNominaSyncResponse']['SendNominaSyncResult']['IsValid'] === 'true') ? true : false;
             $StatusCode = $response['ResponseDian']['Envelope']['Body']['SendNominaSyncResponse']['SendNominaSyncResult']['StatusCode'];
-            
-            if ($isValid || $StatusCode == "299") {
+            $StatusMessage = $response['ResponseDian']['Envelope']['Body']['SendNominaSyncResponse']['SendNominaSyncResult']['StatusMessage'];
+
+            if ($isValid || $StatusCode == "299" || str_ends_with($StatusMessage, "ha sido autorizada.")) {
                 $this->store_documents($payroll->id, $periodo_id, $objeto_nomina, $response, 1, $fechaHora);
                 //aumentar prefijo
                 $resolution->increment('nex');
