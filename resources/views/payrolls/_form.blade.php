@@ -584,7 +584,8 @@
                     {!! Form::hidden('accrued', null, ['class' => 'form-control', 'id' => 'accrued']) !!}
                     {!! Form::hidden('accrued_total', null, ['class' => 'form-control', 'id' => 'accrued_total']) !!}
 
-                    <input type="hidden" id="transportation_allowance_value"
+                    <label>Valor Transporte</label>
+                    <input type="number" id="transportation_allowance_value"
                         value={{ $configuraciones->transport_allowance }}>
 
                 </div>
