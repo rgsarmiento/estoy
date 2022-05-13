@@ -25,14 +25,16 @@ class UpdateRequest extends FormRequest
     {
         return [
                 'payroll_type_document_identification_id' => 'required',
-                'identification_number' => 'required|unique:workers,identification_number,'. $this->route('worker')->id.'|min:7|max:15',
+                //'identification_number' => 'required|unique:workers,identification_number,'. $this->route('worker')->id.'|min:7|max:15',
+                'identification_number' => 'required|min:7|max:15',
                 'surname' => 'required|min:3|max:50',
                 'second_surname' => 'max:50',
                 'first_name' => 'required|min:3|max:50',
                 'second_name' => 'max:50',
                 'address' => 'required|min:3|max:200',
                 'telephone' => 'max:20',
-                'email' => 'required|email:rfc,dns|unique:workers,email,'. $this->route('worker')->id,
+                //'email' => 'required|email:rfc,dns|unique:workers,email,'. $this->route('worker')->id,
+                'email' => 'required|email:rfc,dns',
                 'municipality_id' => 'required',
                  //Informacion laboral
                 'type_contract_id' => 'required',
@@ -61,7 +63,7 @@ class UpdateRequest extends FormRequest
             'identification_number.required' => 'El Numero Documento es requrido.',
             'identification_number.min' => 'Minimo 7 caracteres en Numero Documento.',
             'identification_number.max' => 'Maximo 15 caracteres en Numero Documento.',
-            'identification_number.unique' => 'El Numero Documento ya existe con otro Empleado.',
+            //'identification_number.unique' => 'El Numero Documento ya existe con otro Empleado.',
             'first_name.required' => 'El Primer Nombre es requerido.',
             'first_name.min' => 'Minimo 3 caracteres en Primer Nombre.',
             'first_name.max' => 'Maximo 50 caracteres en Primer Nombre.',
@@ -76,7 +78,7 @@ class UpdateRequest extends FormRequest
             'telephone.max' => 'Maximo 20 caracteres en el Telefono.',
             'email.required' => 'El E-mail es requerido.',
             'email.email' => 'El formato del E-mail no es valido.',
-            'email.unique' => 'El E-mail ya existe con otro Empleado.',
+            //'email.unique' => 'El E-mail ya existe con otro Empleado.',
             'municipality_id.required' => 'El Municipio es requerido.',
              //Informacion laboral
             'type_contract_id.required' => 'El Tipo Contrato es requerido.',
