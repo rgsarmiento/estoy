@@ -139,6 +139,15 @@
                             </div>
                         </div>
 
+                        <div class="profile-widget-item-label">
+                            <i class="fas fa-car mr-1"></i> Auxilio de transporte
+                        </div>
+
+                        <div class="input-group col-md-12 col-12">
+                            <input type="number" class="form-control" id="transportation_allowance_value"
+                        value={{ $configuraciones->transport_allowance }}>
+                        </div>
+
                     </div>
 
                     <div class="profile-widget-item">
@@ -584,9 +593,9 @@
                     {!! Form::hidden('accrued', null, ['class' => 'form-control', 'id' => 'accrued']) !!}
                     {!! Form::hidden('accrued_total', null, ['class' => 'form-control', 'id' => 'accrued_total']) !!}
 
-                    <label>Valor Transporte</label>
+                    {{--  <label>Valor Transporte</label>
                     <input type="number" id="transportation_allowance_value"
-                        value={{ $configuraciones->transport_allowance }}>
+                        value={{ $configuraciones->transport_allowance }}>  --}}
 
                 </div>
             </div>
