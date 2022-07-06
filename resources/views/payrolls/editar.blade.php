@@ -1894,6 +1894,7 @@
             var total_devengado = 0;
             var total_deducido = 0;
             var tipo_empleado = Number(document.getElementById("type_worker_id").value);
+            var sub_tipo_empleado = Number(document.getElementById("sub_type_worker_id").value);
             var dias = Number(document.getElementById("worked_days").value);
             var salario_mensual = Number(document.getElementById("salary").value);
             var aux_transporte_mensual = Number(document.getElementById("transportation_allowance_value").value);
@@ -2268,11 +2269,16 @@
 
             if (pension) {
                 var index_pension = pension.indexOf('% ');
-
+              
                 if (index_pension !== -1) {
                     var largo = pension.length
                     pension_percentage = pension.substring((index_pension + 2), largo);
                     val_pension = (base_pension_concepts_parafiscal * pension_percentage) / 100;
+
+                    if (sub_tipo_empleado == 2 || sub_tipo_empleado == 4){
+                        val_pension = 0
+                    }
+
                     deductions.deducciones.pension_type_law_deductions.value = val_pension;
                     id = deductions.deducciones.pension_type_law_deductions.id
                     //Eliminar y agregar fila de pension

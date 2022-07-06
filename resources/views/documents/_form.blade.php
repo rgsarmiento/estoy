@@ -61,6 +61,10 @@
                 </p>
                     <input id="type_worker_id" type="hidden"
                     value="{{ $document->worker->type_worker->id }}">
+
+                    <input id="sub_type_worker_id" type="hidden"
+                    value="{{ $document->worker->sub_type_worker->id }}">
+
                 <strong><i class="fas fa-calendar-day mr-1"></i> Periodo Nomina</strong>
                 <p class="text-muted">
                     {{ $document->worker->payroll_period->name }}

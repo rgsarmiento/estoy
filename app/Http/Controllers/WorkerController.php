@@ -223,6 +223,7 @@ class WorkerController extends Controller
             'refund' => new StdClass(),
         );
 
+        
         $payroll->accrued = json_encode($accrued);
         $payroll->accrued_total = $accrued_total;
 
@@ -235,11 +236,21 @@ class WorkerController extends Controller
             'value' => $worker->salary * $worker->type_salud_law_deduction->percentage / 100
         );
 
-        $pension_type_law_deduction_ = array(
-            'id' => $worker->type_pension_law_deduction->id,
-            'name' => $worker->type_pension_law_deduction->name . ' % ' . $worker->type_pension_law_deduction->percentage,
-            'value' => $worker->salary * $worker->type_pension_law_deduction->percentage / 100
-        );
+       
+         //si dado el caso no se paga pension
+         if ($worker->sub_type_worker_id == 2 || $worker->sub_type_worker_id == 4){
+            $pension_type_law_deduction_ = array(
+                'id' => $worker->type_pension_law_deduction->id,
+                'name' => $worker->type_pension_law_deduction->name . ' % ' . $worker->type_pension_law_deduction->percentage,
+                'value' => 0
+            );
+        }else{
+            $pension_type_law_deduction_ = array(
+                'id' => $worker->type_pension_law_deduction->id,
+                'name' => $worker->type_pension_law_deduction->name . ' % ' . $worker->type_pension_law_deduction->percentage,
+                'value' => $worker->salary * $worker->type_pension_law_deduction->percentage / 100
+            );  
+        }
 
         $deductions->deducciones = array(
             'eps_type_law_deduction' => $eps_type_law_deduction_,
@@ -424,6 +435,7 @@ class WorkerController extends Controller
             'compensation' => new StdClass(),
         );
 
+        
         $payroll->accrued = json_encode($accrued);
         $payroll->accrued_total = $accrued_total;
 
@@ -435,6 +447,20 @@ class WorkerController extends Controller
             'value' => $worker->salary * $worker->type_salud_law_deduction->percentage / 100
         );
 
+        //si dado el caso no se paga pension
+        if ($worker->sub_type_worker_id == 2 || $worker->sub_type_worker_id == 4){
+            $pension_type_law_deduction_ = array(
+                'id' => $worker->type_pension_law_deduction->id,
+                'name' => $worker->type_pension_law_deduction->name . ' % ' . $worker->type_pension_law_deduction->percentage,
+                'value' => 0
+            );
+        }else{
+            $pension_type_law_deduction_ = array(
+                'id' => $worker->type_pension_law_deduction->id,
+                'name' => $worker->type_pension_law_deduction->name . ' % ' . $worker->type_pension_law_deduction->percentage,
+                'value' => $worker->salary * $worker->type_pension_law_deduction->percentage / 100
+            );  
+        }
 
         $pension_type_law_deduction_ = array(
             'id' => $worker->type_pension_law_deduction->id,
