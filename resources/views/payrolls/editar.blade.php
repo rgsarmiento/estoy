@@ -1132,8 +1132,8 @@
                     case 'fondosp':
                         var id = 11;
                         var salario_mensual = Number(document.getElementById("salary").value);
-                        var fondosp_val = salario_mensual / 100;
-                        var total_fondosp = fondosp_val / 2;
+                        var fondosp_val = (salario_mensual / 100) / 2;
+                        var total_fondosp = fondosp_val * 2;
                         val_deduction = total_fondosp;
                         var array = {
                             'id': id,
