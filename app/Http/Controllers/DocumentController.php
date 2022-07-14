@@ -667,7 +667,7 @@ class DocumentController extends Controller
          
             if ($response->successful()) {
 
-                dd($response);
+                
                 $isValid = ($response['ResponseDian']['Envelope']['Body']['SendNominaSyncResponse']['SendNominaSyncResult']['IsValid'] === 'true') ? true : false;
                 $StatusCode = $response['ResponseDian']['Envelope']['Body']['SendNominaSyncResponse']['SendNominaSyncResult']['StatusCode'];
                 $StatusMessage = $response['ResponseDian']['Envelope']['Body']['SendNominaSyncResponse']['SendNominaSyncResult']['StatusMessage'];
@@ -687,6 +687,7 @@ class DocumentController extends Controller
             }
 
         } catch (Exception $e) {
+            dd($response);
             return $e->getMessage();
         }
         return json_decode($response);
