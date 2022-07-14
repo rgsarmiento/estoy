@@ -662,13 +662,12 @@ class DocumentController extends Controller
         $response =  $this->send_apidian_payroll_adjust_note($company, $configuraciones, $objeto_nomina);
         $this->save_file("app/public/json/" . $document->company->id, json_decode($response), "Rpta-" . $document->worker->identification_number . "-" . $resolution->prefix . "-" . $resolution->nex . ".json");
 
-        dd($response);
-
+       
         try {
          
             if ($response->successful()) {
 
-                
+                dd($response);
                 $isValid = ($response['ResponseDian']['Envelope']['Body']['SendNominaSyncResponse']['SendNominaSyncResult']['IsValid'] === 'true') ? true : false;
                 $StatusCode = $response['ResponseDian']['Envelope']['Body']['SendNominaSyncResponse']['SendNominaSyncResult']['StatusCode'];
                 $StatusMessage = $response['ResponseDian']['Envelope']['Body']['SendNominaSyncResponse']['SendNominaSyncResult']['StatusMessage'];
