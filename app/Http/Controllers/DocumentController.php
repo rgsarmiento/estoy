@@ -662,7 +662,7 @@ class DocumentController extends Controller
         $response =  $this->send_apidian_payroll_adjust_note($company, $configuraciones, $objeto_nomina);
         $this->save_file("app/public/json/" . $document->company->id, json_decode($response), "Rpta-" . $document->worker->identification_number . "-" . $resolution->prefix . "-" . $resolution->nex . ".json");
 
-
+        dd($response);
 
         try {
          
