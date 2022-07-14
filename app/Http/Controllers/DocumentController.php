@@ -663,33 +663,33 @@ class DocumentController extends Controller
         $this->save_file("app/public/json/" . $document->company->id, json_decode($response), "Rpta-" . $document->worker->identification_number . "-" . $resolution->prefix . "-" . $resolution->nex . ".json");
 
 
-        if ($response->successful()) {
 
-            
-            $isValid = ($response['ResponseDian']['Envelope']['Body']['SendNominaSyncResponse']['SendNominaSyncResult']['IsValid'] === 'true') ? true : false;
-            $StatusCode = $response['ResponseDian']['Envelope']['Body']['SendNominaSyncResponse']['SendNominaSyncResult']['StatusCode'];
-            $StatusMessage = $response['ResponseDian']['Envelope']['Body']['SendNominaSyncResponse']['SendNominaSyncResult']['StatusMessage'];
+        try {
+         
+            if ($response->successful()) {
 
-            if ($isValid || $StatusCode == "299" || str_ends_with($StatusMessage, "ha sido autorizada.")) {
-                $this->store_documents($document, $data_na, $periodo_id, $objeto_nomina, $response, 1, $fechaHora);
-                //aumentar prefijo
-                $resolution->increment('nex');
-                return redirect()->route('documents.index')->with('message', 'La Nomina de Ajuste del empleado ' . ' ' . $document->worker->first_name . ' ' . $document->worker->surname . ' ' . 'se envio con éxito a la DIAN con codigo de estado: ' . $StatusCode);
-            } else {
+                
+                $isValid = ($response['ResponseDian']['Envelope']['Body']['SendNominaSyncResponse']['SendNominaSyncResult']['IsValid'] === 'true') ? true : false;
+                $StatusCode = $response['ResponseDian']['Envelope']['Body']['SendNominaSyncResponse']['SendNominaSyncResult']['StatusCode'];
+                $StatusMessage = $response['ResponseDian']['Envelope']['Body']['SendNominaSyncResponse']['SendNominaSyncResult']['StatusMessage'];
 
-                try {
+                if ($isValid || $StatusCode == "299" || str_ends_with($StatusMessage, "ha sido autorizada.")) {
+                    $this->store_documents($document, $data_na, $periodo_id, $objeto_nomina, $response, 1, $fechaHora);
+                    //aumentar prefijo
+                    $resolution->increment('nex');
+                    return redirect()->route('documents.index')->with('message', 'La Nomina de Ajuste del empleado ' . ' ' . $document->worker->first_name . ' ' . $document->worker->surname . ' ' . 'se envio con éxito a la DIAN con codigo de estado: ' . $StatusCode);
+                } else {
+                    
                     $this->store_documents($document, $data_na, $periodo_id, $objeto_nomina, $response, 0, $fechaHora);
-                //$ErrorMessage = $response['ResponseDian']['Envelope']['Body']['SendNominaSyncResponse']['SendNominaSyncResult']['ErrorMessage']['string'];
-                
-                } catch (Exception $e) {
-
-                    return redirect()->route('documents.index')->with('error', 'La Nomina de Ajuste del empleado ' . ' ' . $document->worker->first_name . ' ' . $document->worker->surname . ' ' . 'No se pudo enviar. ' . $e->getMessage() . ' ' . $response);
+                    //$ErrorMessage = $response['ResponseDian']['Envelope']['Body']['SendNominaSyncResponse']['SendNominaSyncResult']['ErrorMessage']['string'];
+                    
+                    return redirect()->route('documents.index')->with('error', 'La Nomina de Ajuste del empleado ' . ' ' . $document->worker->first_name . ' ' . $document->worker->surname . ' ' . 'No se pudo enviar.');
                 }
-                
-                return redirect()->route('documents.index')->with('error', 'La Nomina de Ajuste del empleado ' . ' ' . $document->worker->first_name . ' ' . $document->worker->surname . ' ' . 'No se pudo enviar. ' . $response);
             }
-        }
 
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
         return json_decode($response);
     }
 
