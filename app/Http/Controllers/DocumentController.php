@@ -661,8 +661,7 @@ class DocumentController extends Controller
         $this->save_file("app/public/json/" . $document->company->id, $objeto_nomina, "Env-" . $document->worker->identification_number . "-" . $resolution->prefix . "-" . $resolution->nex . ".json");
         $response =  $this->send_apidian_payroll_adjust_note($company, $configuraciones, $objeto_nomina);
         $this->save_file("app/public/json/" . $document->company->id, json_decode($response), "Rpta-" . $document->worker->identification_number . "-" . $resolution->prefix . "-" . $resolution->nex . ".json");
-
-       
+        
         try {
          
             if ($response->successful()) {

@@ -1862,7 +1862,7 @@
             accrued.devengados.salary.value = (salario_diario * dias)
             total_devengado = (salario_diario * dias);
 
-            if (tipo_empleado == 27) {
+            if (tipo_empleado == 13) {
                 if (concepts_parafiscal.concepts.salary.eps == 1) {
                     if (dias >= 1 && dias <= 7) {
                         base_eps_concepts_parafiscal = (salario_mensual / 4);
