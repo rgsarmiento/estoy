@@ -2118,13 +2118,6 @@
             }
 
 
-
-
-
-
-
-
-
             if (accrued.devengados.transportation_allowance.name == "Subsidio Transporte") {
                 accrued.devengados.transportation_allowance = {};
                 var aux_transporte1 = document.getElementById("aux_transporte1");

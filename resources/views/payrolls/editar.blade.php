@@ -98,7 +98,7 @@
                         document.getElementById("div_deduction_value").style.display = "block";
                         document.getElementById("div_add_deductions").style.display = "block";
                         break;
-                    case 'fondosp':                        
+                    case 'fondosp':
                         document.getElementById("div_add_deductions").style.display = "block";
                         break;
                 }
@@ -206,11 +206,11 @@
                         break;
                     case 'compensations':
                         document.getElementById("div_accrued_compensations").style.display = "block";
-                        document.getElementById("div_add_accrueds").style.display = "block";                        
+                        document.getElementById("div_add_accrueds").style.display = "block";
                         break;
                     case 'other_concepts':
                         document.getElementById("div_accrued_other_concepts").style.display = "block";
-                        document.getElementById("div_add_accrueds").style.display = "block";                        
+                        document.getElementById("div_add_accrueds").style.display = "block";
                         break;
                 }
             });
@@ -787,7 +787,7 @@
 
                         var salary_concept = Number(document.getElementById("val_accrued_other_concepts_salary").value);
                         var description_concept = document.getElementById("description_other_concepts").value;
-                        
+
                         var id = (Math.floor(Math.random() * (999 - 100 + 1) + 100) + n_other_concepts);
                         array = {
                             'id': id,
@@ -797,7 +797,7 @@
                         };
 
                         $("#tbl_accrueds>tbody").append('<tr id="other_concepts-' + id + '"><td>' +
-                            description_concept + 
+                            description_concept +
                             '</td><td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i>' +
                             parseFloat(salary_concept, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
                                 "$1,").toString() + '</td>' +
@@ -2157,7 +2157,7 @@
             var json_other_concepts = accrued.devengados.other_concepts
             var salary_concept = json_other_concepts.reduce((sum, value) => (typeof value.salary_concept == "number" ? sum +
                 value.salary_concept : sum), 0);
-            
+
             total_devengado += (salary_concept)
 
             if (concepts_parafiscal.concepts.other_concepts.eps == 1) {
@@ -2214,7 +2214,7 @@
                                             '<td><a href="" class="btn disabled btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a></td></tr>'
                                         );
                     }
-                
+
             }
 
             document.getElementById("accrued_total").value = total_devengado;
@@ -2241,6 +2241,10 @@
                     val_eps = (base_eps_concepts_parafiscal * eps_percentage) / 100;
                     deductions.deducciones.eps_type_law_deduction.value = val_eps;
                     id = deductions.deducciones.eps_type_law_deduction.id
+
+                    if (tipo_empleado == 4 || tipo_empleado == 6){
+                        val_eps = 0
+                    }
 
                     //Eliminar y agregar fila de eps
                     var eps_type_law_deduction = document.getElementById('eps_type_law_deduction-' + id);
@@ -2269,13 +2273,13 @@
 
             if (pension) {
                 var index_pension = pension.indexOf('% ');
-              
+
                 if (index_pension !== -1) {
                     var largo = pension.length
                     pension_percentage = pension.substring((index_pension + 2), largo);
                     val_pension = (base_pension_concepts_parafiscal * pension_percentage) / 100;
 
-                    if (sub_tipo_empleado == 2 || sub_tipo_empleado == 4){
+                    if (sub_tipo_empleado == 2 || sub_tipo_empleado == 4 || tipo_empleado == 4 || tipo_empleado == 6){
                         val_pension = 0
                     }
 
@@ -2363,7 +2367,7 @@
                 total_deducido += (total_fondosp_deduction_SP);
                 total_deducido += (total_fondosp_deduction_sub);
             }
-         
+
             document.getElementById("deductions_total").value = total_deducido;
             document.getElementById("deductions").value = JSON.stringify(deductions);
 
@@ -2371,7 +2375,7 @@
                 '<tr align="center"><th>TOTAL</th><th colspan="2"><i class="fa fa-sort-down" style="font-size:20px;color:#FF267B;"></i>' +
                 parseFloat(total_deducido, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,")
                 .toString() + '</th></tr>';
- 
+
             document.getElementById("payroll_total").value = (total_devengado - total_deducido)
             document.getElementById("payroll_total2").innerHTML = parseFloat((total_devengado - total_deducido), 10)
                 .toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,")
