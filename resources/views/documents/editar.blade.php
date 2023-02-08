@@ -94,7 +94,7 @@
                         document.getElementById("div_deduction_value").style.display = "block";
                         document.getElementById("div_add_deductions").style.display = "block";
                         break;
-                    case 'fondosp':                        
+                    case 'fondosp':
                         document.getElementById("div_add_deductions").style.display = "block";
                         break;
                 }
@@ -202,11 +202,11 @@
                         break;
                     case 'compensations':
                         document.getElementById("div_accrued_compensations").style.display = "block";
-                        document.getElementById("div_add_accrueds").style.display = "block";                        
+                        document.getElementById("div_add_accrueds").style.display = "block";
                         break;
                     case 'other_concepts':
                         document.getElementById("div_accrued_other_concepts").style.display = "block";
-                        document.getElementById("div_add_accrueds").style.display = "block";                        
+                        document.getElementById("div_add_accrueds").style.display = "block";
                         break;
                 }
             });
@@ -783,7 +783,7 @@
 
                         var salary_concept = Number(document.getElementById("val_accrued_other_concepts_salary").value);
                         var description_concept = document.getElementById("description_other_concepts").value;
-                        
+
                         var id = (Math.floor(Math.random() * (999 - 100 + 1) + 100) + n_other_concepts);
                         array = {
                             'id': id,
@@ -793,7 +793,7 @@
                         };
 
                         $("#tbl_accrueds>tbody").append('<tr id="other_concepts-' + id + '"><td>' +
-                            description_concept + 
+                            description_concept +
                             '</td><td align="right"><i class="fa fa-sort-up" style="font-size:18px;color:#00D0C4;"></i>' +
                             parseFloat(salary_concept, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g,
                                 "$1,").toString() + '</td>' +
@@ -1158,22 +1158,22 @@
                  document.getElementById("div_accrued_value").style.display = "none";
                  document.getElementById("div_add_accrueds").style.display = "none";
                  document.getElementById("div_quantity_a").style.display = "none";
- 
+
                  document.getElementById("div_quantity_h_a").style.display = "none";
                  document.getElementById("div_rango_fecha_h_a").style.display = "none";
- 
+
                  document.getElementById("div_type_incapacidad_a").style.display = "none";
- 
+
                  document.getElementById("div_accrued_intereses").style.display = "none";
                  document.getElementById("div_accrued_compensations").style.display = "none";
                  document.getElementById("div_accrued_other_concepts").style.display = "none";
 
- 
+
                  //deducciones
                  document.getElementById("div_deduction_value").style.display = "none";
                  document.getElementById("div_add_deductions").style.display = "none";
                  document.getElementById("div_orders_value").style.display = "none";
- 
+
 
                 limpiar_controles();
             }
@@ -2074,7 +2074,7 @@
                 sum + value.payment : sum), 0);
             var intereses_cesantias_value = json_severance.reduce((sum, value) => (typeof value.interest_payment == "number" ?
                 sum + value.interest_payment : sum), 0);
-            
+
             var total_severance = (cesantias_value + intereses_cesantias_value)
             total_devengado += (total_severance)
 
@@ -2084,7 +2084,7 @@
             if (concepts_parafiscal.concepts.severance.pension == 1) {
                 base_pension_concepts_parafiscal += (total_severance)
             }
-            
+
             ////////////indemnización/////////////
             var json_compensations = accrued.devengados.compensations
             var ordinary_compensation = json_compensations.reduce((sum, value) => (typeof value.ordinary_compensation == "number" ? sum +
@@ -2107,7 +2107,7 @@
             var json_other_concepts = accrued.devengados.other_concepts
             var salary_concept = json_other_concepts.reduce((sum, value) => (typeof value.salary_concept == "number" ? sum +
                 value.salary_concept : sum), 0);
-            
+
             total_devengado += (salary_concept)
 
             if (concepts_parafiscal.concepts.other_concepts.eps == 1) {
@@ -2167,7 +2167,7 @@
                                             '<td><a href="" class="btn disabled btn-icon btn-sm btn-danger"><i class="fas fa-times"></i></a></td></tr>'
                                         );
                     }
-                
+
             }
 
             document.getElementById("accrued_total").value = total_devengado;
@@ -2194,6 +2194,10 @@
                     val_eps = (base_eps_concepts_parafiscal * eps_percentage) / 100;
                     deductions.deducciones.eps_type_law_deduction.value = val_eps;
                     id = deductions.deducciones.eps_type_law_deduction.id
+
+                    if (tipo_empleado == 4 || tipo_empleado == 6){
+                        val_eps = 0
+                    }
 
                     //Eliminar y agregar fila de eps
                     var eps_type_law_deduction = document.getElementById('eps_type_law_deduction-' + id);
@@ -2228,7 +2232,7 @@
                     pension_percentage = pension.substring((index_pension + 2), largo);
                     val_pension = (base_pension_concepts_parafiscal * pension_percentage) / 100;
 
-                    if (sub_tipo_empleado == 2 || sub_tipo_empleado == 4){
+                    if (sub_tipo_empleado == 2 || sub_tipo_empleado == 4 || tipo_empleado == 4 || tipo_empleado == 6){
                         val_pension = 0
                     }
 
@@ -2383,13 +2387,13 @@
             calcular_vacaciones();
         });
 
-        function calcular_vacaciones(){     
-            
+        function calcular_vacaciones(){
+
             var nodo = document.getElementById("select_tipo_devengado").value;
-            
+
             var salario_mensual = Number(document.getElementById("salary").value);
             var cantidad = Number(document.getElementById("quantity_a").value);
-            var valor = (salario_mensual*cantidad) / 720;            
+            var valor = (salario_mensual*cantidad) / 720;
 
             switch (nodo) {
                 case 'paid_vacation':
