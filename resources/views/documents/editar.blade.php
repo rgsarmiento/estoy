@@ -1413,7 +1413,7 @@
                     var porcentaje = Number(document.getElementById("val_accrued_pocentaje_intereses").value);
                     var intereses = Number(document.getElementById("val_accrued_value_intereses").value);
                     var valor = Number(document.getElementById("val_accrued").value);
-                    if (valor <= 0 || intereses <= 0 || porcentaje <= 0) {
+                    if (valor < 0 || intereses < 0 || porcentaje < 0) {
                         return false
                     }
                     break;
