@@ -1,5 +1,5 @@
 <li class="side-menus {{ Request::is('home') ? 'active' : '' }}">
-    <a class="nav-link" href="estoy-colombiasis/public/home"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a>
+    <a class="nav-link" href="/home"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a>
 </li>
 
 
@@ -8,18 +8,18 @@
     <ul class="dropdown-menu">
         @can('usuarios.index')
             <li class="side-menus {{ Request::is('usuarios') ? 'active' : '' }}">
-                <a class="nav-link" href="estoy-colombiasis/public/usuarios"><i class="fas fa-users"></i><span>Usuarios</span></a>
+                <a class="nav-link" href="/usuarios"><i class="fas fa-users"></i><span>Usuarios</span></a>
             </li>
         @endcan
 
         @can('roles.index')
             <li class="side-menus {{ Request::is('roles') ? 'active' : '' }}">
-                <a class="nav-link" href="estoy-colombiasis/public/roles"><i class="fas fa-user-lock"></i><span>Roles</span></a>
+                <a class="nav-link" href="/roles"><i class="fas fa-user-lock"></i><span>Roles</span></a>
             </li>
         @endcan
         @can('companies.index')
             <li class="side-menus {{ Request::is('companies') ? 'active' : '' }}">
-                <a class="nav-link" href="estoy-colombiasis/public/companies"><i class="fas fa-briefcase"></i><span>Empresas</span></a>
+                <a class="nav-link" href="/companies"><i class="fas fa-briefcase"></i><span>Empresas</span></a>
             </li>
         @endcan
     </ul>
@@ -30,13 +30,13 @@
     <a href="#" class="nav-link has-dropdown"><i class="fas fa-address-book"></i><span>Nomina</span></a>
     <ul class="dropdown-menu">
         <li class="side-menus {{ Request::is('workers') ? 'active' : '' }}">
-            <a class="nav-link" href="estoy-colombiasis/public/workers"><i class="fa fa-user-clock"></i>Empleados</a>
+            <a class="nav-link" href="/workers"><i class="fa fa-user-clock"></i>Empleados</a>
         </li>
         <li class="side-menus {{ Request::is('payrolls') ? 'active' : '' }}">
-            <a class="nav-link" href="estoy-colombiasis/public/payrolls"><i class="fa fa-calculator"></i>Comprobante</a>
+            <a class="nav-link" href="/payrolls"><i class="fa fa-calculator"></i>Comprobante</a>
         </li>
         <li class="side-menus {{ Request::is('documents') ? 'active' : '' }}">
-            <a class="nav-link beep beep-sidebar" href="estoy-colombiasis/public/documents"><i class="fa fa-file-invoice"></i>Emitidos</a>
+            <a class="nav-link beep beep-sidebar" href="/documents"><i class="fa fa-file-invoice"></i>Emitidos</a>
         </li>
     </ul>
 </li>
