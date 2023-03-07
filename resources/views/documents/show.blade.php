@@ -9,7 +9,7 @@
         <div class="section-header">
             <h3 class="page__heading">Detalles Documentos Emitidos</h3>
             <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="/home">Dashboard</a></div>
+                <div class="breadcrumb-item active"><a href="home">Dashboard</a></div>
                 <div class="breadcrumb-item active"><a href="{{ route('documents.index') }}">Documentos Emitidos</a></div>
                 <div class="breadcrumb-item">Detalles documentos emitidos</div>
             </div>
@@ -170,7 +170,7 @@
                                                                         href="{{ route('documents.edit', $row->id) }}"><i
                                                                             class="far fa-edit"></i> Nomina Ajuste</a>
                                                                 @endif
-                                                                
+
                                                             </div>
                                                             <!-- end of dropdown menu -->
                                                         </div>

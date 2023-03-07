@@ -9,7 +9,7 @@
         <div class="section-header">
             <h3 class="page__heading">Empresa y sus Usuarios</h3>
             <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="/home">Dashboard</a></div>
+                <div class="breadcrumb-item active"><a href="home">Dashboard</a></div>
                 <div class="breadcrumb-item">Empresa y sus Usuarios</div>
             </div>
         </div>
@@ -59,13 +59,13 @@
                                                 {{ $row->company->identification_number }}</td>
                                             <td>{{ $row->user->name }} <br>
                                                 {{ $row->user->email }}</td>
-                                            
+
                                             <td class="text-right">
                                                 @can('company_has_users.eliminar')
                                                     {!! Form::open(['method' => 'DELETE', 'route' => ['company_has_user.destroy', $row], 'style' => 'display:inline', 'class' => 'form-delete']) !!}
                                                     {!! Form::button('<i class="fas fa-trash-alt"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-icon icon-left']) !!}
                                                     {!! Form::close() !!}
-                                                @endcan                                                
+                                                @endcan
                                             </td>
 
                                         </tr>
@@ -106,7 +106,7 @@
             Swal.fire("Eliminado!", "{{ session()->get('eliminar') }}", "success");
         </script>
     @endif
-  
+
 
     <script>
         $('.form-delete').submit(function(e) {

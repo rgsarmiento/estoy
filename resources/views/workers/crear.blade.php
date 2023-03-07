@@ -9,7 +9,7 @@
         <div class="section-header">
             <h3 class="page__heading">Crear Empleado</h3>
             <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="/home">Dashboard</a></div>
+                <div class="breadcrumb-item active"><a href="home">Dashboard</a></div>
                 <div class="breadcrumb-item active"><a href="{{ route('workers.index') }}">Empleados</a></div>
                 <div class="breadcrumb-item">Crear Empleado</div>
               </div>
@@ -27,7 +27,7 @@
                             @endforeach
                         </ul>
                     </div>
-                    
+
                     <button type="button" class="close" data-dismiss="alert" aria-label="close">
                         <span aria-hidden="true">&times;</span>
                     </button>

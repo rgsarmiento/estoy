@@ -9,7 +9,7 @@
         <div class="section-header">
             <h3 class="page__heading">Generar Comprobantes</h3>
             <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="/home">Dashboard</a></div>
+                <div class="breadcrumb-item active"><a href="home">Dashboard</a></div>
                 <div class="breadcrumb-item">Comprobantes</div>
             </div>
         </div>
@@ -314,17 +314,17 @@
 
                                                         @php
                                                             $devengados_json = json_decode($row->accrued, true);
-                                                            
+
                                                             $salary = $devengados_json['devengados']['salary'];
                                                             $transportation_allowance = $devengados_json['devengados']['transportation_allowance'];
-                                                            
+
                                                             $common_vacation = $devengados_json['devengados']['common_vacation'];
                                                             $paid_vacation = $devengados_json['devengados']['paid_vacation'];
                                                             $maternity_leave = $devengados_json['devengados']['maternity_leave'];
                                                             $paid_leave = $devengados_json['devengados']['paid_leave'];
                                                             $non_paid_leave = $devengados_json['devengados']['non_paid_leave'];
                                                             $legal_strike = $devengados_json['devengados']['legal_strike'];
-                                                            
+
                                                             $HEDs = $devengados_json['devengados']['HEDs'];
                                                             $HENs = $devengados_json['devengados']['HENs'];
                                                             $HRNs = $devengados_json['devengados']['HRNs'];
@@ -332,7 +332,7 @@
                                                             $HRDDFs = $devengados_json['devengados']['HRDDFs'];
                                                             $HENDFs = $devengados_json['devengados']['HENDFs'];
                                                             $HRNDFs = $devengados_json['devengados']['HRNDFs'];
-                                                            
+
                                                             $work_disabilities = $devengados_json['devengados']['work_disabilities'];
                                                             $service_bonus = $devengados_json['devengados']['service_bonus'];
                                                             $severance = $devengados_json['devengados']['severance'];
@@ -501,17 +501,17 @@
                                                     <td style="white-space:nowrap;"><i class="fa fa-sort-up"
                                                             style="font-size:18px;color:#00D0C4;"></i> $
                                                         {{ number_format($row->accrued_total, 2) }}</td>
-                                                   
-                                                   
+
+
                                                         <td style="font-size:12px">
 
                                                         @php
                                                             $deducciones_json = json_decode($row->deductions, true);
-                                                            
+
                                                             $eps_type_law_deduction = $deducciones_json['deducciones']['eps_type_law_deduction'];
                                                             $pension_type_law_deductions = $deducciones_json['deducciones']['pension_type_law_deductions'];
                                                             $other_deductions = $deducciones_json['deducciones']['other_deductions'];
-                                                            
+
                                                             $debt = $deducciones_json['deducciones']['debt'];
                                                             $voluntary_pension = $deducciones_json['deducciones']['voluntary_pension'];
                                                             $withholding_at_source = $deducciones_json['deducciones']['withholding_at_source'];
@@ -528,7 +528,7 @@
                                                         @if ($eps_type_law_deduction)
                                                         {!! $eps_type_law_deduction['name'] . ':<strong> -' . number_format($eps_type_law_deduction['value'], 2) . '</strong>' !!}
                                                         @endif
-                                                       
+
                                                         @if ($pension_type_law_deductions)
                                                         <hr
                                                             style="margin-top:0rem;margin-bottom:0rem;border-top:1px solid rgb(103 119 239)">
@@ -552,7 +552,7 @@
                                                         @foreach ($orders as $value)
                                                             {!! $value['name'] . ':<br><strong> -' . number_format($value['value'], 2) . '</strong>' !!} <br>
                                                         @endforeach
-                                                     
+
                                                         @if ($debt)
                                                             <hr
                                                                 style="margin-top:0rem;margin-bottom:0rem;border-top:1px solid rgb(103 119 239)">

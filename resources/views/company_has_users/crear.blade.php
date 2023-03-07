@@ -9,7 +9,7 @@ Ralacionar Empresa y Usuarios
         <div class="section-header">
             <h3 class="page__heading">Ralacionar Empresa y Usuarios</h3>
             <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="/home">Dashboard</a></div>
+                <div class="breadcrumb-item active"><a href="home">Dashboard</a></div>
                 <div class="breadcrumb-item active"><a href="{{ route('company_has_user.index') }}">Empresa y sus Usuarios</a></div>
                 <div class="breadcrumb-item">Ralacionar Empresa y Usuarios</div>
               </div>
@@ -27,7 +27,7 @@ Ralacionar Empresa y Usuarios
                             @endforeach
                         </ul>
                     </div>
-                    
+
                     <button type="button" class="close" data-dismiss="alert" aria-label="close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -35,17 +35,17 @@ Ralacionar Empresa y Usuarios
             @endif
 
             {!! Form::open(['route' => 'company_has_user.store', 'method' => 'POST']) !!}
-            
+
             <div class="row">
                 <div class="col-lg-12">
-                               
+
                     <div class="card card-primary">
                         <div class="card-body">
                             <div class="card-header">
                                 <h5>Relacionar</h5>
                             </div>
                             <div class="card-block">
-                              
+
                                 <div class="row">
                                     <div class="col-sm-12 col-xl-6 m-b-30">
                                         <div class="form-group">
@@ -75,10 +75,10 @@ Ralacionar Empresa y Usuarios
                                 <button type="submit" class="btn btn-primary">Guardar</button>
                             </div>
                         </div>
-                    </div>                    
+                    </div>
                 </div>
             </div>
-           
+
             @section('scripts')
                 <script>
                     $(document).ready(function() {
@@ -86,9 +86,9 @@ Ralacionar Empresa y Usuarios
                         $('#user_id').select2();
                     });
                 </script>
-            
+
             @endsection
-            
+
 
             {!! Form::close() !!}
         </div>

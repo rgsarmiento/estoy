@@ -9,7 +9,7 @@
         <div class="section-header">
             <h3 class="page__heading">Empleado detalle</h3>
             <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="/home">Dashboard</a></div>
+                <div class="breadcrumb-item active"><a href="home">Dashboard</a></div>
                 <div class="breadcrumb-item active"> <a href="{{ route('workers.index') }}">Empleados</a></div>
                 <div class="breadcrumb-item">Empleado detalle</div>
             </div>
@@ -43,7 +43,7 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <div class="card-header">
                                 <h5><span class="text-primary">Popiedad</span></h5>
                             </div>

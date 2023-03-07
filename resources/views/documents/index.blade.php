@@ -9,7 +9,7 @@
         <div class="section-header">
             <h3 class="page__heading">Documentos Emitidos</h3>
             <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="/home">Dashboard</a></div>
+                <div class="breadcrumb-item active"><a href="home">Dashboard</a></div>
                 <div class="breadcrumb-item">Documentos Emitidos</div>
             </div>
         </div>
@@ -138,14 +138,14 @@
 
                                                         <td class="text-right">
                                                             {!! Form::open(['method' => 'GET', 'route' => 'documents.show', 'style' => 'display:inline']) !!}
-    
+
                                                             {!! Form::hidden('period_id', $row->period_id) !!}
-    
+
                                                             {!! Form::button('<i class="fas fa-eye"></i>', ['type' => 'submit', 'class' => 'btn btn-light btn-sm btn-icon']) !!}
-                                                            
+
                                                             {!! Form::close() !!}
-                                                            
-    
+
+
                                                         </td>
                                                 </tr>
                                             @endforeach

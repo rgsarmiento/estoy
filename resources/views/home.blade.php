@@ -35,7 +35,7 @@
                                                 <h2 class="text-right"><i
                                                         class="fa fa-briefcase f-left"></i><span>{{ $cantidad_empresas }}</span>
                                                 </h2>
-                                                <p class="m-b-0 text-right"><a href="/companies" class="text-white">Ver
+                                                <p class="m-b-0 text-right"><a href="companies" class="text-white">Ver
                                                         más</a></p>
                                             </div>
                                         </div>
@@ -50,7 +50,7 @@
                                                 <h2 class="text-right"><i
                                                         class="fa fa-people-carry f-left"></i><span>{{ $cantidad_empleados }}</span>
                                                 </h2>
-                                                <p class="m-b-0 text-right"><a href="/workers" class="text-white">Ver
+                                                <p class="m-b-0 text-right"><a href="workers" class="text-white">Ver
                                                         más</a></p>
                                             </div>
                                         </div>
