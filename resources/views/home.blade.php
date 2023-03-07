@@ -20,7 +20,7 @@
                                                 <h2 class="text-right"><i
                                                         class="fa fa-users f-left"></i><span>{{ $cantidad_usuarios }}</span>
                                                 </h2>
-                                                <p class="m-b-0 text-right"><a href={{$_ENV['URL_LIN']}}"/usuarios" class="text-white">Ver
+                                                <p class="m-b-0 text-right"><a href="usuarios" class="text-white">Ver
                                                         más</a></p>
                                             </div>
                                         </div>
