@@ -9,7 +9,7 @@ Ralacionar Empresa y Usuarios
         <div class="section-header">
             <h3 class="page__heading">Ralacionar Empresa y Usuarios</h3>
             <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="home">Dashboard</a></div>
+                <div class="breadcrumb-item active"><a href="/home">Dashboard</a></div>
                 <div class="breadcrumb-item active"><a href="{{ route('company_has_user.index') }}">Empresa y sus Usuarios</a></div>
                 <div class="breadcrumb-item">Ralacionar Empresa y Usuarios</div>
               </div>

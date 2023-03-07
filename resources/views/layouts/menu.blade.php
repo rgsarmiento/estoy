@@ -8,7 +8,7 @@
     <ul class="dropdown-menu">
         @can('usuarios.index')
             <li class="side-menus {{ Request::is('usuarios') ? 'active' : '' }}">
-                <a class="nav-link" href="usuarios"><i class="fas fa-users"></i><span>Usuarios</span></a>
+                <a class="nav-link" href="{{ route('usuarios.index') }}"><i class="fas fa-users"></i><span>Usuarios</span></a>
             </li>
         @endcan
 

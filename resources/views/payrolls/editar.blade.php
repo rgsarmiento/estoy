@@ -9,7 +9,7 @@
         <div class="section-header">
             <h3 class="page__heading">Modificar Comprobante</h3>
             <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="home">Dashboard</a></div>
+                <div class="breadcrumb-item active"><a href="/home">Dashboard</a></div>
                 <div class="breadcrumb-item active"><a href="{{ route('payrolls.index') }}">Comprobantes</a></div>
                 <div class="breadcrumb-item">Modificar Comprobante</div>
             </div>

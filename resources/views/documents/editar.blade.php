@@ -9,7 +9,7 @@
         <div class="section-header">
             <h3 class="page__heading">Nomina de Ajuste</h3>
             <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="home">Dashboard</a></div>
+                <div class="breadcrumb-item active"><a href="/home">Dashboard</a></div>
                 <div class="breadcrumb-item active"><a href="{{ route('documents.index') }}">Doc. Emitidos</a></div>
                 <div class="breadcrumb-item">Nomina de Ajuste</div>
             </div>
